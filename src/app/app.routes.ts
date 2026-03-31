@@ -1,9 +1,20 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './modules/auth/pages/login/login';
-import { RegisterComponent } from './modules/auth/pages/register/register';
+import { authGuard } from './core/guards/auth-guard';
+
+import { LoginComponent } from './features/auth/pages/login/login';
+import { RegisterComponent } from './features/auth/pages/register/register';
+
+// Dashboars de roles
+import { Administrador } from './features/dashboard/pages/administrador/administrador';
+import { Cliente } from './features/dashboard/pages/cliente/cliente';
+import { Empleado } from './features/dashboard/pages/empleado/empleado';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'admin', component: Administrador, canActivate: [authGuard], data: { roles: ['admin'] } },
+  { path: 'cliente', component: Cliente, canActivate: [authGuard], data: { roles: ['cliente'] } },
+  { path: 'empleado', component: Empleado, canActivate: [authGuard], data: { roles: ['empleado'] } },
 ];

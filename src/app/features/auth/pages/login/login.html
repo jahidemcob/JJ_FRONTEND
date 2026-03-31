@@ -1,0 +1,60 @@
+<div class="login-container">
+
+  <!-- LADO IZQUIERDO -->
+  <div class="left-panel">
+    <div class="overlay">
+      <img src="assets/logo.png" alt="logo" class="logo"/>
+
+      <h1>Bienvenido<br><span>TallerControl</span></h1>
+
+      <p>
+        Gestiona servicios y citas de forma rápida y eficiente.
+        Ahorra tiempo y mejora tu productividad.
+      </p>
+    </div>
+  </div>
+
+  <!-- LADO DERECHO -->
+  <div class="right-panel">
+    <div class="login-card">
+
+      <h2>Iniciar Sesión</h2>
+      <p class="subtitle">Accede a tu cuenta</p>
+
+      <form (submit)="login(); $event.preventDefault()">
+
+        <div class="form-group">
+          <input 
+            type="email"
+            placeholder="Correo electrónico"
+            [(ngModel)]="email"
+            name="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <input 
+            type="password"
+            placeholder="Contraseña"
+            [(ngModel)]="password"
+            name="password"
+          />
+        </div>
+
+        <button type="submit">Ingresar</button>
+
+        <button class="google-btn" type="button">
+          Continuar con Google
+        </button>
+
+        <p class="register-link">
+          ¿No tienes cuenta?
+          <a routerLink="/register">Regístrate</a>
+        </p>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
