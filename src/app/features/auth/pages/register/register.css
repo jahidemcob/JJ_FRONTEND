@@ -1,61 +1,102 @@
+/* CONTENEDOR */
 .register-container {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  background: linear-gradient(135deg, #303854, #1f263a);
+  font-family: 'Inter', sans-serif;
+  position: relative;
 }
 
+/* LOGO */
+.logo {
+  position: absolute;
+  top: 15px;
+  left: -20px;
+  width: 280px;
+}
+
+/* TARJETA */
 .register-card {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 340px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  width: 420px;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* TITULO */
 .register-card h2 {
-  margin-bottom: 20px;
+  font-size: 40px;
+  color: #303854;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: 'League Spartan', serif;
 }
 
+/* INPUT GROUP */
 .input-group {
-  margin-bottom: 15px;
-  text-align: left;
+  margin-bottom: 16px;
 }
 
+/* LABEL */
 .input-group label {
-  font-size: 14px;
+  font-size: 13px;
+  color: #777;
 }
 
+/* INPUT estilo login */
 .input-group input {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 2px solid #C2CDD5;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
 }
 
+/* FOCUS */
+.input-group input:focus {
+  border-color: #303854;
+}
+
+/* BOTÓN */
 button {
   width: 100%;
-  padding: 10px;
-  background: #2a5298;
-  color: white;
+  padding: 12px;
   border: none;
-  border-radius: 6px;
+  background: #303854;
+  color: #fff;
+  border-radius: 8px;
   cursor: pointer;
+  margin-top: 10px;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
 button:hover {
-  background: #1e3c72;
+  opacity: 0.9;
 }
 
+/* LINK */
 .login-link {
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 16px;
+  font-size: 13px;
+  text-align: center;
 }
 
 .login-link a {
-  color: #2a5298;
+  color: #303854;
+  font-weight: 600;
   text-decoration: none;
+}
+
+.mensaje {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
 }

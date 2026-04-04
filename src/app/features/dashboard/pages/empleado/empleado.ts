@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Navbar } from "../../../../shared/components/navbar/navbar";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-empleado',
-  imports: [Navbar],
+  imports: [CommonModule], 
   templateUrl: './empleado.html',
   styleUrl: './empleado.css',
 })

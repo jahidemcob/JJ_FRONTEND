@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { Navbar } from "../../../../shared/components/navbar/navbar";
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-cliente',
-  imports: [Navbar],
+  standalone: true,
+  imports: [CommonModule], // solo lo necesario
   templateUrl: './cliente.html',
-  styleUrl: './cliente.css',
+  styleUrls: ['./cliente.css'],
 })
 export class Cliente {
-
+  // aquí agregas tu lógica de dashboard
 }
