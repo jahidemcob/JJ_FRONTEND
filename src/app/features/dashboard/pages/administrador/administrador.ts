@@ -30,3 +30,4 @@ export class Administrador {
     this.authService.logout();
   }
 }
+

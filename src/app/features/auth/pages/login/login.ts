@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -11,28 +12,56 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
 
-  email: string = '';
+  username: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   login() {
-  console.log(this.email, this.password);
+    console.log(this.username, this.password);
 
-   if (this.email === 'admin@test.com' && this.password === '123') {
-    localStorage.setItem('rol', 'admin');
-    this.router.navigate(['/admin']);
- 
-   } else if (this.email === 'empleado@test.com' && this.password === '123') {
-    localStorage.setItem('rol', 'empleado');
-    this.router.navigate(['/empleado']);
+    const data = {
+      username: this.username,
+      clave: this.password
+    };
 
-   } else if (this.email === 'cliente@test.com' && this.password === '123') {
-    localStorage.setItem('rol', 'cliente');
-    this.router.navigate(['/cliente']);
+    this.authService.login(data).subscribe({
+      next: (res: any) => {
+        console.log('LOGIN OK:', res);
 
-   } else {
-    alert('Credenciales incorrectas');
-   }
+        // 🔥 Guardar token
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+        }
+
+        // 🔥 Guardar usuario completo
+        localStorage.setItem('usuario', JSON.stringify(res));
+
+        // 🔥 Obtener rol del backend
+        const rolBackend = (res.role || res.rol || 'cliente').toLowerCase();
+
+        // 🔥 Mapear rol a rutas del frontend
+        const roleMap: any = {
+          administrador: 'admin',
+          empleado: 'empleado',
+          cliente: 'cliente'
+        };
+
+        const rol = roleMap[rolBackend] || 'cliente';
+
+        // 🔥 Guardar rol correcto
+        localStorage.setItem('rol', rol);
+
+        // 🔥 Redirección automática
+        this.router.navigate([`/${rol}`]);
+      },
+      error: (err) => {
+        console.error('ERROR LOGIN:', err);
+        alert('Usuario o contraseña incorrectos');
+      }
+    });
   }
 }

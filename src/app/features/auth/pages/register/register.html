@@ -39,8 +39,12 @@
 
       <button type="submit">Registrarse</button>
 
-      <!-- MENSAJE -->
-      <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+      <!-- MENSAJES -->
+      <!-- MENSAJE ERROR -->
+      <p *ngIf="mensaje" class="mensaje error">{{ mensaje }}</p>
+
+      <!-- MENSAJE EXITO -->
+      <p *ngIf="mensajeExito" class="mensaje success">{{ mensajeExito }}</p>
 
       <p class="login-link">
         ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>

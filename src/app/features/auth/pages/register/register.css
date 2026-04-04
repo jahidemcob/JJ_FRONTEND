@@ -94,9 +94,20 @@ button:hover {
   text-decoration: none;
 }
 
+/* MENSAJES BASE */
 .mensaje {
   text-align: center;
   margin-top: 10px;
   font-size: 14px;
+  font-weight: bold;
+}
+
+/* ERROR (rojo) */
+.mensaje.error {
   color: red;
+}
+
+/* ÉXITO (verde) */
+.mensaje.success {
+  color: #2ecc71;
 }

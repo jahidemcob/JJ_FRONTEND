@@ -1,23 +1,37 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { AuthService } from '../services/auth';
 
 export const authGuard: CanActivateFn = (route) => {
-  const router = inject(Router);
-  const rol = localStorage.getItem('rol');
 
-  // ❌ No está logueado
-  if (!rol) {
+  const router = inject(Router);
+  const authService = inject(AuthService);
+
+  // 🔐 Validar sesión
+  if (!authService.isLoggedIn()) {
     return router.createUrlTree(['/login']);
   }
 
-  // 👇 Obtener rol permitido desde la ruta
+  // 🎯 Rol desde JWT
+  const userRoleRaw = authService.getUserRole();
+  const userRole = userRoleRaw ? userRoleRaw.toLowerCase() : null;
+
+  // 🔥 Mapear rol
+  const roleMap: any = {
+    administrador: 'admin',
+    empleado: 'empleado',
+    cliente: 'cliente'
+  };
+
+  const rol = userRole ? (roleMap[userRole] || userRole) : null;
+
+  // Roles permitidos
   const allowedRoles = route.data?.['roles'] as string[];
 
-  // ❌ Si el rol no está permitido
-  if (allowedRoles && !allowedRoles.includes(rol)) {
+  // ❌ No autorizado
+  if (allowedRoles && (!rol || !allowedRoles.includes(rol))) {
     return router.createUrlTree([`/${rol}`]);
   }
 
-  // ✅ Todo bien
   return true;
 };

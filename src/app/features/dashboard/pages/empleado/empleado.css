@@ -1,12 +1,151 @@
-.container {
+/* BASE */
+.dashboard {
+  display: flex;
   height: 100vh;
+  background: #F4F7FB;
+  font-family: 'Inter', sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #303854;
+  border-radius: 25px;
+  padding: 15px 10px;
+  width: 70px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* LISTA */
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ITEMS */
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+
+  width: 50px; /* 🔥 cerrado */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ICONO */
+.icon {
+  font-size: 20px;
+  min-width: 25px;
+  text-align: center;
+}
+
+/* TEXTO */
+.text {
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: white;
+}
+
+/* 🔥 AQUÍ ESTÁ LA CLAVE */
+.sidebar li:hover {
+  width: 180px; /* 🔥 se expande BIEN */
+  background: #303854;
+  color: white;
+}
+
+/* TEXTO APARECE */
+.sidebar li:hover .text {
+  opacity: 1;
+}
+
+/* MAIN */
+.main-content {
+  flex: 1;
+  margin-left: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 40px;
+  position: relative;
+}
+
+/* PERFIL */
+.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* AVATAR */
+.avatar {
+  width: 35px;
+  height: 35px;
+  background: #C2CDD5;
+  border-radius: 50%;
+}
+
+/* USERNAME */
+.username {
+  color: #303854;
+}
+
+/* BOTÓN FLECHA */
+.arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* DROPDOWN */
+.dropdown {
+  position: absolute;
+  top: 65px;
+  right: 40px;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  width: 160px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+/* OPCIONES */
+.dropdown p {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dropdown p:hover {
+  background: #F4F7FB;
+}
+
+/* CONTENIDO */
+.content {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffdddd;
 }
 
-h1 {
+.content h1 {
   font-size: 50px;
-  color: #b30000;
+  color: #303854;
 }

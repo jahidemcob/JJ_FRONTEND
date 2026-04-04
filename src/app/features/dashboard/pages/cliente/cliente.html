@@ -1,3 +1,54 @@
-<div class="container">
-  <h1>CLIENTE</h1>
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <ul>
+
+      <li (click)="cambiarVista('Empleados')">
+        <span class="icon">👥</span>
+        <span class="text">Empleados</span>
+      </li>
+
+      <li (click)="cambiarVista('Citas')">
+        <span class="icon">📅</span>
+        <span class="text">Citas</span>
+      </li>
+
+      <li (click)="cambiarVista('Servicios')">
+        <span class="icon">🛠️</span>
+        <span class="text">Servicios</span>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="main-content">
+
+    <!-- HEADER -->
+    <div class="topbar">
+
+      <div class="profile-box">
+        <div class="avatar"></div>
+        <span class="username">cliente</span>
+
+        <!-- 🔥 BOTÓN REAL -->
+        <button class="arrow" (click)="toggleMenu()">▼</button>
+      </div>
+
+      <!-- DROPDOWN -->
+      <div class="dropdown" *ngIf="menuAbierto">
+        <p (click)="cambiarVista('Perfil')">Perfil</p>
+        <p (click)="cerrarSesion()">Cerrar sesión</p>
+      </div>
+
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="content">
+      <h1>{{ vistaActual }}</h1>
+    </div>
+
+  </div>
+
 </div>
