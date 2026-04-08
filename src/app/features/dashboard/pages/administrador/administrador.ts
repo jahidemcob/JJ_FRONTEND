@@ -16,7 +16,7 @@ export class Administrador {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    public router: Router
   ) {}
 
   ir(ruta: string) {
@@ -30,4 +30,4 @@ export class Administrador {
   cerrarSesion() {
     this.authService.logout();
   }
-}
+} 

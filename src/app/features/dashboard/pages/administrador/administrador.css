@@ -12,47 +12,42 @@
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  background: #303854;
+  background: #303854; 
   border-radius: 25px;
-  padding: 15px 0; /* padding vertical, sin horizontal */
+  padding: 15px 0;
   width: 70px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* LISTA */
 .sidebar ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* ITEMS */
 .sidebar li {
   display: flex;
-  flex-direction: column; /* icono arriba, texto debajo */
-  align-items: center;    /* centra horizontalmente */
-  justify-content: center; /* centra verticalmente dentro del li */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 12px 0;
   margin: 10px 0;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: white;
-  width: 100%;   /* ocupa todo el ancho del sidebar */
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
 }
 
-/* ICONOS */
 .icon {
   width: 28px;
   height: 28px;
-  display: block;
-  stroke: white; /* color blanco */
-  margin: 0 auto; /* centra horizontalmente */
+  stroke: white;
+  margin: 0 auto;
 }
 
-/* TEXTO */
 .text {
   opacity: 0;
   transition: opacity 0.2s;
@@ -62,10 +57,10 @@
   text-align: center;
 }
 
-/* HOVER SIDEBAR */
 .sidebar li:hover {
   width: 180px;
   background: #303854;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .sidebar li:hover .text {
@@ -88,14 +83,12 @@
   position: relative;
 }
 
-/* PERFIL */
 .profile-box {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* AVATAR */
 .avatar {
   width: 35px;
   height: 35px;
@@ -103,12 +96,10 @@
   border-radius: 50%;
 }
 
-/* USERNAME */
 .username {
   color: #303854;
 }
 
-/* BOTÓN FLECHA */
 .arrow {
   background: none;
   border: none;
@@ -116,7 +107,6 @@
   font-size: 14px;
 }
 
-/* DROPDOWN */
 .dropdown {
   position: absolute;
   top: 65px;
@@ -129,7 +119,6 @@
   z-index: 100;
 }
 
-/* OPCIONES */
 .dropdown p {
   padding: 10px;
   cursor: pointer;
@@ -148,7 +137,20 @@
   align-items: center;
 }
 
-.content h1 {
-  font-size: 50px;
+/* 👇 NUEVO */
+.welcome {
+  text-align: center;
+    transform: translate(-80px, -60px);
+
+}
+
+.welcome h1 {
+  font-size: 45px;
   color: #303854;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  font-size: 18px;
+  color: #6c757d;
 }
