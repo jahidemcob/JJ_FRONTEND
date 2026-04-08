@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route) => {
 
   // 🔐 Validar sesión
   if (!authService.isLoggedIn()) {
-    return router.createUrlTree(['/login']);
+    return true;
   }
 
   // 🎯 Rol desde JWT

@@ -46,7 +46,7 @@
 
 .header-table thead {
   background: #303854;
-  color: white;
+  color: white;  
 }
 
 .header-table th {
@@ -54,24 +54,26 @@
   text-align: center;
 }
 
+/* 🔥 SOLUCIÓN AQUÍ */
 .table-scroll { 
   max-height: 380px;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-gutter: stable; /* 👈 clave para alinear siempre */
 } 
 
 .body-table { 
   width: 100%; 
   border-collapse: collapse; 
   table-layout: fixed;
-} 
+}
 
-.body-table td { 
+.body-table td:not(:last-child) { 
   padding: 12px; 
   border-bottom: 1px solid #eee; 
   text-align: center; 
   vertical-align: middle;
-} 
+}
 
 .body-table tr:hover { 
   background: #f9f9f9;
@@ -87,8 +89,9 @@
   display: flex;
   justify-content: flex-end;
   gap: 6px;
-  padding-right: 10px; /* ajusta este valor hasta que quede donde quieres */
+  padding-right: 10px; 
 }
+
 .btn-edit, .btn-state { 
   padding: 6px 12px; 
   border-radius: 8px; 
