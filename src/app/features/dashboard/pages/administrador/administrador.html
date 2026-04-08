@@ -1,54 +1,66 @@
 <div class="dashboard">
-
   <!-- SIDEBAR -->
   <div class="sidebar">
     <ul>
-
-      <li (click)="cambiarVista('Empleados')">
-        <span class="icon">👥</span>
-        <span class="text">Empleados</span>
+      <li (click)="ir('/admin/usuarios')">
+        <!-- Icono Usuarios -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="text">Usuarios</span>
       </li>
 
-      <li (click)="cambiarVista('Citas')">
-        <span class="icon">📅</span>
+      <li (click)="ir('/admin/citas')">
+        <!-- Icono Citas -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
         <span class="text">Citas</span>
       </li>
 
-      <li (click)="cambiarVista('Servicios')">
-        <span class="icon">🛠️</span>
+      <li (click)="ir('/admin/servicios')">
+        <!-- Icono Servicios -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
         <span class="text">Servicios</span>
       </li>
 
+      <li (click)="ir('/admin/perfil')">
+        <!-- Icono Perfil -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="7" r="4"></circle>
+          <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
+        </svg>
+        <span class="text">Perfil</span>
+      </li>
     </ul>
   </div>
 
   <!-- CONTENIDO -->
   <div class="main-content">
-
-    <!-- HEADER -->
+    <!-- TOPBAR -->
     <div class="topbar">
-
       <div class="profile-box">
         <div class="avatar"></div>
         <span class="username">Administrador</span>
-
-        <!-- 🔥 BOTÓN REAL -->
         <button class="arrow" (click)="toggleMenu()">▼</button>
       </div>
 
-      <!-- DROPDOWN -->
       <div class="dropdown" *ngIf="menuAbierto">
-        <p (click)="cambiarVista('Perfil')">Perfil</p>
         <p (click)="cerrarSesion()">Cerrar sesión</p>
       </div>
-
     </div>
 
-    <!-- CONTENIDO -->
+    <!-- CONTENIDO DINÁMICO -->
     <div class="content">
-      <h1>{{ vistaActual }}</h1>
+      <router-outlet></router-outlet>
     </div>
-
   </div>
-
 </div>

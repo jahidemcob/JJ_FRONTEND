@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../../core/services/auth'; 
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-administrador',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './administrador.html',
   styleUrls: ['./administrador.css'],
 })
 export class Administrador {
 
-  vistaActual: string = 'Bienvenido';
   menuAbierto: boolean = false;
 
-  constructor(private authService: AuthService) {} // inyecta el servicio
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  cambiarVista(vista: string) {
-    this.vistaActual = vista;
-    this.menuAbierto = false;
+  ir(ruta: string) {
+    this.router.navigate([ruta]);
   }
 
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
   }
 
-  // ✅ Llamamos al servicio para cerrar sesión
   cerrarSesion() {
     this.authService.logout();
   }
 }
-

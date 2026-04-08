@@ -1,0 +1,45 @@
+<div class="form-container">
+
+  <h2>Editar Usuario</h2>
+
+  <form *ngIf="usuario" (ngSubmit)="guardar()">
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" [(ngModel)]="usuario.nombre" name="nombre" required>
+    </div>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input type="text" [(ngModel)]="usuario.usuario" name="usuario" required>
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input type="text" [(ngModel)]="usuario.telefono" name="telefono">
+    </div>
+
+    <div class="form-group">
+      <label>Correo</label>
+      <input type="email" [(ngModel)]="usuario.correo" name="correo">
+    </div>
+
+    <div class="form-group">
+      <label>Clave</label>
+      <input type="password" [(ngModel)]="usuario.clave" name="clave">
+    </div>
+
+    <div class="form-group">
+      <label>Rol</label>
+      <select [(ngModel)]="usuario.idRol" name="idRol">
+        <option [value]="1">Administrador</option>
+        <option [value]="2">Empleado</option>
+        <option [value]="3">Cliente</option>
+      </select>
+    </div>
+
+    <button class="btn-save" type="submit">Guardar cambios</button>
+
+  </form>
+
+</div>

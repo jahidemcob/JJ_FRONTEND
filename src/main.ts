@@ -15,3 +15,4 @@ bootstrapApplication(App, {
     provideHttpClient(withInterceptors([authInterceptor]))
   ]
 });
+

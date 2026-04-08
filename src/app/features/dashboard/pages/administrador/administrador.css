@@ -14,7 +14,7 @@
   transform: translateY(-50%);
   background: #303854;
   border-radius: 25px;
-  padding: 15px 10px;
+  padding: 15px 0; /* padding vertical, sin horizontal */
   width: 70px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
@@ -29,25 +29,27 @@
 /* ITEMS */
 .sidebar li {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px;
+  flex-direction: column; /* icono arriba, texto debajo */
+  align-items: center;    /* centra horizontalmente */
+  justify-content: center; /* centra verticalmente dentro del li */
+  padding: 12px 0;
   margin: 10px 0;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: white;
-
-  width: 50px; /* 🔥 cerrado */
+  width: 100%;   /* ocupa todo el ancho del sidebar */
   overflow: hidden;
   white-space: nowrap;
 }
 
-/* ICONO */
+/* ICONOS */
 .icon {
-  font-size: 20px;
-  min-width: 25px;
-  text-align: center;
+  width: 28px;
+  height: 28px;
+  display: block;
+  stroke: white; /* color blanco */
+  margin: 0 auto; /* centra horizontalmente */
 }
 
 /* TEXTO */
@@ -55,16 +57,17 @@
   opacity: 0;
   transition: opacity 0.2s;
   color: white;
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: center;
 }
 
-/* 🔥 AQUÍ ESTÁ LA CLAVE */
+/* HOVER SIDEBAR */
 .sidebar li:hover {
-  width: 180px; /* 🔥 se expande BIEN */
+  width: 180px;
   background: #303854;
-  color: white;
 }
 
-/* TEXTO APARECE */
 .sidebar li:hover .text {
   opacity: 1;
 }
