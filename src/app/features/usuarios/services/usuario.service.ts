@@ -1,43 +1,42 @@
-// usuario.service.ts
-import { Injectable } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/usuario.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
+  httpClient = inject(HttpClient);
 
-  private usuarios: Usuario[] = [
-    {
-      idUsuario: 1,
-      idRol: 1,
-      nombre: 'Admin',
-      usuario: 'admin',
-      telefono: '123456789',
-      correo: 'admin@test.com',
-      activo: true
-    }
-  ];
+  private apiUrl = 'https://localhost:7240/users'; 
 
-  getUsuarios(): Usuario[] {
-    return this.usuarios;
+  // 🔹 GET TODOS
+  getUsers(): Observable<Usuario[]> {
+    return this.httpClient.get<Usuario[]>(this.apiUrl);
   }
 
-  agregar(usuario: Usuario) {
-    this.usuarios.push(usuario);
+  // 🔥 GET POR ID (NUEVO)
+  getUserById(id: number): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
-  actualizar(usuario: Usuario) {
-    const index = this.usuarios.findIndex(u => u.idUsuario === usuario.idUsuario);
-    if (index !== -1) this.usuarios[index] = usuario;
+  // 🔹 POST (crear)
+  registerUser(user: UsuarioCreate): Observable<Usuario> {
+    return this.httpClient.post<Usuario>(this.apiUrl, user);
   }
 
-  cambiarEstado(id: number) {
-    const user = this.usuarios.find(u => u.idUsuario === id);
-    if (user) user.activo = !user.activo;
+  // 🔹 PUT (actualizar)
+  updateUser(id: number, user: UsuarioUpdate): Observable<Usuario> {
+    return this.httpClient.put<Usuario>(`${this.apiUrl}/${id}`, user);
   }
 
-  getUsuarioById(id: number): Usuario | undefined {
-  return this.usuarios.find(u => u.idUsuario === id);
-}
+  // 🔹 PATCH (activar/desactivar)
+  updateUserStatus(id: number, status: boolean): Observable<void> {
+    return this.httpClient.patch<void>(
+      `${this.apiUrl}/${id}/disable`,
+      { activo: status }
+    );
+  }
 }

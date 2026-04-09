@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; 
 import { UsuarioService } from '../../services/usuario.service';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -11,33 +12,47 @@ import { UsuarioService } from '../../services/usuario.service';
   templateUrl: './editar-usuario.html',
   styleUrls: ['./editar-usuario.css']
 })
-export class EditarUsuario {
+export class EditarUsuario implements OnInit {
 
-  usuario: any = {
-    idUsuario: 0,
-    idRol: 1,
-    nombre: '',
-    usuario: '',
-    telefono: '',
-    correo: '',
-    clave: '',
-    activo: true
-  };
+  route = inject(ActivatedRoute);
+  usuarioService = inject(UsuarioService);
+  router = inject(Router);
+  cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    private route: ActivatedRoute,
-    private usuarioService: UsuarioService,
-    private router: Router
-  ) {
+  user: Usuario = {} as Usuario;
+
+  ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const data = this.usuarioService.getUsuarios().find(u => u.idUsuario === id);
-    if (data) {
-      this.usuario = { ...data }; // copia segura
-    }
+
+    this.usuarioService.getUserById(id).subscribe({
+      next: (data) => {
+
+        // 🔥 FORZAR CICLO DE ANGULAR
+        setTimeout(() => {
+          this.user = data;
+          this.cdr.detectChanges(); // 🔥 CLAVE
+        });
+
+      },
+      error: (err) => {
+        console.error('Error cargando usuario:', err);
+      }
+    });
   }
 
-  guardar() {
-    this.usuarioService.actualizar(this.usuario);
-    this.router.navigate(['/admin/usuarios']);
+  guardar(form: any) {
+  if (form.invalid) {
+    form.control.markAllAsTouched(); // 🔥 activa validaciones
+    return;
   }
+
+  this.usuarioService.updateUser(this.user.idUsuario, this.user).subscribe({
+    next: () => {
+      this.router.navigate(['/admin/usuarios']);
+    },
+    error: (err) => {
+      console.error('Error actualizando:', err);
+    }
+  });
+}
 }

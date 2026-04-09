@@ -82,3 +82,11 @@ body {
     padding: 10px;
   }
 }
+
+.error {
+  color: red;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  text-align: center;
+}

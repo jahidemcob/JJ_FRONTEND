@@ -10,7 +10,7 @@ body {
 }
 
 .form-container {
-  width: 400px;
+  width: 400px; 
   background: white;
   padding: 30px;
   border-radius: 20px;
@@ -83,4 +83,12 @@ body {
     font-size: 14px;
     padding: 10px;
   }
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  text-align: center;
 }

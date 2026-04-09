@@ -1,38 +1,88 @@
 <div class="form-container">
   <h2>Crear Usuario</h2>
 
-  <div class="form-group">
-    <label>Nombre</label>
-    <input [(ngModel)]="usuario.nombre" placeholder="Nombre">
-  </div>
+  <!-- 🔥 FORM REAL -->
+  <form #form="ngForm" (ngSubmit)="guardar(form)">
 
-  <div class="form-group">
-    <label>Usuario</label>
-    <input [(ngModel)]="usuario.usuario" placeholder="Usuario">
-  </div>
+    <div class="form-group">
+      <label>Nombre</label>
+      <input 
+        [(ngModel)]="usuario.nombre" 
+        name="nombre"
+        placeholder="Nombre"
+        required
+        #nombre="ngModel">
+    </div>
 
-  <div class="form-group">
-    <label>Teléfono</label>
-    <input [(ngModel)]="usuario.telefono" placeholder="Teléfono">
-  </div>
+    <div class="form-group">
+      <label>Usuario</label>
+      <input 
+        [(ngModel)]="usuario.nombreUsuario" 
+        name="nombreUsuario"
+        placeholder="Usuario"
+        required
+        #nombreUsuario="ngModel">
+    </div>
 
-  <div class="form-group">
-    <label>Correo</label>
-    <input [(ngModel)]="usuario.correo" placeholder="Correo">
-  </div>
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input 
+        [(ngModel)]="usuario.telefono" 
+        name="telefono"
+        placeholder="Teléfono"
+        required
+        pattern="[0-9]{10}"
+        #telefono="ngModel">
+    </div>
 
-  <div class="form-group">
-    <label>Clave</label>
-    <input type="password" [(ngModel)]="usuario.clave" placeholder="Clave">
-  </div>
+    <div class="form-group">
+      <label>Correo</label>
+      <input 
+        [(ngModel)]="usuario.correo" 
+        name="correo"
+        placeholder="Correo"
+        type="email"
+        required
+        email
+        #correo="ngModel">
+    </div>
 
-  <div class="form-group">
-    <label>Rol</label>
-    <select [(ngModel)]="usuario.idRol">
-      <option [value]="2">Empleado</option>
-      <option [value]="3">Cliente</option>
-    </select>
-  </div>
+    <div class="form-group">
+      <label>Clave (minimo 6 caracteres)</label>
+      <input 
+        type="password"
+        [(ngModel)]="usuario.clave" 
+        name="clave"
+        placeholder="Clave"
+        required
+        minlength="4"
+        #clave="ngModel">
+    </div>
 
-  <button class="btn-save" (click)="guardar()">Guardar</button>
+    <div class="form-group">
+      <label>Rol</label>
+      <select 
+        [(ngModel)]="usuario.idRol"
+        name="idRol"
+        required
+        #rol="ngModel">
+        <option [ngValue]="null" disabled selected>Seleccione un rol</option>
+        <option [value]="2">Empleado</option>
+        <option [value]="3">Cliente</option>
+      </select>
+    </div>
+
+    <!-- 🔥 MENSAJE GENERAL -->
+    <div class="error" *ngIf="form.invalid && (form.touched || form.dirty)">
+      Todos los campos son obligatorios y deben ser válidos
+    </div>
+
+    <button 
+      class="btn-save"
+      type="submit"
+      [disabled]="form.invalid">
+      Guardar
+    </button>
+
+  </form>
 </div>

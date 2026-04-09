@@ -2,32 +2,45 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
+import { UsuarioCreate } from '../../models/usuario.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './crear-usuario.html',
-  styleUrls: ['./crear-usuario.css']
+  styleUrls: ['./crear-usuario.css'],
 })
 export class CrearUsuario {
 
-  usuario = {
-    idUsuario: Date.now(),
-    idRol: 1,       // 1=Administrador, 2=Empleado, 3=Cliente
+  usuario: UsuarioCreate = {
+    idRol: null as any, // 🔥 importante para validación
     nombre: '',
-    usuario: '',
+    nombreUsuario: '',
     telefono: '',
     correo: '',
     clave: '',
-    activo: true
   };
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+  ) {}
 
-  guardar() {
-    // Aquí idRol ya se actualiza según lo que selecciones
-    this.usuarioService.agregar(this.usuario);
-    this.router.navigate(['/admin/usuarios']);
+  guardar(form: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched(); // 🔥 activa errores
+      return;
+    }
+
+    this.usuarioService.registerUser(this.usuario).subscribe({
+      next: () => {
+        this.router.navigate(['/admin/usuarios']);
+      },
+      error: (err) => {
+        console.error('Error creando usuario:', err);
+      }
+    });
   }
 }
