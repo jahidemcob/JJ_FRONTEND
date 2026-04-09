@@ -13,11 +13,11 @@ export class UsuarioService {
   private apiUrl = 'https://localhost:7240/users'; 
 
   // 🔹 GET TODOS
-  getUsers(): Observable<Usuario[]> {
+  GetAllUsers(): Observable<Usuario[]> {
     return this.httpClient.get<Usuario[]>(this.apiUrl);
   }
 
-  // 🔥 GET POR ID (NUEVO)
+
   getUserById(id: number): Observable<Usuario> {
     return this.httpClient.get<Usuario>(`${this.apiUrl}/${id}`);
   }

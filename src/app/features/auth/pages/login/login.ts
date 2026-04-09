@@ -58,9 +58,29 @@ export class LoginComponent {
         // 🔥 Redirección automática
         this.router.navigate([`/${rol}`]);
       },
+      
       error: (err) => {
         console.error('ERROR LOGIN:', err);
-        alert('Usuario o contraseña incorrectos');
+
+        // Manejo de errores del backend
+        let errorMessage = 'Ocurrió un error inesperado';
+
+        if (err.status === 401) {
+          // Usuario o contraseña incorrectos
+          errorMessage = err.error?.error || 'Usuario o contraseña incorrectos';
+        } else if (err.status === 403) {
+          // Usuario desactivado
+          errorMessage = err.error?.error || 'Usuario desactivado';
+        } else if (err.status === 400) {
+          // Error de validación o datos
+          errorMessage = err.error?.error || 'Datos inválidos';
+        } else if (err.status === 404) {
+          errorMessage = err.error?.error || 'Usuario no encontrado';
+        } else if (err.status === 500) {
+          errorMessage = err.error?.error || 'Error interno del servidor';
+        }
+
+        alert(errorMessage);
       }
     });
   }

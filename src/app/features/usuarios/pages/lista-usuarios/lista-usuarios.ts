@@ -13,9 +13,8 @@ import { Usuario } from '../../models/usuario.model';
   styleUrls: ['./lista-usuarios.css'],
 })
 export class ListaUsuarios implements OnInit {
-  usuarios: Usuario[] = [];
 
-  // 🔥 control de clicks
+  usuarios: Usuario[] = [];
   loadingIds: number[] = [];
 
   constructor(
@@ -29,11 +28,10 @@ export class ListaUsuarios implements OnInit {
   }
 
   cargarUsuarios() {
-    this.usuarioService.getUsers().subscribe({
+    this.usuarioService.GetAllUsers().subscribe({
       next: (users) => {
         this.usuarios = users;
 
-        // 🔥 forzar actualización de vista
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -58,18 +56,18 @@ export class ListaUsuarios implements OnInit {
 
     const nuevoEstado = !user.activo;
 
-    // 🔥 actualización inmediata UI
+
     user.activo = nuevoEstado;
 
     this.usuarioService.updateUserStatus(id, nuevoEstado).subscribe({
       next: () => {
-        // 🔥 desbloquear botón
+        
         this.loadingIds = this.loadingIds.filter((i) => i !== id);
       },
       error: (err) => {
         console.error('Error actualizando estado:', err);
 
-        // 🔥 revertir si falla
+        
         user.activo = !nuevoEstado;
 
         this.loadingIds = this.loadingIds.filter((i) => i !== id);
@@ -77,7 +75,7 @@ export class ListaUsuarios implements OnInit {
     });
   }
 
-  // 🔥 mejora rendimiento de tabla
+  
   trackById(index: number, item: Usuario) {
     return item.idUsuario;
   }

@@ -27,4 +27,5 @@ export interface UsuarioUpdate {
   nombreUsuario: string;
   telefono?: string;
   correo?: string;
+  nuevaClave?: string;
 }

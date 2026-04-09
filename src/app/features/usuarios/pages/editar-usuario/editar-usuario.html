@@ -2,74 +2,50 @@
   <h2>Editar Usuario</h2>
 
   <form #form="ngForm" (ngSubmit)="guardar(form)">
-
     <div class="form-group">
       <label>Nombre</label>
-      <input 
-        type="text" 
-        [(ngModel)]="user.nombre" 
-        name="nombre" 
-        required 
-        #nombre="ngModel" />
+      <input type="text" [(ngModel)]="user.nombre" name="nombre" required />
     </div>
 
     <div class="form-group">
       <label>Usuario</label>
-      <input
-        type="text"
-        [(ngModel)]="user.nombreUsuario"
-        name="nombreUsuario"
-        required
-        #nombreUsuario="ngModel"
-      />
+      <input type="text" [(ngModel)]="user.nombreUsuario" name="nombreUsuario" required />
     </div>
 
     <div class="form-group">
       <label>Teléfono</label>
-      <input 
-        type="text" 
-        [(ngModel)]="user.telefono" 
-        name="telefono"
-        required
-        pattern="[0-9]{10}"
-        #telefono="ngModel" />
+      <input type="text" [(ngModel)]="user.telefono" name="telefono" pattern="[0-9]{10}" />
     </div>
 
     <div class="form-group">
       <label>Correo</label>
-      <input 
-        type="email" 
-        [(ngModel)]="user.correo" 
-        name="correo" 
-        required 
-        email
-        #correo="ngModel" />
+      <input type="email" [(ngModel)]="user.correo" name="correo" />
+    </div>
+
+    <!-- 🔹 Campo para nueva contraseña (si el usuario quiere cambiarla) -->
+    <div class="form-group">
+      <label>Nueva Contraseña</label>
+      <input
+        type="password"
+        [(ngModel)]="nuevaClave"
+        name="nuevaClave"
+        minlength="6"
+        placeholder="Ingrese nueva contraseña si desea cambiarla"
+      />
+      <div class="error" *ngIf="nuevaClave.length > 0 && nuevaClave.length < 6">
+        La contraseña debe tener al menos 6 caracteres
+      </div>
     </div>
 
     <div class="form-group">
       <label>Rol</label>
-      <select 
-        [(ngModel)]="user.idRol" 
-        name="idRol" 
-        required 
-        #rol="ngModel">
+      <select [(ngModel)]="user.idRol" name="idRol" required>
         <option [ngValue]="null" disabled selected>Seleccione un rol</option>
         <option [value]="2">Empleado</option>
         <option [value]="3">Cliente</option>
       </select>
     </div>
 
-    <!-- 🔥 MENSAJE GENERAL -->
-    <div class="error" *ngIf="form.invalid && (form.touched || form.dirty)">
-      Todos los campos son obligatorios y deben ser válidos
-    </div>
-
-    <button 
-      class="btn-save" 
-      type="submit" 
-      [disabled]="form.invalid">
-      Guardar cambios
-    </button>
-
+    <button class="btn-save" type="submit" [disabled]="form.invalid">Guardar cambios</button>
   </form>
 </div>
