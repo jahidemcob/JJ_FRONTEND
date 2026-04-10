@@ -2,27 +2,52 @@
   <h2>Editar Usuario</h2>
 
   <form #form="ngForm" (ngSubmit)="guardar(form)">
+
+    <!-- NOMBRE -->
     <div class="form-group">
       <label>Nombre</label>
-      <input type="text" [(ngModel)]="user.nombre" name="nombre" required />
+      <input type="text" [(ngModel)]="user.nombre" name="nombre" required #nombre="ngModel" />
     </div>
 
+    <!-- USUARIO -->
     <div class="form-group">
       <label>Usuario</label>
-      <input type="text" [(ngModel)]="user.nombreUsuario" name="nombreUsuario" required />
+      <input
+        type="text"
+        [(ngModel)]="user.nombreUsuario"
+        name="nombreUsuario"
+        required
+        #nombreUsuario="ngModel"
+      />
     </div>
 
+    <!-- TELÉFONO -->
     <div class="form-group">
       <label>Teléfono</label>
-      <input type="text" [(ngModel)]="user.telefono" name="telefono" pattern="[0-9]{10}" />
+      <input
+        type="text"
+        [(ngModel)]="user.telefono"
+        name="telefono"
+        required
+        pattern="[0-9]{10}"
+        #telefono="ngModel"
+      />
     </div>
 
+    <!-- CORREO  -->
     <div class="form-group">
       <label>Correo</label>
-      <input type="email" [(ngModel)]="user.correo" name="correo" />
+      <input
+        type="email"
+        [(ngModel)]="user.correo"
+        name="correo"
+        required
+        email
+        #correo="ngModel"
+      />
     </div>
 
-    <!-- 🔹 Campo para nueva contraseña (si el usuario quiere cambiarla) -->
+    <!-- CONTRASEÑA -->
     <div class="form-group">
       <label>Nueva Contraseña</label>
       <input
@@ -31,21 +56,77 @@
         name="nuevaClave"
         minlength="6"
         placeholder="Ingrese nueva contraseña si desea cambiarla"
+        #nuevaClaveModel="ngModel"
       />
-      <div class="error" *ngIf="nuevaClave.length > 0 && nuevaClave.length < 6">
-        La contraseña debe tener al menos 6 caracteres
-      </div>
     </div>
 
+    <!-- ROL -->
     <div class="form-group">
       <label>Rol</label>
-      <select [(ngModel)]="user.idRol" name="idRol" required>
-        <option [ngValue]="null" disabled selected>Seleccione un rol</option>
+      <select [(ngModel)]="user.idRol" name="idRol" required #rol="ngModel">
+        <option [ngValue]="null" disabled>Seleccione un rol</option>
         <option [value]="2">Empleado</option>
         <option [value]="3">Cliente</option>
       </select>
     </div>
 
-    <button class="btn-save" type="submit" [disabled]="form.invalid">Guardar cambios</button>
+    <!-- ERRORES -->
+    <div class="error" *ngIf="form.touched || form.dirty">
+
+      <!-- 1. CAMPOS VACÍOS -->
+      <span
+        *ngIf="
+          nombre.errors?.['required'] ||
+          nombreUsuario.errors?.['required'] ||
+          telefono.errors?.['required'] ||
+          correo.errors?.['required'] ||
+          rol.errors?.['required']
+        "
+      >
+        Todos los campos deben estar diligenciados correctamente
+      </span>
+
+      <!-- 2. TELÉFONO -->
+      <span
+        *ngIf="
+          !nombre.errors?.['required'] &&
+          !nombreUsuario.errors?.['required'] &&
+          !telefono.errors?.['required'] &&
+          telefono.errors?.['pattern']
+        "
+      >
+        El teléfono debe tener 10 dígitos numéricos
+      </span>
+
+      <!-- 3. CORREO -->
+      <span
+        *ngIf="
+          !nombre.errors?.['required'] &&
+          !nombreUsuario.errors?.['required'] &&
+          !telefono.errors?.['required'] &&
+          !telefono.errors?.['pattern'] &&
+          !correo.errors?.['required'] &&
+          correo.invalid
+        "
+      >
+        El correo no es válido
+      </span>
+
+      <!-- 4. CONTRASEÑA -->
+      <span *ngIf="nuevaClave && nuevaClave.length > 0 && nuevaClave.length < 6">
+        La contraseña debe tener al menos 6 caracteres
+      </span>
+
+    </div>
+
+    <!-- BOTÓN -->
+    <button
+      class="btn-save"
+      type="submit"
+      [disabled]="form.invalid || (nuevaClave && nuevaClave.length > 0 && nuevaClave.length < 6)"
+    >
+      Guardar cambios
+    </button>
+
   </form>
 </div>

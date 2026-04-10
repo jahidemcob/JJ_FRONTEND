@@ -1,55 +1,148 @@
 <div class="register-container">
-
   <img src="assets/logo.png" class="logo" />
 
   <div class="register-card">
     <h2>Crea tu cuenta</h2>
 
     <form (ngSubmit)="registrar(form)" #form="ngForm">
-
+      <!-- NOMBRE -->
       <div class="input-group">
         <label>Nombre completo</label>
-        <input type="text" name="nombre" ngModel required placeholder="Ingresa tu nombre">
+        <input
+          type="text"
+          name="nombre"
+          ngModel
+          required
+          placeholder="Ingresa tu nombre"
+          #nombre="ngModel"
+        />
       </div>
 
+      <!-- USUARIO -->
       <div class="input-group">
         <label>Usuario</label>
-        <input type="text" name="usuario" ngModel required placeholder="Crea un usuario">
+        <input
+          type="text"
+          name="usuario"
+          ngModel
+          required
+          placeholder="Crea un usuario"
+          #usuario="ngModel"
+        />
       </div>
 
+      <!-- TELÉFONO -->
       <div class="input-group">
         <label>Teléfono</label>
-        <input type="tel" name="telefono" ngModel required placeholder="Ingresa tu teléfono">
+        <input
+          type="tel"
+          name="telefono"
+          ngModel
+          required
+          pattern="[0-9]{10}"
+          placeholder="Ingresa tu teléfono"
+          #telefono="ngModel"
+        />
       </div>
 
+      <!-- CORREO -->
       <div class="input-group">
         <label>Correo electrónico</label>
-        <input type="email" name="correo" ngModel required placeholder="Ingresa tu correo">
+        <input
+          type="email"
+          name="correo"
+          ngModel
+          required
+          email
+          placeholder="Ingresa tu correo"
+          #correo="ngModel"
+        />
       </div>
 
+      <!-- CONTRASEÑA -->
       <div class="input-group">
-        <label>Clave (minimo 6 caracteres)</label>
-        <input type="password" name="clave" ngModel required placeholder="Crea una contraseña">
+        <label>Clave (mínimo 6 caracteres)</label>
+        <input
+          type="password"
+          name="clave"
+          ngModel
+          required
+          minlength="6"
+          placeholder="Crea una contraseña"
+          #clave="ngModel"
+        />
       </div>
 
+      <!-- CONFIRMAR -->
       <div class="input-group">
         <label>Confirmar contraseña</label>
-        <input type="password" name="confirmarClave" ngModel required placeholder="Repite la contraseña">
+        <input
+          type="password"
+          name="confirmarClave"
+          ngModel
+          required
+          placeholder="Repite la contraseña"
+          #confirmarClave="ngModel"
+        />
       </div>
 
-      <button type="submit">Registrarse</button>
+      <!-- BOTÓN -->
+      <button type="submit" [disabled]="form.invalid || clave.value !== confirmarClave.value">
+        Registrarse
+      </button>
 
-      <!-- MENSAJES -->
-      <!-- MENSAJE ERROR -->
-      <p *ngIf="mensaje" class="mensaje error">{{ mensaje }}</p>
+      <p *ngIf="(form.touched || form.dirty) && !mensajeExito" class="mensaje error">
+        <!-- 1. CAMPOS VACÍOS (PRIORIDAD 1) -->
+        <span
+          *ngIf="
+            (nombre.errors?.['required'] ||
+              usuario.errors?.['required'] ||
+              telefono.errors?.['required'] ||
+              correo.errors?.['required'] ||
+              clave.errors?.['required'] ||
+              confirmarClave.errors?.['required']) &&
+            !telefono.errors?.['pattern'] &&
+            !correo.errors?.['email'] &&
+            !clave.errors?.['minlength']
+          "
+        >
+          Todos los campos deben estar diligenciados correctamente
+        </span>
 
-      <!-- MENSAJE EXITO -->
-      <p *ngIf="mensajeExito" class="mensaje success">{{ mensajeExito }}</p>
+        <!-- 2. TELÉFONO (NO depende de otros campos) -->
+        <span *ngIf="!telefono.errors?.['required'] && telefono.errors?.['pattern']">
+          El teléfono debe tener 10 dígitos numéricos
+        </span>
 
-      <p class="login-link">
-        ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+        <!-- 3. CORREO -->
+        <span *ngIf="!correo.errors?.['required'] && correo.errors?.['email']">
+          El correo no es válido
+        </span>
+
+        <!-- 4. CONTRASEÑA -->
+        <span *ngIf="!clave.errors?.['required'] && clave.errors?.['minlength']">
+          La contraseña debe tener al menos 6 caracteres
+        </span>
+
+        <!-- 5. CONFIRMACIÓN -->
+        <span
+          *ngIf="
+            !confirmarClave.errors?.['required'] &&
+            !clave.errors?.['minlength'] &&
+            clave.value &&
+            confirmarClave.value &&
+            clave.value !== confirmarClave.value
+          "
+        >
+          Las contraseñas no coinciden
+        </span>
       </p>
 
+      <!-- MENSAJES BACKEND -->
+      <p *ngIf="mensaje" class="mensaje error">{{ mensaje }}</p>
+      <p *ngIf="mensajeExito" class="mensaje success">{{ mensajeExito }}</p>
+
+      <p class="login-link">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
     </form>
   </div>
 </div>

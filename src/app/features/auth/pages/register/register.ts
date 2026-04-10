@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth';
 
 @Component({
@@ -13,21 +14,28 @@ import { AuthService } from '../../../../core/services/auth';
   styleUrl: './register.css',
 })
 export class RegisterComponent {
+  mensaje: string = '';
+  mensajeExito: string = '';
 
-  mensaje: string = '';          // 🔴 errores
-  mensajeExito: string = '';     // 🟢 éxito
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  constructor(private authService: AuthService, private router: Router) {}
+  campoActivo: string = '';
+
+  setCampoActivo(campo: string) {
+    this.campoActivo = campo;
+  }
 
   registrar(form: any) {
-
-    // limpiar mensajes anteriores
     this.mensaje = '';
     this.mensajeExito = '';
 
-    // 🔴 Validaciones
     if (form.invalid) {
-      this.mensaje = 'Todos los campos son obligatorios';
+      form.control.markAllAsTouched();
+      this.mensaje = 'Todos los campos deben estar completos correctamente';
       return;
     }
 
@@ -36,37 +44,33 @@ export class RegisterComponent {
       return;
     }
 
-    // 🔥 DATA
     const data = {
       Nombre: form.value.nombre,
       NombreUsuario: form.value.usuario,
       Telefono: form.value.telefono,
       Correo: form.value.correo,
-      Clave: form.value.clave
+      Clave: form.value.clave,
     };
 
-    console.log('DATA ENVIADA:', data);
-
-    // 🔥 PETICIÓN
     this.authService.register(data).subscribe({
-      next: (res: any) => {
-        console.log('REGISTRO OK:', res);
+      next: (resp) => {
+        console.log('RESPUESTA OK:', resp);
 
-        // 🟢 MENSAJE VERDE
         this.mensajeExito = 'Usuario registrado correctamente';
-
-        // 🧹 LIMPIAR FORMULARIO
+        this.mensaje = '';
         form.reset();
       },
+
       error: (err) => {
         console.error('ERROR REGISTRO:', err);
 
-        if (err.status === 400) {
-          this.mensaje = 'El usuario ya existe o datos inválidos';
-        } else {
-          this.mensaje = 'Error en el registro';
-        }
-      }
+        this.mensaje = err.error?.message || 'El usuario o correo ya existe';
+
+        this.mensajeExito = '';
+
+        this.cdr.detectChanges();
+
+      },
     });
   }
 }

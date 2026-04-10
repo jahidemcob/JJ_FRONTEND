@@ -13,9 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./crear-usuario.css'],
 })
 export class CrearUsuario {
-
   usuario: UsuarioCreate = {
-    idRol: null as any, // 🔥 importante para validación
+    idRol: null as any,
     nombre: '',
     nombreUsuario: '',
     telefono: '',
@@ -23,14 +22,18 @@ export class CrearUsuario {
     clave: '',
   };
 
+  erroresBackend: any = {}; // 🔥 errores por campo
+
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
   ) {}
 
   guardar(form: any) {
+    this.erroresBackend = {}; // 🔥 limpiar errores
+
     if (form.invalid) {
-      form.control.markAllAsTouched(); // 🔥 activa errores
+      form.control.markAllAsTouched();
       return;
     }
 
@@ -40,7 +43,22 @@ export class CrearUsuario {
       },
       error: (err) => {
         console.error('Error creando usuario:', err);
-      }
+
+        if (err.error && err.error.error) {
+          const mensaje = err.error.error.toLowerCase();
+
+          // 🔥 detectar campo según mensaje
+          if (mensaje.includes('correo')) {
+            this.erroresBackend.correo = err.error.error;
+          } else if (mensaje.includes('usuario')) {
+            this.erroresBackend.nombreUsuario = err.error.error;
+          } else if (mensaje.includes('telefono')) {
+            this.erroresBackend.telefono = err.error.error;
+          } else {
+            this.erroresBackend.general = err.error.error;
+          }
+        }
+      },
     });
   }
 }

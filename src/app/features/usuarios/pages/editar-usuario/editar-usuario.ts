@@ -15,18 +15,18 @@ import { Usuario } from '../../models/usuario.model';
 export class EditarUsuario implements OnInit {
   route = inject(ActivatedRoute);
   usuarioService = inject(UsuarioService);
-  router = inject(Router);
+  router = inject(Router); 
   cdr = inject(ChangeDetectorRef);
 
-  user!: Usuario;               // datos traídos del backend
-  nuevaClave: string = '';      // campo temporal para nueva contraseña
+  user!: Usuario;               
+  nuevaClave: string = '';      
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.usuarioService.getUserById(id).subscribe({
       next: (data) => {
-        this.user = data;       // inicializa usuario con datos existentes
+        this.user = data;      
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -41,7 +41,7 @@ export class EditarUsuario implements OnInit {
       return;
     }
 
-    // 🔹 Solo agregamos nuevaClave si el usuario escribió algo
+    // Solo agregamos nuevaClave si el usuario escribio algo
     if (this.nuevaClave) {
       (this.user as any).nuevaClave = this.nuevaClave;
     }
