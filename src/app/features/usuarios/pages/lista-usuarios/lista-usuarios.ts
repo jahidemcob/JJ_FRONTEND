@@ -13,14 +13,13 @@ import { Usuario } from '../../models/usuario.model';
   styleUrls: ['./lista-usuarios.css'],
 })
 export class ListaUsuarios implements OnInit {
-
   usuarios: Usuario[] = [];
   loadingIds: number[] = [];
 
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private cdr: ChangeDetectorRef, // 🔥 clave
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -56,18 +55,15 @@ export class ListaUsuarios implements OnInit {
 
     const nuevoEstado = !user.activo;
 
-
     user.activo = nuevoEstado;
 
     this.usuarioService.updateUserStatus(id, nuevoEstado).subscribe({
       next: () => {
-        
         this.loadingIds = this.loadingIds.filter((i) => i !== id);
       },
       error: (err) => {
         console.error('Error actualizando estado:', err);
 
-        
         user.activo = !nuevoEstado;
 
         this.loadingIds = this.loadingIds.filter((i) => i !== id);
@@ -75,7 +71,6 @@ export class ListaUsuarios implements OnInit {
     });
   }
 
-  
   trackById(index: number, item: Usuario) {
     return item.idUsuario;
   }

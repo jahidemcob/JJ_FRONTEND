@@ -1,4 +1,4 @@
-// 🔹 Lo que viene del backend
+// Lo que viene del backend
 export interface Usuario {
   idUsuario: number;
   idRol: number;
@@ -9,7 +9,7 @@ export interface Usuario {
   activo: boolean;
 }
 
-// 🔹 Crear
+// Crear
 export interface UsuarioCreate {
   idRol: number;
   nombre: string;
@@ -19,7 +19,7 @@ export interface UsuarioCreate {
   correo?: string;
 }
 
-// 🔹 Actualizar
+// Actualizar
 export interface UsuarioUpdate {
   idUsuario: number;
   idRol: number;

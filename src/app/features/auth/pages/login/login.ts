@@ -11,13 +11,12 @@ import { AuthService } from '../../../../core/services/auth';
   styleUrl: './login.css',
 })
 export class LoginComponent {
-
   username: string = '';
   password: string = '';
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   login() {
@@ -25,40 +24,40 @@ export class LoginComponent {
 
     const data = {
       username: this.username,
-      clave: this.password
+      clave: this.password,
     };
 
     this.authService.login(data).subscribe({
       next: (res: any) => {
         console.log('LOGIN OK:', res);
 
-        // 🔥 Guardar token
+        //  Guardar token
         if (res.token) {
           localStorage.setItem('token', res.token);
         }
 
-        // 🔥 Guardar usuario completo
+        // Guardar usuario completo
         localStorage.setItem('usuario', JSON.stringify(res));
 
-        // 🔥 Obtener rol del backend
+        // Obtener rol del backend
         const rolBackend = (res.role || res.rol || 'cliente').toLowerCase();
 
-        // 🔥 Mapear rol a rutas del frontend
+        // Mapear rol a rutas del frontend
         const roleMap: any = {
           administrador: 'admin',
           empleado: 'empleado',
-          cliente: 'cliente'
+          cliente: 'cliente',
         };
 
         const rol = roleMap[rolBackend] || 'cliente';
 
-        // 🔥 Guardar rol correcto
+        // Guardar rol correcto
         localStorage.setItem('rol', rol);
 
-        // 🔥 Redirección automática
+        // Redirección automática
         this.router.navigate([`/${rol}`]);
       },
-      
+
       error: (err) => {
         console.error('ERROR LOGIN:', err);
 
@@ -81,7 +80,7 @@ export class LoginComponent {
         }
 
         alert(errorMessage);
-      }
+      },
     });
   }
 }

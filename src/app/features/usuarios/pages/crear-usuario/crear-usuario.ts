@@ -22,7 +22,7 @@ export class CrearUsuario {
     clave: '',
   };
 
-  erroresBackend: any = {}; // 🔥 errores por campo
+  erroresBackend: any = {}; //  errores por campo
 
   constructor(
     private usuarioService: UsuarioService,
@@ -30,7 +30,7 @@ export class CrearUsuario {
   ) {}
 
   guardar(form: any) {
-    this.erroresBackend = {}; // 🔥 limpiar errores
+    this.erroresBackend = {}; // limpiar errores
 
     if (form.invalid) {
       form.control.markAllAsTouched();
@@ -47,7 +47,7 @@ export class CrearUsuario {
         if (err.error && err.error.error) {
           const mensaje = err.error.error.toLowerCase();
 
-          // 🔥 detectar campo según mensaje
+          // detectar campo según mensaje
           if (mensaje.includes('correo')) {
             this.erroresBackend.correo = err.error.error;
           } else if (mensaje.includes('usuario')) {

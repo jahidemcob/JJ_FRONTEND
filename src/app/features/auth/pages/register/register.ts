@@ -20,7 +20,7 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   campoActivo: string = '';
@@ -69,7 +69,6 @@ export class RegisterComponent {
         this.mensajeExito = '';
 
         this.cdr.detectChanges();
-
       },
     });
   }

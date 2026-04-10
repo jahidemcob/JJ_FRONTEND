@@ -3,32 +3,30 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth';
 
 export const authGuard: CanActivateFn = (route) => {
-
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  // 🔐 Validar sesión
+  //  Validar sesión
   if (!authService.isLoggedIn()) {
     return router.createUrlTree(['/login']);
   }
 
-  // 🎯 Rol desde JWT
+  //  Rol desde JWT
   const userRoleRaw = authService.getUserRole();
   const userRole = userRoleRaw ? userRoleRaw.toLowerCase() : null;
 
-  // 🔥 Mapear rol
   const roleMap: any = {
     administrador: 'admin',
     empleado: 'empleado',
-    cliente: 'cliente'
+    cliente: 'cliente',
   };
 
-  const rol = userRole ? (roleMap[userRole] || userRole) : null;
+  const rol = userRole ? roleMap[userRole] || userRole : null;
 
   // Roles permitidos
   const allowedRoles = route.data?.['roles'] as string[];
 
-  // ❌ No autorizado
+  // No autorizado
   if (allowedRoles && (!rol || !allowedRoles.includes(rol))) {
     return router.createUrlTree([`/${rol}`]);
   }

@@ -10,33 +10,29 @@ import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/usuario.model';
 export class UsuarioService {
   httpClient = inject(HttpClient);
 
-  private apiUrl = 'https://localhost:7240/users'; 
+  private apiUrl = 'https://localhost:7240/users';
 
-  // 🔹 GET TODOS
+  // GET TODOS
   GetAllUsers(): Observable<Usuario[]> {
     return this.httpClient.get<Usuario[]>(this.apiUrl);
   }
-
 
   getUserById(id: number): Observable<Usuario> {
     return this.httpClient.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
-  // 🔹 POST (crear)
+  // POST (crear)
   registerUser(user: UsuarioCreate): Observable<Usuario> {
     return this.httpClient.post<Usuario>(this.apiUrl, user);
   }
 
-  // 🔹 PUT (actualizar)
+  // PUT (actualizar)
   updateUser(id: number, user: UsuarioUpdate): Observable<Usuario> {
     return this.httpClient.put<Usuario>(`${this.apiUrl}/${id}`, user);
   }
 
-  // 🔹 PATCH (activar/desactivar)
+  // PATCH (activar/desactivar)
   updateUserStatus(id: number, status: boolean): Observable<void> {
-    return this.httpClient.patch<void>(
-      `${this.apiUrl}/${id}/disable`,
-      { activo: status }
-    );
+    return this.httpClient.patch<void>(`${this.apiUrl}/${id}/disable`, { activo: status });
   }
 }

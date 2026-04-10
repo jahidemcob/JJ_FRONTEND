@@ -9,12 +9,14 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root',
 })
 export class AuthService {
-
   private apiUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {}
 
-  // 🔥 LOGIN REAL
+  // LOGIN
   login(data: { username: string; clave: string }) {
     return this.http.post(`${this.apiUrl}/login`, data).pipe(
       tap((response: any) => {
@@ -25,11 +27,11 @@ export class AuthService {
 
         // Guardar usuario (opcional)
         localStorage.setItem('usuario', JSON.stringify(response));
-      })
+      }),
     );
   }
 
-  // 🔐 Decodificar token
+  // Decodificar token
   getDecodedToken() {
     const token = localStorage.getItem('token');
     if (!token) return null;
@@ -41,16 +43,14 @@ export class AuthService {
     }
   }
 
-  // 🎯 Obtener rol desde JWT
+  // Obtener rol desde JWT
   getUserRole(): string | null {
     const decoded: any = this.getDecodedToken();
 
-    return decoded?.role?.toLowerCase() 
-        || decoded?.rol?.toLowerCase() 
-        || null;
+    return decoded?.role?.toLowerCase() || decoded?.rol?.toLowerCase() || null;
   }
 
-  // 🔐 Verificar sesión válida
+  // Verificar sesión válida
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
     if (!token) return false;
@@ -62,11 +62,12 @@ export class AuthService {
     return decoded.exp * 1000 > Date.now();
   }
 
-  // 🔥 REGISTER REAL
+  // REGISTRO
   register(data: any) {
-  return this.http.post(`${this.apiUrl}/register`, data);
+    return this.http.post(`${this.apiUrl}/register`, data);
   }
 
+  //cerrar sesion
   logout() {
     localStorage.removeItem('usuario');
     localStorage.removeItem('token');
