@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { UsuarioService } from '../../services/usuario.service';
+import { UsuarioService } from '../../services/user.service';
 import { Usuario } from '../../models/usuario.model';
 
 @Component({
