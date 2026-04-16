@@ -31,7 +31,7 @@ export class LoginComponent {
       next: (res: any) => {
         console.log('LOGIN OK:', res);
 
-        //  Guardar token
+        // Guardar token
         if (res.token) {
           localStorage.setItem('token', res.token);
         }
@@ -61,22 +61,22 @@ export class LoginComponent {
       error: (err) => {
         console.error('ERROR LOGIN:', err);
 
-        // Manejo de errores del backend
         let errorMessage = 'Ocurrió un error inesperado';
 
+        const backendMessage = err.error?.message;
+
         if (err.status === 401) {
-          // Usuario o contraseña incorrectos
-          errorMessage = err.error?.error || 'Usuario o contraseña incorrectos';
+          errorMessage = backendMessage || 'Usuario o contraseña incorrectos';
         } else if (err.status === 403) {
-          // Usuario desactivado
-          errorMessage = err.error?.error || 'Usuario desactivado';
+          errorMessage = backendMessage || 'Usuario desactivado';
         } else if (err.status === 400) {
-          // Error de validación o datos
-          errorMessage = err.error?.error || 'Datos inválidos';
+          errorMessage = backendMessage || 'Datos inválidos';
         } else if (err.status === 404) {
-          errorMessage = err.error?.error || 'Usuario no encontrado';
+          errorMessage = backendMessage || 'Usuario no encontrado';
         } else if (err.status === 500) {
-          errorMessage = err.error?.error || 'Error interno del servidor';
+          errorMessage = backendMessage || 'Error interno del servidor';
+        } else {
+          errorMessage = backendMessage || errorMessage;
         }
 
         alert(errorMessage);

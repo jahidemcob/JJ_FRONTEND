@@ -5,9 +5,9 @@ import { LoginComponent } from './features/auth/pages/login/login';
 import { RegisterComponent } from './features/auth/pages/register/register';
 
 // Dashboars de roles
-import { Administrador } from './features/dashboard/pages/administrador/administrador';
-import { Cliente } from './features/dashboard/pages/cliente/cliente';
-import { Empleado } from './features/dashboard/pages/empleado/empleado';
+import { Administrador } from './features/dashboard/pages/admin/administrador';
+import { Cliente } from './features/dashboard/pages/client/cliente';
+import { Empleado } from './features/dashboard/pages/employee/empleado';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -23,7 +23,7 @@ export const routes: Routes = [
       {
       path: 'usuarios',
       loadChildren: () =>
-        import('./features/usuarios/usuarios.routes').then(m => m.USUARIOS_ROUTES)
+        import('./features/users/users.routes').then(m => m.USUARIOS_ROUTES)
       }
     ]
   },
