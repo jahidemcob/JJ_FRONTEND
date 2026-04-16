@@ -5,7 +5,13 @@ import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 
-@Injectable({ 
+interface JwtPayload {
+  role?: string;
+  rol?: string;
+  exp: number;
+}
+
+@Injectable({
   providedIn: 'root',
 })
 export class AuthService {
@@ -16,62 +22,75 @@ export class AuthService {
     private http: HttpClient,
   ) {}
 
-  // LOGIN
+  // 🔐 LOGIN
   login(data: { username: string; clave: string }) {
     return this.http.post(`${this.apiUrl}/login`, data).pipe(
       tap((response: any) => {
         console.log('RESPUESTA BACKEND:', response);
 
         // Guardar token
-        localStorage.setItem('token', response.token);
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+        }
 
-        // Guardar usuario 
+        // Guardar usuario (opcional)
         localStorage.setItem('usuario', JSON.stringify(response));
       }),
     );
   }
 
-  // Decodificar token
-  getDecodedToken() {
-    const token = localStorage.getItem('token');
+  // 🔓 Obtener token
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  // 🧠 Decodificar token
+  getDecodedToken(): JwtPayload | null {
+    const token = this.getToken();
     if (!token) return null;
 
     try {
-      return jwtDecode(token);
+      return jwtDecode<JwtPayload>(token);
     } catch {
       return null;
     }
   }
 
-  // Obtener rol desde JWT
+  // 🎭 Obtener rol desde JWT
   getUserRole(): string | null {
-    const decoded: any = this.getDecodedToken();
-
+    const decoded = this.getDecodedToken();
     return decoded?.role?.toLowerCase() || decoded?.rol?.toLowerCase() || null;
   }
 
-  // Verificar sesión válida
+  // 🔀 Obtener ruta según rol
+  getRedirectRoute(): string {
+    const rol = this.getUserRole();
+
+    const roleMap: any = {
+      administrador: 'admin',
+      empleado: 'empleado',
+      cliente: 'cliente',
+    };
+
+    return roleMap[rol || 'cliente'] || 'cliente';
+  }
+
+  // ✅ Verificar si está logueado
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    const decoded: any = this.getDecodedToken();
-
+    const decoded = this.getDecodedToken();
     if (!decoded?.exp) return false;
 
     return decoded.exp * 1000 > Date.now();
   }
 
-  // REGISTRO
+  // 📝 REGISTRO
   register(data: any) {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
 
-  //cerrar sesion
+  // 🚪 LOGOUT
   logout() {
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('token');
-
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 }
