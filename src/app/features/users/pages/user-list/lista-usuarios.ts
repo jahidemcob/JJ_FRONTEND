@@ -54,7 +54,7 @@ export class ListaUsuarios implements OnInit {
     if (!user) return;
 
     const nuevoEstado = !user.activo;
-
+ 
     user.activo = nuevoEstado;
 
     this.usuarioService.updateUserStatus(id, nuevoEstado).subscribe({

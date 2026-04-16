@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root',
 })
 export class AuthService {
@@ -25,7 +25,7 @@ export class AuthService {
         // Guardar token
         localStorage.setItem('token', response.token);
 
-        // Guardar usuario (opcional)
+        // Guardar usuario 
         localStorage.setItem('usuario', JSON.stringify(response));
       }),
     );
