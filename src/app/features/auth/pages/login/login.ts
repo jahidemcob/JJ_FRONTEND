@@ -20,49 +20,21 @@ export class LoginComponent {
   ) {}
 
   login() {
-    console.log(this.username, this.password);
-
     const data = {
       username: this.username,
       clave: this.password,
     };
 
     this.authService.login(data).subscribe({
-      next: (res: any) => {
-        console.log('LOGIN OK:', res);
-
-        // Guardar token
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-        }
-
-        // Guardar usuario completo
-        localStorage.setItem('usuario', JSON.stringify(res));
-
-        // Obtener rol del backend
-        const rolBackend = (res.role || res.rol || 'cliente').toLowerCase();
-
-        // Mapear rol a rutas del frontend
-        const roleMap: any = {
-          administrador: 'admin',
-          empleado: 'empleado',
-          cliente: 'cliente',
-        };
-
-        const rol = roleMap[rolBackend] || 'cliente';
-
-        // Guardar rol correcto
-        localStorage.setItem('rol', rol);
-
-        // Redirección automática
-        this.router.navigate([`/${rol}`]);
+      next: () => {
+        const ruta = this.authService.getRedirectRoute();
+        this.router.navigate([`/${ruta}`]);
       },
 
       error: (err) => {
         console.error('ERROR LOGIN:', err);
 
         let errorMessage = 'Ocurrió un error inesperado';
-
         const backendMessage = err.error?.message;
 
         if (err.status === 401) {
