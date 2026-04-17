@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/usuario.model';
 
@@ -10,7 +11,7 @@ import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/usuario.model';
 export class UsuarioService {
   httpClient = inject(HttpClient);
 
-  private apiUrl = 'https://localhost:7240/users';
+  private apiUrl = `${environment.apiUrl}/users`;
 
   // GET TODOS
   GetAllUsers(): Observable<Usuario[]> {

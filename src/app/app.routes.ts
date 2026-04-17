@@ -10,7 +10,7 @@ import { Cliente } from './features/dashboard/pages/client/cliente';
 import { Empleado } from './features/dashboard/pages/employee/empleado';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, 
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -21,12 +21,66 @@ export const routes: Routes = [
     data: { roles: ['admin'] },
     children: [
       {
-      path: 'usuarios',
-      loadChildren: () =>
-        import('./features/users/users.routes').then(m => m.USUARIOS_ROUTES)
+        path: 'usuarios',
+        loadChildren: () => import('./features/users/users.routes').then((m) => m.USUARIOS_ROUTES),
+      },
+      {
+        path: 'servicios',
+        loadChildren: () =>
+          import('./features/services/services.routes').then((m) => m.ADMIN_SERVICES_ROUTES),
+      },
+      {
+        path: 'citas',
+        loadChildren: () =>
+          import('./features/appointments/appointments.routes').then((m) => m.ADMIN_APPOINTMENTS_ROUTES),
+      },
+      {
+        path: 'finanzas',
+        loadChildren: () => import('./features/finance/finance.routes').then((m) => m.FINANCE_ROUTES),
       }
-    ]
+    ],
   },
-  { path: 'cliente', component: Cliente, canActivate: [authGuard], data: { roles: ['cliente'] } },
-  { path: 'empleado', component: Empleado, canActivate: [authGuard], data: { roles: ['empleado'] } },
+
+  {
+    path: 'cliente',
+    component: Cliente, 
+    canActivate: [authGuard],
+    data: { roles: ['cliente'] },
+    children: [
+      {
+        path: 'servicios',
+        loadChildren: () =>
+          import('./features/services/services.routes').then((m) => m.CLIENT_SERVICES_ROUTES),
+      },
+      {
+        path: 'citas',
+        loadChildren: () =>
+          import('./features/appointments/appointments.routes').then((m) => m.CLIENT_APPOINTMENTS_ROUTES),
+      },
+      {
+        path: "motocicletas",
+        loadChildren: () =>
+          import('./features/motorcycles/motorcycles.routes').then((m) => m.MOTORCYCLES_ROUTES),
+      }
+    ],
+  },
+
+  {
+    path: 'empleado',
+    component: Empleado,
+    canActivate: [authGuard],
+    data: { roles: ['empleado'] },
+    children: [
+      {
+        path: 'servicios',
+        loadChildren: () =>
+          import('./features/services/services.routes').then((m) => m.EMPLOYEE_SERVICES_ROUTES),
+      },
+      {
+        path: 'citas',
+        loadChildren: () =>
+          import('./features/appointments/appointments.routes').then((m) => m.EMPLOYEE_APPOINTMENTS_ROUTES),
+      }
+    ],
+  },
 ];
