@@ -1,33 +1,35 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { AuthService } from '../../../../core/services/auth'; // Asegúrate de que la ruta sea correcta
+import { Router, RouterModule } from '@angular/router';
+
+import { AuthService } from '../../../../core/services/auth'; 
 
 @Component({
   selector: 'app-cliente',
   standalone: true,
-  imports: [CommonModule], // solo lo necesario
+  imports: [CommonModule, RouterModule], 
   templateUrl: './cliente.html',
   styleUrls: ['./cliente.css'],
 })
 
 export class Cliente {
 
-  vistaActual: string = 'Bienvenido';
   menuAbierto: boolean = false;
 
-  constructor(private authService: AuthService) {} // inyecta el servicio
+  constructor(
+    private authService: AuthService,
+    public router: Router
+  ) {}
 
-  cambiarVista(vista: string) {
-    this.vistaActual = vista;
-    this.menuAbierto = false;
+  ir(ruta: string) {
+    this.router.navigate([ruta]);
   }
 
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
   }
 
-  // ✅ Llamamos al servicio para cerrar sesión
   cerrarSesion() {
     this.authService.logout();
   }
-}
+} 

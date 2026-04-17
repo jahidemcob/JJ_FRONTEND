@@ -5,66 +5,64 @@
   background: #F4F7FB;
   font-family: 'Inter', sans-serif;
 }
-
+ 
 /* SIDEBAR */
 .sidebar {
   position: fixed;
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  background: #303854;
+  background: #303854; 
   border-radius: 25px;
-  padding: 15px 10px;
+  padding: 15px 0;
   width: 70px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* LISTA */
 .sidebar ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* ITEMS */
 .sidebar li {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
-  padding: 12px;
+  justify-content: center;
+  padding: 12px 0;
   margin: 10px 0;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: white;
-
-  width: 50px; /* 🔥 cerrado */
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
 }
 
-/* ICONO */
 .icon {
-  font-size: 20px;
-  min-width: 25px;
-  text-align: center;
+  width: 28px;
+  height: 28px;
+  stroke: white;
+  margin: 0 auto;
 }
 
-/* TEXTO */
 .text {
   opacity: 0;
   transition: opacity 0.2s;
   color: white;
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: center;
 }
 
-/* 🔥 AQUÍ ESTÁ LA CLAVE */
 .sidebar li:hover {
-  width: 180px; /* 🔥 se expande BIEN */
+  width: 180px;
   background: #303854;
-  color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* TEXTO APARECE */
 .sidebar li:hover .text {
   opacity: 1;
 }
@@ -85,14 +83,12 @@
   position: relative;
 }
 
-/* PERFIL */
 .profile-box {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* AVATAR */
 .avatar {
   width: 35px;
   height: 35px;
@@ -100,12 +96,10 @@
   border-radius: 50%;
 }
 
-/* USERNAME */
 .username {
   color: #303854;
 }
 
-/* BOTÓN FLECHA */
 .arrow {
   background: none;
   border: none;
@@ -113,7 +107,6 @@
   font-size: 14px;
 }
 
-/* DROPDOWN */
 .dropdown {
   position: absolute;
   top: 65px;
@@ -126,7 +119,6 @@
   z-index: 100;
 }
 
-/* OPCIONES */
 .dropdown p {
   padding: 10px;
   cursor: pointer;
@@ -145,7 +137,20 @@
   align-items: center;
 }
 
-.content h1 {
-  font-size: 50px;
+/* 👇 NUEVO */
+.welcome {
+  text-align: center;
+    transform: translate(-80px, -60px);
+
+}
+
+.welcome h1 {
+  font-size: 45px;
   color: #303854;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  font-size: 18px;
+  color: #6c757d;
 }

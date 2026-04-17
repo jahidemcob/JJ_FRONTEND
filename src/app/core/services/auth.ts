@@ -22,7 +22,7 @@ export class AuthService {
     private http: HttpClient,
   ) {}
 
-  // 🔐 LOGIN
+  // LOGIN
   login(data: { username: string; clave: string }) {
     return this.http.post(`${this.apiUrl}/login`, data).pipe(
       tap((response: any) => {
@@ -33,18 +33,17 @@ export class AuthService {
           localStorage.setItem('token', response.token);
         }
 
-        // Guardar usuario (opcional)
         localStorage.setItem('usuario', JSON.stringify(response));
       }),
     );
   }
 
-  // 🔓 Obtener token
+  // Obtener token
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // 🧠 Decodificar token
+  // Decodificar token
   getDecodedToken(): JwtPayload | null {
     const token = this.getToken();
     if (!token) return null;
@@ -56,13 +55,13 @@ export class AuthService {
     }
   }
 
-  // 🎭 Obtener rol desde JWT
+  // Obtener rol desde JWT
   getUserRole(): string | null {
     const decoded = this.getDecodedToken();
     return decoded?.role?.toLowerCase() || decoded?.rol?.toLowerCase() || null;
   }
 
-  // 🔀 Obtener ruta según rol
+  // Obtener ruta según rol
   getRedirectRoute(): string {
     const rol = this.getUserRole();
 
@@ -75,7 +74,7 @@ export class AuthService {
     return roleMap[rol || 'cliente'] || 'cliente';
   }
 
-  // ✅ Verificar si está logueado
+  // Verificar si está logueado
   isLoggedIn(): boolean {
     const decoded = this.getDecodedToken();
     if (!decoded?.exp) return false;
