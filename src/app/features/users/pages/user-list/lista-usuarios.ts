@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { UsuarioService } from '../../services/user.service';
-import { Usuario } from '../../models/usuario.model';
+import { Usuario } from '../../models/user.model';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -12,7 +12,7 @@ import { Usuario } from '../../models/usuario.model';
   templateUrl: './lista-usuarios.html',
   styleUrls: ['./lista-usuarios.css'],
 })
-export class ListaUsuarios implements OnInit {
+export class ListaUsuarios implements OnInit { 
   usuarios: Usuario[] = [];
   loadingIds: number[] = [];
 

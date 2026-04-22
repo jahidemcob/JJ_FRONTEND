@@ -10,8 +10,8 @@ export interface Usuario {
 }
 
 // Crear
-export interface UsuarioCreate {
-  idRol: number;
+export interface UsuarioCreate { 
+  idRol: number; 
   nombre: string;
   nombreUsuario: string;
   clave: string;

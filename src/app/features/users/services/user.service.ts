@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
-import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/usuario.model';
+import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UsuarioService {
+export class UsuarioService { 
   httpClient = inject(HttpClient);
 
   private apiUrl = `${environment.apiUrl}/users`;
