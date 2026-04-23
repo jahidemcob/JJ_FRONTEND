@@ -46,4 +46,23 @@ export class ServiceListComponent implements OnInit {
   goToCreate() {
     this.router.navigate(['/admin/servicios/crear']);
   }
+
+  goToEdit(id: number) {
+    this.router.navigate(['/admin/servicios/editar', id]);
+  }
+
+  toggleStatus(service: Service) {
+    this.servicesService.toggleServiceStatus(service.idServicio).subscribe({
+      next: (res) => {
+        // actualizamos el estado local sin recargar todo
+        service.isActive = res.status;
+
+        console.log(res.message);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error cambiando estado:', err);
+      },
+    });
+  }
 }

@@ -24,8 +24,8 @@
         </div>
 
         <div class="card-actions">
-          <button class="btn-edit">Editar</button>
-          <button class="btn-state">
+          <button class="btn-edit" (click)="goToEdit(s.idServicio)">Editar</button>
+          <button class="btn-state" (click)="toggleStatus(s)">
             {{ s.isActive ? 'Desactivar' : 'Activar' }}
           </button>
         </div>

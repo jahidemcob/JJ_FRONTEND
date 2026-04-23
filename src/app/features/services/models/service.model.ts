@@ -13,3 +13,11 @@ export interface CreateService {
   descripcion: string;
   precioBase: number;
 }
+
+//editar servicios
+export interface UpdateService {
+  idServicio: number;
+  nombreServicio: string;
+  descripcion: string;
+  precioBase: number;
+}
