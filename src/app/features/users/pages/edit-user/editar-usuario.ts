@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../services/user.service';
-import { Usuario } from '../../models/usuario.model';
+import { Usuario } from '../../models/user.model';
 
 @Component({
   selector: 'app-editar-usuario',

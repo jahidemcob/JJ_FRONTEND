@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: 'admin',
+    path: 'admin', 
     component: Administrador,
     canActivate: [authGuard],
     data: { roles: ['admin'] },

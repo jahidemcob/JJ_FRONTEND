@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/user.service';
-import { UsuarioCreate } from '../../models/usuario.model';
+import { UsuarioCreate } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -41,7 +41,7 @@ export class CrearUsuario {
       next: () => {
         this.router.navigate(['/admin/usuarios']);
       },
-      error: (err) => {
+      error: (err) => { 
         console.error('Error creando usuario:', err);
 
         if (err.error && err.error.error) {

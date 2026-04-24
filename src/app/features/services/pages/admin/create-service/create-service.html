@@ -1,1 +1,74 @@
-<p>create-service works!</p>
+<div class="form-container">
+  <h2>Crear Servicio</h2>
+
+  <form #form="ngForm" (ngSubmit)="createService(form)">
+    <!-- NOMBRE -->
+    <div class="form-group">
+      <label>Nombre del Servicio</label>
+      <input
+        [(ngModel)]="service.nombreServicio"
+        name="nombreServicio"
+        required
+        #nombreServicio="ngModel"
+      />
+    </div>
+
+    <!-- DESCRIPCIÓN -->
+    <div class="form-group">
+      <label>Descripción</label>
+      <input [(ngModel)]="service.descripcion" name="descripcion" required #descripcion="ngModel" />
+    </div>
+
+    <!-- PRECIO -->
+    <div class="form-group">
+      <label>Precio Base</label>
+      <input
+        type="number"
+        [(ngModel)]="service.precioBase"
+        name="precioBase"
+        required
+        min="1"
+        #precioBase="ngModel"
+      />
+    </div>
+
+    <!-- VALIDACIONES FRONT -->
+    <div class="error" *ngIf="form.invalid && (form.touched || form.dirty)">
+      <!-- CAMPOS VACÍOS -->
+      <span
+        *ngIf="
+          nombreServicio.errors?.['required'] ||
+          descripcion.errors?.['required'] ||
+          precioBase.errors?.['required']
+        "
+      >
+        Todos los campos deben estar diligenciados correctamente
+      </span>
+
+      <!-- PRECIO INVÁLIDO -->
+      <span
+        *ngIf="
+          !nombreServicio.errors?.['required'] &&
+          !descripcion.errors?.['required'] &&
+          !precioBase.errors?.['required'] &&
+          precioBase.errors?.['min']
+        "
+      >
+        El precio debe ser mayor a 0
+      </span>
+    </div>
+
+    <!-- ERROR BACKEND -->
+    <div class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <!-- ÉXITO -->
+    <div class="success" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <!-- BOTÓN -->
+    <button class="btn-save" type="submit" [disabled]="form.invalid || loading">Guardar</button>
+  </form>
+</div>
