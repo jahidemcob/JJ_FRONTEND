@@ -42,7 +42,7 @@ export class ServiceListComponent implements OnInit {
   trackById(index: number, item: Service) {
     return item.idServicio;
   }
-
+ 
   goToCreate() {
     this.router.navigate(['/admin/servicios/crear']);
   }

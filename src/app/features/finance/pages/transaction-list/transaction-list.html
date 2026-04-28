@@ -1,1 +1,93 @@
-<h1>FINANZAS</h1>
+<div class="finanzas-container">
+
+  <!-- 🔝 CONTENEDOR REGISTRO -->
+  <div class="table-container">
+
+    <div class="table-header center-header">
+      <h2>Gestión de Finanzas</h2>
+    </div>
+
+    <div class="finanzas-form">
+      <input type="text" placeholder="Descripción" />
+      <input type="number" placeholder="Valor" />
+
+      <div class="tipo-buttons">
+        <button class="btn-ingreso">Ingreso</button>
+        <button class="btn-salida">Salida</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 📊 CONTENEDOR TABLA -->
+  <div class="table-container">
+
+    <!-- HEADER -->
+    <table class="custom-table header-table">
+      <colgroup>
+        <col style="width: 80px" />
+        <col style="width: 40%" />
+        <col style="width: 30%" />
+        <col style="width: 30%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descripción</th>
+          <th>Valor</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+    </table>
+
+    <!-- BODY -->
+    <div class="table-scroll">
+      <table class="custom-table body-table">
+        <colgroup>
+          <col style="width: 80px" />
+          <col style="width: 40%" />
+          <col style="width: 30%" />
+          <col style="width: 30%" />
+        </colgroup>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Pago cliente</td>
+            <td>$ 150000</td>
+            <td><span class="ingreso">Ingreso</span></td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Compra repuestos</td>
+            <td>$ 80000</td>
+            <td><span class="salida">Salida</span></td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>Mantenimiento</td>
+            <td>$ 120000</td>
+            <td><span class="ingreso">Ingreso</span></td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>Pago electricidad</td>
+            <td>$ 50000</td>
+            <td><span class="salida">Salida</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="finanzas-total">
+      <h3>Total:</h3>
+      <span class="positivo">$ 140000</span>
+    </div>
+
+  </div>
+
+</div>

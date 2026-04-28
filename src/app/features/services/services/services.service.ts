@@ -16,6 +16,7 @@ export class ServicesService {
   // GET TODOS
   getAllServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>(this.apiUrl);
+    
   }
 
   // POST (crear)

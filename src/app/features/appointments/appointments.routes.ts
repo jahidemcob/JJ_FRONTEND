@@ -7,7 +7,6 @@ import { ManageAppointments } from './pages/admin/manage-appointments/manage-app
 import { ScheduledAppointments } from './pages/employee/scheduled-appointments/scheduled-appointments';
 
 // CLIENT
-import { AppointmentStatus } from './pages/client/appointment-status/appointment-status';
 import { RequestAppointment } from './pages/client/request-appointment/request-appointment';
 import { App } from '../../app';
 
@@ -19,7 +18,6 @@ export const ADMIN_APPOINTMENTS_ROUTES: Routes = [
 // CLIENT ROUTES
 export const CLIENT_APPOINTMENTS_ROUTES: Routes = [ 
   { path: '', component: RequestAppointment },
-  { path: 'actualizar/:id', component: AppointmentStatus },
 ];
 
 // EMPLOYEE ROUTES

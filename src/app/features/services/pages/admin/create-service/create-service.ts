@@ -8,7 +8,7 @@ import { CreateService } from '../../../models/service.model';
 @Component({
   selector: 'app-create-service',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule], 
   templateUrl: './create-service.html',
   styleUrls: ['./create-service.css'],
 })

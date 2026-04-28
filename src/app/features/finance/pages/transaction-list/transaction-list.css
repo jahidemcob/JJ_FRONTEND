@@ -1,0 +1,212 @@
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
+.finanzas-container {
+  width: 90%;
+  max-width: 1200px;
+  margin-top: -35px;
+  margin-left: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================
+   CONTENEDOR BASE (TABLA)
+========================= */
+.table-container { 
+  width: 100%;
+  background: white; 
+  padding: 25px; 
+  border-radius: 15px; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
+  overflow: hidden;
+} 
+
+/* =========================
+   HEADER
+========================= */
+.table-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 20px; 
+} 
+
+.center-header {
+  justify-content: center;
+}
+
+.table-header h2 { 
+  color: #303854; 
+  font-family: 'League Spartan', sans-serif;
+  font-size: 30px;
+  margin: 0; 
+} 
+
+/* =========================
+   FORMULARIO
+========================= */
+.finanzas-form {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.finanzas-form input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #C2CDD5;
+  outline: none;
+  width: 200px;
+}
+
+/* =========================
+   BOTONES
+========================= */
+.tipo-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-ingreso,
+.btn-salida {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s;
+}
+
+.btn-ingreso {
+  background: #28a745;
+}
+
+.btn-ingreso:hover {
+  background: #218838;
+}
+
+.btn-salida {
+  background: #dc3545;
+}
+
+.btn-salida:hover {
+  background: #c82333;
+}
+
+/* =========================
+   TABLA HEADER
+========================= */
+.header-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.header-table thead {
+  background: #303854;
+  color: white;  
+}
+
+.header-table th {
+  padding: 14px;
+  text-align: center;
+}
+
+/* =========================
+   SCROLL
+========================= */
+.table-scroll { 
+  max-height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+} 
+
+/* =========================
+   TABLA BODY
+========================= */
+.body-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  table-layout: fixed;
+}
+
+.body-table td { 
+  padding: 14px 10px; 
+  border-bottom: 1px solid #eee; 
+  text-align: center; 
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+.body-table tr {
+  height: 55px;
+}
+
+.body-table tr:hover { 
+  background: #f9f9f9;
+} 
+
+/* =========================
+   TIPOS (INGRESO / SALIDA)
+========================= */
+.ingreso {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.salida {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* =========================
+   TOTAL
+========================= */
+.finanzas-total {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.finanzas-total h3 {
+  margin: 0;
+  color: #303854;
+}
+
+.finanzas-total span {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.positivo {
+  color: #28a745;
+}
+
+.negativo {
+  color: #dc3545;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .finanzas-form {
+    flex-direction: column;
+  }
+
+  .finanzas-form input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .finanzas-container {
+    width: 100%;
+    margin-left: 0;
+  }
+}
