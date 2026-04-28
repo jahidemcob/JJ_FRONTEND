@@ -1,3 +1,4 @@
+
 /* LAYOUT GENERAL */
 .layout-cita {
   display: flex;
@@ -8,7 +9,7 @@
   margin-top: -15px;
 }
 
-/* CONTENEDOR IZQUIERDO */
+/* IZQUIERDA */
 .table-container { 
   flex: 3;
   width: 100%; 
@@ -68,7 +69,7 @@
 }
 
 .cards-scroll {
-  max-height: 420px; /* 🔥 EXACTO: 2 filas */
+  max-height: 420px;
   overflow-y: auto;
 }
 
@@ -132,6 +133,28 @@
   align-self: center;
 }
 
+/* 🔥 MOTOCICLETA */
+.campo-resumen {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.campo-resumen label {
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #303854;
+  font-weight: bold;
+}
+
+.campo-resumen select {
+  padding: 7px 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+/* LISTA */
 .lista-resumen {
   list-style: none;
   padding: 0;
@@ -146,7 +169,6 @@
   border-radius: 8px;
 }
 
-/* INFO */
 .item-info {
   display: flex;
   flex-direction: column;
