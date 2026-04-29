@@ -1,1 +1,108 @@
-<h1>CITAS</h1>
+<div class="table-container">
+  <div class="table-header">
+    <h2>Gestión de Citas</h2>
+  </div>
+
+  <!-- HEADER --> 
+  <table class="custom-table header-table">
+    <colgroup>
+      <col style="width: 80px" />
+      <col />
+      <col />
+      <col />
+      <col style="width: 200px" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Servicios</th>
+        <th>Hora</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+  </table>
+
+  <!-- BODY -->
+  <div class="table-scroll">
+    <table class="custom-table body-table">
+      <colgroup>
+        <col style="width: 80px" />
+        <col />
+        <col />
+        <col />
+        <col style="width: 200px" />
+      </colgroup>
+
+      <tbody>
+
+        <!-- FILA 1 -->
+        <tr>
+          <td>1</td>
+          <td>Juan Pérez</td>
+
+          <td class="servicios-lista">
+            <ul>
+              <li>Cambio de aceite</li>
+              <li>Alineación</li>
+            </ul>
+          </td>
+
+          <td>10:00 AM</td>
+
+          <td class="acciones">
+            <div class="acciones-inner">
+              <button class="btn-accept">Aceptar</button>
+              <button class="btn-reject">Rechazar</button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- FILA 2 -->
+        <tr>
+          <td>2</td>
+          <td>María Gómez</td>
+
+          <td class="servicios-lista">
+            <ul>
+              <li>Balanceo</li>
+            </ul>
+          </td>
+
+          <td>02:00 PM</td>
+
+          <td class="acciones">
+            <div class="acciones-inner">
+              <button class="btn-accept">Aceptar</button>
+              <button class="btn-reject">Rechazar</button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- FILA 3 -->
+        <tr>
+          <td>3</td>
+          <td>Carlos Ramírez</td>
+
+          <td class="servicios-lista">
+            <ul>
+              <li>Revisión general</li>
+              <li>Frenos</li>
+              <li>Balanceo</li>
+            </ul>
+          </td>
+
+          <td>04:00 PM</td>
+
+          <td class="acciones">
+            <div class="acciones-inner">
+              <button class="btn-accept">Aceptar</button>
+              <button class="btn-reject">Rechazar</button>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

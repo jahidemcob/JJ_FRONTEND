@@ -1,0 +1,179 @@
+ /* CONTENEDOR */
+.table-container { 
+  width: 90%; 
+  max-width: 1100px; 
+  margin-top: -35px;
+  margin-left: 2px; 
+  background: white; 
+  padding: 25px; 
+  border-radius: 15px; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
+  overflow: hidden;
+} 
+
+/* HEADER */
+.table-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 20px; 
+} 
+
+.table-header h2 { 
+  color: #303854; 
+  font-family: 'League Spartan', sans-serif;
+  font-size: 32px;
+  margin: 0; 
+} 
+
+/* HEADER TABLE */
+.header-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.header-table thead {
+  background: #303854;
+  color: white;  
+}
+
+.header-table th {
+  padding: 12px;
+  text-align: center;
+}
+
+/* SCROLL */
+.table-scroll { 
+  max-height: 380px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+} 
+
+/* BODY TABLE */
+.body-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  table-layout: fixed;
+}
+
+/* CELDAS */
+.body-table td:not(:last-child) { 
+  padding: 12px; 
+  border-bottom: 1px solid #eee; 
+  text-align: center; 
+  vertical-align: middle;
+}
+
+.body-table tr:hover { 
+  background: #f9f9f9;
+} 
+
+/* COLUMNA SERVICIOS (TRUNCADO) */
+.body-table tbody tr td:nth-child(3) {
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* SERVICIOS LISTA */
+.servicios-lista ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.servicios-lista li::before {
+  content: "- ";
+  color: #303854;
+  font-weight: bold;
+} 
+
+/* ACCIONES */
+.acciones { 
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+} 
+
+.acciones-inner {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* BOTONES GENERALES */
+.btn-process,
+.btn-finish {
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  border: none;
+  transition: 0.2s;
+}
+
+/* BOTÓN EN DESARROLLO */
+.btn-process {
+  background: #17a2b8;
+  color: white;
+}
+
+.btn-process:hover {
+  background: #138496;
+}
+
+/* BOTÓN TERMINADO */
+.btn-finish {
+  background: #28a745;
+  color: white;
+}
+
+.btn-finish:hover {
+  background: #218838;
+}
+
+/* ESTADOS */
+.estado {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* EN ESPERA */
+.estado.espera {
+  background: #ffc107;
+  color: #333;
+}
+
+/* EN PROCESO */
+.estado.proceso {
+  background: #17a2b8;
+  color: white;
+}
+
+/* TERMINADO */
+.estado.terminado {
+  background: #28a745;
+  color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .header-table th,
+  .body-table td {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .table-container {
+    width: 100%;
+    margin-left: 0;
+  }
+}

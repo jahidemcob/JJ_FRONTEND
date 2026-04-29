@@ -68,7 +68,7 @@ export class ListaUsuarios implements OnInit {
 
         this.loadingIds = this.loadingIds.filter((i) => i !== id);
       },
-    });
+    }); 
   }
 
   trackById(index: number, item: Usuario) {

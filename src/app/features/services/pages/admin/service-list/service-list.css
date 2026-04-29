@@ -2,14 +2,18 @@
 .cards-container {
   width: 90%;
   max-width: 1100px;
+  height: 80vh; /* 🔥 CLAVE: altura fija */
   margin-top: -35px;
   margin-left: 2px;
   background: #f4f6f9;
   padding: 25px;
   border-radius: 15px;
 
-  border: 1px solid #dfe3e8; /* 👈 define el contorno */
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); /* 👈 más oscura */
+  border: 1px solid #dfe3e8;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  display: flex; /* 🔥 CLAVE */
+  flex-direction: column; /* 🔥 CLAVE */
 
   overflow: hidden;
 }
@@ -19,7 +23,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  flex-shrink: 0; /* 🔥 evita que se reduzca */
 }
 
 .cards-header h2 {
@@ -46,14 +51,14 @@
 
 /* SCROLL */
 .cards-scroll {
-  max-height: 500px;
+  flex: 1; /* 🔥 ocupa todo el espacio restante */
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-gutter: stable;
-  padding-right: 8px; 
+  padding-right: 8px;
 }
 
-/* GRID (3 POR FILA) */
+/* GRID */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -149,6 +154,16 @@
 
 .btn-state:hover {
   background: #aab7c2;
+}
+
+/* EMPTY STATE */
+.empty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #C2CDD5;
+  font-size: 18px;
 }
 
 /* RESPONSIVE */
