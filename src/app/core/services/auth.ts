@@ -4,12 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
-
-interface JwtPayload {
-  role?: string;
-  rol?: string;
-  exp: number;
-}
+import { LoginRequest, AuthResponse, JwtPayload, RegisterRequest } from '../models/model.auth';
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +18,9 @@ export class AuthService {
   ) {}
 
   // LOGIN
-  login(data: { username: string; clave: string }) {
-    return this.http.post(`${this.apiUrl}/login`, data).pipe(
-      tap((response: any) => {
-        console.log('RESPUESTA BACKEND:', response);
-
-        // Guardar token
+  login(data: LoginRequest) {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, data).pipe(
+      tap((response) => {
         if (response.token) {
           localStorage.setItem('token', response.token);
         }
@@ -61,11 +53,11 @@ export class AuthService {
     return decoded?.role?.toLowerCase() || decoded?.rol?.toLowerCase() || null;
   }
 
-  // Obtener ruta según rol
+  // Ruta según rol
   getRedirectRoute(): string {
     const rol = this.getUserRole();
 
-    const roleMap: any = {
+    const roleMap: Record<string, string> = {
       administrador: 'admin',
       empleado: 'empleado',
       cliente: 'cliente',
@@ -74,7 +66,7 @@ export class AuthService {
     return roleMap[rol || 'cliente'] || 'cliente';
   }
 
-  // Verificar si está logueado
+  // Verificar sesión
   isLoggedIn(): boolean {
     const decoded = this.getDecodedToken();
     if (!decoded?.exp) return false;
@@ -82,12 +74,12 @@ export class AuthService {
     return decoded.exp * 1000 > Date.now();
   }
 
-  // 📝 REGISTRO
-  register(data: any) {
-    return this.http.post(`${this.apiUrl}/register`, data);
+  // REGISTRO
+  register(data: RegisterRequest) {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data);
   }
 
-  // 🚪 LOGOUT
+  // LOGOUT
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
