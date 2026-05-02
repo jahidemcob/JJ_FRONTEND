@@ -40,15 +40,8 @@ export class EditService implements OnInit {
 
   // CARGAR SERVICIO
   loadService(id: number) {
-    this.servicesService.getAllServices().subscribe({
-      next: (services) => {
-        const found = services.find((s) => s.idServicio === id);
-
-        if (!found) {
-          this.errorMessage = 'Servicio no encontrado';
-          return;
-        }
-
+    this.servicesService.getServiceById(id).subscribe({
+      next: (found) => {
         this.service = {
           idServicio: found.idServicio,
           nombreServicio: found.nombreServicio,
@@ -59,7 +52,8 @@ export class EditService implements OnInit {
         this.cdr.detectChanges();
       },
       error: () => {
-        this.errorMessage = 'Error cargando servicio';
+        this.errorMessage = 'Servicio no encontrado';
+        this.cdr.detectChanges();
       },
     });
   }
@@ -73,7 +67,7 @@ export class EditService implements OnInit {
 
     this.servicesService.updateService(this.service).subscribe({
       next: () => {
-        // 🚀 redirección inmediata
+        //  redirección inmediata
         this.router.navigate(['/admin/servicios']);
       },
       error: (err) => {
