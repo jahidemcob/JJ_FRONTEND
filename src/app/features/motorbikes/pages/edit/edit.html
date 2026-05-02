@@ -1,0 +1,56 @@
+<div class="form-container">
+  <h2>Editar Motocicleta</h2>
+
+  <form #form="ngForm" (ngSubmit)="updateService()">
+    <!-- MARCA -->
+    <div class="form-group">
+      <label>Marca</label>
+      <input [(ngModel)]="motorbike.marca" name="marca" #marca="ngModel" />
+    </div>
+
+    <!-- MODELO -->
+    <div class="form-group">
+      <label>Modelo</label>
+      <input [(ngModel)]="motorbike.modelo" name="modelo" #modelo="ngModel" />
+    </div>
+
+    <!-- CILINDRAJE -->
+    <div class="form-group">
+      <label>Cilindraje</label>
+      <input
+        type="number"
+        [(ngModel)]="motorbike.cilindraje"
+        name="cilindraje"
+        min="1"
+        #cilindraje="ngModel"
+      />
+    </div>
+
+    <!-- AÑO -->
+    <div class="form-group">
+      <label>Año</label>
+      <input type="number" [(ngModel)]="motorbike.anio" name="anio" min="2010" #anio="ngModel" />
+    </div>
+
+    <!-- VALIDACIONES (SIN CAMPOS VACÍOS) -->
+    <div class="error" *ngIf="form.touched || form.dirty">
+      <!-- CILINDRAJE -->
+      <span *ngIf="motorbike.cilindraje && cilindraje.errors?.['min']">
+        El cilindraje debe ser mayor a 0
+      </span>
+
+      <!-- AÑO -->
+      <span *ngIf="!cilindraje.errors?.['min'] && motorbike.anio && anio.errors?.['min']">
+        El año debe ser mayor a 2009
+      </span>
+    </div>
+
+    <!-- ERROR BACK -->
+    <div class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <!-- BOTÓN -->
+    <button class="btn-save" type="submit" [disabled]="loading">Actualizar Motocicleta</button>
+  </form>
+</div>

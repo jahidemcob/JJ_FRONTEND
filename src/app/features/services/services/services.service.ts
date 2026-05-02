@@ -16,7 +16,10 @@ export class ServicesService {
   // GET TODOS
   getAllServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>(this.apiUrl);
-    
+  }
+
+  getServiceById(id: number): Observable<Service> {
+    return this.httpClient.get<Service>(`${this.apiUrl}/${id}`);
   }
 
   // POST (crear)
@@ -40,7 +43,7 @@ export class ServicesService {
     );
   }
 
-  getActiveServices() {
+  getActiveServices() { 
     return this.httpClient.get<Service[]>(`${this.apiUrl}?onlyActive=true`);
   }
 }

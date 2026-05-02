@@ -37,6 +37,9 @@
     "@angular/build": "^21.1.4",
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.0",
+    "@types/cypress": "^0.1.6",
+    "@types/mocha": "^10.0.10",
+    "cypress": "^15.14.1",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
