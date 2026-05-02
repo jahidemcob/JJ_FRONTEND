@@ -1,10 +1,13 @@
 /* CONTENEDOR PRINCIPAL */
 .cards-container {
-  width: 95%;
-  max-width: 1500px; /* 🔥 MÁS ANCHO */
-  height: 80vh;
-  margin-top: -35px;
-  margin-left: 2px;
+  width: calc(100% + 120px); /* 🔥 más ancho real */
+  max-width: none; /* elimina límite */
+
+  height: 70vh;
+
+  margin-top: -60px; /* ✅ lo conservas */
+  margin-left: -135px; /* ✅ lo conservas */
+
   background: #f4f6f9;
   padding: 25px;
   border-radius: 15px;
@@ -57,7 +60,7 @@
   padding-right: 8px;
 }
 
-/* GRID (MEJOR DISTRIBUCIÓN) */
+/* GRID (NO SE TOCA) */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(280px, 1fr));
@@ -83,7 +86,7 @@
   transform: translateY(-4px);
 }
 
-/* ICONO (AZUL SIN FONDO) */
+/* ICONO */
 .icon-moto {
   position: absolute;
   top: 12px;

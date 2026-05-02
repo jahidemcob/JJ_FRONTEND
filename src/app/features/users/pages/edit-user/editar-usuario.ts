@@ -41,7 +41,7 @@ export class EditarUsuario implements OnInit {
       return;
     }
 
-    // Solo agregamos nuevaClave si el usuario escribio algo
+    // 
     if (this.nuevaClave) {
       (this.user as any).nuevaClave = this.nuevaClave;
     }
