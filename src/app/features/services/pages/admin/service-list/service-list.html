@@ -7,7 +7,7 @@
 
   <!-- SCROLL -->
   <div class="cards-scroll">
-    <!-- GRID SIEMPRE EXISTE -->
+    <!-- GRID SIEMPRE EXISTE --> 
     <div class="cards-grid">
       <!-- ESTADO VACÍO -->
       <div *ngIf="services.length === 0" class="empty">No hay servicios registrados</div>
@@ -18,7 +18,7 @@
           <h3 class="service-name">{{ s.nombreServicio }}</h3>
 
           <p class="service-description">
-            {{ s.descripcion }}
+            {{ s.descripcion }} 
           </p>
 
           <p class="service-price">$ {{ s.precioBase | number: '1.0-0' }}</p>

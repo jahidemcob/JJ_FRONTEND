@@ -48,11 +48,6 @@ export const routes: Routes = [
     data: { roles: ['cliente'] },
     children: [
       {
-        path: 'servicios',
-        loadChildren: () =>
-          import('./features/services/services.routes').then((m) => m.CLIENT_SERVICES_ROUTES),
-      },
-      {
         path: 'citas',
         loadChildren: () =>
           import('./features/appointments/appointments.routes').then((m) => m.CLIENT_APPOINTMENTS_ROUTES),
@@ -60,7 +55,7 @@ export const routes: Routes = [
       {
         path: "motocicletas",
         loadChildren: () =>
-          import('./features/motorcycles/motorcycles.routes').then((m) => m.MOTORCYCLES_ROUTES),
+          import('./features/motorbikes/motorbikes.routes').then((m) => m.MOTORBIKES_ROUTES),
       }
     ],
   },
@@ -71,11 +66,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
     data: { roles: ['empleado'] },
     children: [
-      {
-        path: 'servicios',
-        loadChildren: () =>
-          import('./features/services/services.routes').then((m) => m.EMPLOYEE_SERVICES_ROUTES),
-      },
       {
         path: 'citas',
         loadChildren: () =>

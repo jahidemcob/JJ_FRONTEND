@@ -47,7 +47,7 @@ export class ServiceListComponent implements OnInit {
     this.router.navigate(['/admin/servicios/crear']);
   }
 
-  goToEdit(id: number) {
+  goToEdit(id: number) { 
     this.router.navigate(['/admin/servicios/editar', id]);
   }
 

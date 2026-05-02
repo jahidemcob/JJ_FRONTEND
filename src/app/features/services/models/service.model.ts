@@ -5,7 +5,7 @@ export interface Service {
   descripcion: string;
   precioBase: number;
   isActive: boolean;
-}
+} 
 
 //crear servicios
 export interface CreateService {
