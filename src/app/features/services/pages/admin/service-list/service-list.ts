@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ServicesService } from '../../../services/services.service';
+
 import { Service } from '../../../models/service.model';
+import { ServicesFacade } from '../../../services/service.facade';
 
 @Component({
   selector: 'app-service-list',
@@ -14,28 +15,21 @@ import { Service } from '../../../models/service.model';
 export class ServiceListComponent implements OnInit {
   services: Service[] = [];
 
-  constructor(
-    private servicesService: ServicesService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-  ) {}
+  private facade = inject(ServicesFacade);
+  private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.loadServices();
   }
 
   loadServices() {
-    this.servicesService.getAllServices().subscribe({
+    this.facade.getServicios().subscribe({
       next: (data) => {
         this.services = data;
-
-        console.log('Servicios:', data);
-
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error cargando servicios:', err);
-      },
+      error: (err) => console.error(err),
     });
   }
 
@@ -47,22 +41,17 @@ export class ServiceListComponent implements OnInit {
     this.router.navigate(['/admin/servicios/crear']);
   }
 
-  goToEdit(id: number) { 
+  goToEdit(id: number) {
     this.router.navigate(['/admin/servicios/editar', id]);
   }
 
   toggleStatus(service: Service) {
-    this.servicesService.toggleServiceStatus(service.idServicio).subscribe({
+    this.facade.toggleEstado(service.idServicio).subscribe({
       next: (res) => {
-        // actualizamos el estado local sin recargar todo
         service.isActive = res.status;
-
-        console.log(res.message);
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error cambiando estado:', err);
-      },
+      error: (err) => console.error(err),
     });
   }
 }

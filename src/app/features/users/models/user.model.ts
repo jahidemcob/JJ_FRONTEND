@@ -10,7 +10,7 @@ export interface Usuario {
 }
 
 // Crear
-export interface UsuarioCreate { 
+export interface UsuarioCreate {  
   idRol: number; 
   nombre: string;
   nombreUsuario: string;
@@ -28,4 +28,18 @@ export interface UsuarioUpdate {
   telefono?: string;
   correo?: string;
   nuevaClave?: string;
+}
+
+export interface ApiError {
+  status: number;
+  error: string;   
+  message: string;
+  timestamp: string;
+}
+
+export interface BackendErrors {
+  correo?: string;
+  nombreUsuario?: string;
+  telefono?: string;
+  general?: string;
 }

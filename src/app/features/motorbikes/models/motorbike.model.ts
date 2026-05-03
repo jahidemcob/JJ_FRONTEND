@@ -2,7 +2,7 @@
 export interface Motorbike {
   idMoto: number;
   idUsuario: number;
-  marca: string;
+  marca: string; 
   modelo: string;
   placa: string;
   cilindraje: number;

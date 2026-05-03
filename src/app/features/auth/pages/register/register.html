@@ -109,7 +109,7 @@
           Todos los campos deben estar diligenciados correctamente
         </span>
 
-        <!-- 2. TELÉFONO (NO depende de otros campos) -->
+        <!-- 2. TELÉFONO -->
         <span *ngIf="!telefono.errors?.['required'] && telefono.errors?.['pattern']">
           El teléfono debe tener 10 dígitos numéricos
         </span>
@@ -138,7 +138,14 @@
         </span>
       </p>
 
-      <!-- MENSAJES BACKEND -->
+      <!--  ERRORES BACKEND -->
+      <p class="mensaje error" *ngIf="errores.usuario || errores.correo || errores.general">
+        <span *ngIf="errores.usuario">{{ errores.usuario }}</span>
+        <span *ngIf="errores.correo">{{ errores.correo }}</span>
+        <span *ngIf="errores.general">{{ errores.general }}</span>
+      </p>
+
+      <!-- MENSAJES EXISTENTES -->
       <p *ngIf="mensaje" class="mensaje error">{{ mensaje }}</p>
       <p *ngIf="mensajeExito" class="mensaje success">{{ mensajeExito }}</p>
 

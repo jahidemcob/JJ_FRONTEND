@@ -6,7 +6,7 @@ export interface Service {
   precioBase: number;
   isActive: boolean;
 } 
-
+ 
 //crear servicios
 export interface CreateService {
   nombreServicio: string;

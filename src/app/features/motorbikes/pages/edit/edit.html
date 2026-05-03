@@ -34,20 +34,27 @@
 
     <!-- VALIDACIONES (SIN CAMPOS VACÍOS) -->
     <div class="error" *ngIf="form.touched || form.dirty">
-      <!-- CILINDRAJE -->
       <span *ngIf="motorbike.cilindraje && cilindraje.errors?.['min']">
         El cilindraje debe ser mayor a 0
       </span>
 
-      <!-- AÑO -->
       <span *ngIf="!cilindraje.errors?.['min'] && motorbike.anio && anio.errors?.['min']">
         El año debe ser mayor a 2009
       </span>
     </div>
 
-    <!-- ERROR BACK -->
-    <div class="error" *ngIf="errorMessage">
-      {{ errorMessage }}
+    <!-- ERROR BACKEND (FACADE) -->
+    <div
+      class="error"
+      *ngIf="
+        errores.general || errores.marca || errores.modelo || errores.cilindraje || errores.anio
+      "
+    >
+      <span *ngIf="errores.marca">{{ errores.marca }}</span>
+      <span *ngIf="errores.modelo">{{ errores.modelo }}</span>
+      <span *ngIf="errores.cilindraje">{{ errores.cilindraje }}</span>
+      <span *ngIf="errores.anio">{{ errores.anio }}</span>
+      <span *ngIf="errores.general">{{ errores.general }}</span>
     </div>
 
     <!-- BOTÓN -->

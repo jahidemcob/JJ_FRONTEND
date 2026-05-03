@@ -35,12 +35,12 @@ describe('Login multi-rol (Admin, Empleado, Cliente)', () => {
     cerrarSesion();
 
     //  EMPLEADO
-    login('empleado', '123456');
+    login('empleado', '1234567');
     validarDashboard('Empleado');
     cerrarSesion();
 
     //  CLIENTE
-    login('cliente', '1234567');
+    login('cliente', '123456');
     validarDashboard('Cliente');
     cerrarSesion();
   });
