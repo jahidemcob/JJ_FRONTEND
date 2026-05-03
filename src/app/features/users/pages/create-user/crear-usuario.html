@@ -2,7 +2,6 @@
   <h2>Crear Usuario</h2>
 
   <form #form="ngForm" (ngSubmit)="guardar(form)">
-    
     <!-- NOMBRE -->
     <div class="form-group">
       <label>Nombre</label>
@@ -12,25 +11,50 @@
     <!-- USUARIO -->
     <div class="form-group">
       <label>Usuario</label>
-      <input [(ngModel)]="usuario.nombreUsuario" name="nombreUsuario" required #nombreUsuario="ngModel" />
+      <input
+        [(ngModel)]="usuario.nombreUsuario"
+        name="nombreUsuario"
+        required
+        #nombreUsuario="ngModel"
+      />
     </div>
 
     <!-- TELÉFONO -->
     <div class="form-group">
       <label>Teléfono</label>
-      <input [(ngModel)]="usuario.telefono" name="telefono" required pattern="[0-9]{10}" #telefono="ngModel" />
+      <input
+        [(ngModel)]="usuario.telefono"
+        name="telefono"
+        required
+        pattern="[0-9]{10}"
+        #telefono="ngModel"
+      />
     </div>
 
     <!-- CORREO -->
     <div class="form-group">
       <label>Correo</label>
-      <input [(ngModel)]="usuario.correo" name="correo" type="email" required email #correo="ngModel" />
+      <input
+        [(ngModel)]="usuario.correo"
+        name="correo"
+        type="email"
+        required
+        email
+        #correo="ngModel"
+      />
     </div>
 
     <!-- CLAVE -->
     <div class="form-group">
       <label>Clave (mínimo 6 caracteres)</label>
-      <input type="password" [(ngModel)]="usuario.clave" name="clave" required minlength="6" #clave="ngModel" />
+      <input
+        type="password"
+        [(ngModel)]="usuario.clave"
+        name="clave"
+        required
+        minlength="6"
+        #clave="ngModel"
+      />
     </div>
 
     <!-- ROL -->
@@ -43,60 +67,90 @@
       </select>
     </div>
 
-    <!-- 🔥 VALIDACIONES (CORREGIDAS) -->
-    <div class="error" *ngIf="form.touched || form.dirty">
+    <!-- 🔥 BLOQUE DE ERRORES UNIFICADO -->
+    <div
+      class="error"
+      *ngIf="
+        form.touched || form.dirty || errores.general || errores.nombreUsuario || errores.correo
+      "
+    >
+      <!-- 🔴 BACKEND (PRIORIDAD ALTA) -->
+      <span *ngIf="errores.nombreUsuario">
+        {{ errores.nombreUsuario }}
+      </span>
 
-      <!-- 1. CAMPOS VACÍOS (CON PRIORIDAD REAL) -->
-      <span *ngIf="
-        nombre.errors?.['required'] ||
-        nombreUsuario.errors?.['required'] ||
-        telefono.errors?.['required'] ||
-        correo.errors?.['required'] ||
-        clave.errors?.['required'] ||
-        rol.errors?.['required']
-      ">
+      <span *ngIf="!errores.nombreUsuario && errores.correo">
+        {{ errores.correo }}
+      </span>
+
+      <span *ngIf="!errores.nombreUsuario && !errores.correo && errores.general">
+        {{ errores.general }}
+      </span>
+
+      <!-- 🟡 FRONTEND -->
+      <span
+        *ngIf="
+          !errores.nombreUsuario &&
+          !errores.correo &&
+          !errores.general &&
+          (nombre.errors?.['required'] ||
+            nombreUsuario.errors?.['required'] ||
+            telefono.errors?.['required'] ||
+            correo.errors?.['required'] ||
+            clave.errors?.['required'] ||
+            rol.errors?.['required'])
+        "
+      >
         Todos los campos deben estar diligenciados correctamente
       </span>
 
-      <!-- 2. TELÉFONO -->
-      <span *ngIf="
-        !nombre.errors?.['required'] &&
-        !nombreUsuario.errors?.['required'] &&
-        !telefono.errors?.['required'] &&
-        telefono.errors?.['pattern']
-      ">
+      <span
+        *ngIf="
+          !errores.nombreUsuario &&
+          !errores.correo &&
+          !errores.general &&
+          !nombre.errors?.['required'] &&
+          !nombreUsuario.errors?.['required'] &&
+          !telefono.errors?.['required'] &&
+          telefono.errors?.['pattern']
+        "
+      >
         El teléfono debe tener 10 dígitos numéricos
       </span>
 
-      <!-- 3. CORREO -->
-      <span *ngIf="
-        !nombre.errors?.['required'] &&
-        !nombreUsuario.errors?.['required'] &&
-        !telefono.errors?.['required'] &&
-        !telefono.errors?.['pattern'] &&
-        !correo.errors?.['required'] &&
-        correo.invalid
-      ">
+      <span
+        *ngIf="
+          !errores.nombreUsuario &&
+          !errores.correo &&
+          !errores.general &&
+          !nombre.errors?.['required'] &&
+          !nombreUsuario.errors?.['required'] &&
+          !telefono.errors?.['required'] &&
+          !telefono.errors?.['pattern'] &&
+          !correo.errors?.['required'] &&
+          correo.invalid
+        "
+      >
         El correo no es válido
       </span>
 
-      <!-- 4. CONTRASEÑA -->
-      <span *ngIf="
-        !nombre.errors?.['required'] &&
-        !nombreUsuario.errors?.['required'] &&
-        !telefono.errors?.['required'] &&
-        !correo.errors?.['required'] &&
-        clave.errors?.['minlength']
-      ">
+      <span
+        *ngIf="
+          !errores.nombreUsuario &&
+          !errores.correo &&
+          !errores.general &&
+          !nombre.errors?.['required'] &&
+          !nombreUsuario.errors?.['required'] &&
+          !telefono.errors?.['required'] &&
+          !correo.errors?.['required'] &&
+          clave.errors?.['minlength']
+        "
+      >
         La contraseña debe tener al menos 6 caracteres
       </span>
-
     </div>
 
     <!-- BOTÓN -->
-    <button class="btn-save" type="submit" [disabled]="form.invalid">
-      Guardar
-    </button>
-
+    <button class="btn-save" type="submit" [disabled]="form.invalid">Guardar</button>
   </form>
 </div>

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/user.service';
-import { UsuarioCreate } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
+
+import { UsuarioFacade } from '../../services/user.facade';
+import { UsuarioCreate, BackendErrors } from '../../models/user.model';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -14,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CrearUsuario {
   usuario: UsuarioCreate = {
-    idRol: null as any,
+    idRol: 0,
     nombre: '',
     nombreUsuario: '',
     telefono: '',
@@ -22,42 +23,27 @@ export class CrearUsuario {
     clave: '',
   };
 
-  erroresBackend: any = {}; //  errores por campo
+  errores: BackendErrors = {};
 
   constructor(
-    private usuarioService: UsuarioService,
+    private facade: UsuarioFacade,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   guardar(form: any) {
-    this.erroresBackend = {}; // limpiar errores
+    this.errores = {};
 
     if (form.invalid) {
       form.control.markAllAsTouched();
       return;
     }
 
-    this.usuarioService.registerUser(this.usuario).subscribe({
-      next: () => {
-        this.router.navigate(['/admin/usuarios']);
-      },
-      error: (err) => { 
-        console.error('Error creando usuario:', err);
-
-        if (err.error && err.error.error) {
-          const mensaje = err.error.error.toLowerCase();
-
-          // detectar campo según mensaje
-          if (mensaje.includes('correo')) {
-            this.erroresBackend.correo = err.error.error;
-          } else if (mensaje.includes('usuario')) {
-            this.erroresBackend.nombreUsuario = err.error.error;
-          } else if (mensaje.includes('telefono')) {
-            this.erroresBackend.telefono = err.error.error;
-          } else {
-            this.erroresBackend.general = err.error.error;
-          }
-        }
+    this.facade.crearUsuario(this.usuario).subscribe({
+      next: () => this.router.navigate(['/admin/usuarios']),
+      error: (err) => {
+        this.errores = this.facade.mapBackendErrors(err);
+        this.cdr.detectChanges();
       },
     });
   }

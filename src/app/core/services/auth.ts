@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+
 import { LoginRequest, AuthResponse, JwtPayload, RegisterRequest } from '../models/model.auth';
 
 @Injectable({
@@ -17,8 +19,7 @@ export class AuthService {
     private http: HttpClient,
   ) {}
 
-  // LOGIN
-  login(data: LoginRequest) {
+  login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, data).pipe(
       tap((response) => {
         if (response.token) {
@@ -30,12 +31,15 @@ export class AuthService {
     );
   }
 
-  // Obtener token
+  register(data: RegisterRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data);
+  }
+
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Decodificar token
   getDecodedToken(): JwtPayload | null {
     const token = this.getToken();
     if (!token) return null;
@@ -47,13 +51,11 @@ export class AuthService {
     }
   }
 
-  // Obtener rol desde JWT
   getUserRole(): string | null {
     const decoded = this.getDecodedToken();
     return decoded?.role?.toLowerCase() || decoded?.rol?.toLowerCase() || null;
   }
 
-  // Ruta según rol
   getRedirectRoute(): string {
     const rol = this.getUserRole();
 
@@ -66,7 +68,7 @@ export class AuthService {
     return roleMap[rol || 'cliente'] || 'cliente';
   }
 
-  // Verificar sesión
+
   isLoggedIn(): boolean {
     const decoded = this.getDecodedToken();
     if (!decoded?.exp) return false;
@@ -74,13 +76,7 @@ export class AuthService {
     return decoded.exp * 1000 > Date.now();
   }
 
-  // REGISTRO
-  register(data: RegisterRequest) {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data);
-  }
-
-  // LOGOUT
-  logout() {
+  logout(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
   }

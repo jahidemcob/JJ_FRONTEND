@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { ServicesService } from '../../../services/services.service';
+
 import { Service } from '../../../models/service.model';
+import { ServicesFacade } from '../../../services/service.facade';
 
 @Component({
   selector: 'app-service-list',
@@ -14,25 +14,20 @@ import { Service } from '../../../models/service.model';
 export class ServiceList implements OnInit {
   services: Service[] = [];
 
-  constructor(
-    private servicesService: ServicesService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-  ) {}
+  private facade = inject(ServicesFacade);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.loadServices();
   }
 
   loadServices() {
-    this.servicesService.getActiveServices().subscribe({
+    this.facade.getServiciosActivos().subscribe({
       next: (data) => {
         this.services = data;
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error(err);
-      },
+      error: (err) => console.error(err),
     });
   }
 

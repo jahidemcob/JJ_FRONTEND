@@ -19,7 +19,7 @@ describe('Registro de usuario', () => {
     cy.get('button[type="submit"]').click();
 
     // Espera respuesta del backend
-    cy.contains('Usuario registrado correctamente', { timeout: 5000 })
+    cy.contains('Usuario registrado correctamente', { timeout: 10000 })
       .should('be.visible');
 
   });

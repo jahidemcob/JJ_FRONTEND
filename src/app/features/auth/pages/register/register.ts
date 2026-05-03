@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
-import { AuthService } from '../../../../core/services/auth';
+
+import { AuthFacade, AuthErrors } from '../../../../core/services/auth.facade';
 
 @Component({
   selector: 'app-register',
@@ -17,13 +17,13 @@ export class RegisterComponent {
   mensaje: string = '';
   mensajeExito: string = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  errores: AuthErrors = {};
 
   campoActivo: string = '';
+
+  private facade = inject(AuthFacade);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   setCampoActivo(campo: string) {
     this.campoActivo = campo;
@@ -32,6 +32,7 @@ export class RegisterComponent {
   registrar(form: any) {
     this.mensaje = '';
     this.mensajeExito = '';
+    this.errores = {};
 
     if (form.invalid) {
       form.control.markAllAsTouched();
@@ -52,22 +53,13 @@ export class RegisterComponent {
       Clave: form.value.clave,
     };
 
-    this.authService.register(data).subscribe({
-      next: (resp) => {
-        console.log('RESPUESTA OK:', resp);
-
+    this.facade.register(data).subscribe({
+      next: () => {
         this.mensajeExito = 'Usuario registrado correctamente';
-        this.mensaje = '';
         form.reset();
       },
-
       error: (err) => {
-        console.error('ERROR REGISTRO:', err);
-
-        this.mensaje = err.error?.message || 'El usuario o correo ya existe';
-
-        this.mensajeExito = '';
-
+        this.errores = this.facade.mapRegisterErrors(err);
         this.cdr.detectChanges();
       },
     });

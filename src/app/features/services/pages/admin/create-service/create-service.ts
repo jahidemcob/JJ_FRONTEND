@@ -1,9 +1,9 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { ServicesService } from '../../../services/services.service';
 import { CreateService } from '../../../models/service.model';
+import { ServicesFacade, BackendErrors } from '../../../services/service.facade';
 
 @Component({
   selector: 'app-create-service',
@@ -11,7 +11,7 @@ import { CreateService } from '../../../models/service.model';
   imports: [CommonModule, FormsModule],
   templateUrl: './create-service.html',
   styleUrls: ['./create-service.css'],
-}) 
+})
 export class CreateServiceComponent {
   service: CreateService = {
     nombreServicio: '',
@@ -19,41 +19,34 @@ export class CreateServiceComponent {
     precioBase: 0,
   };
 
+  errores: BackendErrors = {};
   loading = false;
-  errorMessage = '';
   successMessage = '';
 
-  constructor(
-    private servicesService: ServicesService,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  private facade = inject(ServicesFacade);
+  private cdr = inject(ChangeDetectorRef);
 
   createService(form: any) {
     if (this.loading) return;
 
     this.loading = true;
-    this.errorMessage = '';
+    this.errores = {};
     this.successMessage = '';
 
-    this.servicesService.createService(this.service).subscribe({
+    this.facade.crearServicio(this.service).subscribe({
       next: () => {
         this.successMessage = 'Servicio creado correctamente';
-
-        // RESET REAL DEL FORM
         form.resetForm();
-
         this.loading = false;
-
         this.cdr.detectChanges();
 
-        // ocultar mensaje después de 3s
         setTimeout(() => {
           this.successMessage = '';
           this.cdr.detectChanges();
         }, 3000);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message ?? 'Error al crear servicio';
+        this.errores = this.facade.mapBackendErrors(err);
         this.loading = false;
         this.cdr.detectChanges();
       },

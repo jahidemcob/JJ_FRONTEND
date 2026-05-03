@@ -54,7 +54,6 @@
 
     <!-- VALIDACIONES -->
     <div class="error" *ngIf="form.touched || form.dirty">
-      <!-- 1. CAMPOS VACÍOS -->
       <span
         *ngIf="
           marca.errors?.['required'] ||
@@ -67,7 +66,6 @@
         Todos los campos deben estar diligenciados correctamente
       </span>
 
-      <!-- 2. PLACA -->
       <span
         *ngIf="
           !marca.errors?.['required'] &&
@@ -79,7 +77,6 @@
         La placa debe tener formato XXX11X
       </span>
 
-      <!-- 3. CILINDRAJE -->
       <span
         *ngIf="
           !marca.errors?.['required'] &&
@@ -93,7 +90,6 @@
         El cilindraje debe ser mayor a 0
       </span>
 
-      <!-- 4. AÑO -->
       <span
         *ngIf="
           !marca.errors?.['required'] &&
@@ -110,9 +106,15 @@
       </span>
     </div>
 
-    <!-- ERROR BACK -->
-    <div class="error" *ngIf="errorMessage">
-      {{ errorMessage }}
+    <!-- ERROR BACKEND (FACADE) -->
+    <div
+      class="error"
+      *ngIf="errores.general || errores.placa || errores.cilindraje || errores.anio"
+    >
+      <span *ngIf="errores.placa">{{ errores.placa }}</span>
+      <span *ngIf="errores.cilindraje">{{ errores.cilindraje }}</span>
+      <span *ngIf="errores.anio">{{ errores.anio }}</span>
+      <span *ngIf="errores.general">{{ errores.general }}</span>
     </div>
 
     <!-- SUCCESS -->

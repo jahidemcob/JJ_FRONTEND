@@ -9,11 +9,10 @@ import { Service, CreateService, UpdateService } from '../models/service.model';
   providedIn: 'root',
 })
 export class ServicesService {
-  httpClient = inject(HttpClient);
+  private httpClient = inject(HttpClient);
 
   private apiUrl = `${environment.apiUrl}/api/services`;
 
-  // GET TODOS
   getAllServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>(this.apiUrl);
   }
@@ -22,28 +21,25 @@ export class ServicesService {
     return this.httpClient.get<Service>(`${this.apiUrl}/${id}`);
   }
 
-  // POST (crear)
-  createService(service: CreateService) {
+  createService(service: CreateService): Observable<Service> {
     return this.httpClient.post<Service>(this.apiUrl, service);
   }
 
-  // PUT (editar)
-  updateService(service: UpdateService) {
+  updateService(service: UpdateService): Observable<{ message: string }> {
     return this.httpClient.put<{ message: string }>(
       `${this.apiUrl}/${service.idServicio}`,
       service,
     );
   }
 
-  // PATCH activar/desactivar
-  toggleServiceStatus(id: number) {
+  toggleServiceStatus(id: number): Observable<{ message: string; status: boolean }> {
     return this.httpClient.patch<{ message: string; status: boolean }>(
       `${this.apiUrl}/${id}/disable`,
       {},
     );
   }
 
-  getActiveServices() { 
+  getActiveServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>(`${this.apiUrl}?onlyActive=true`);
   }
 }

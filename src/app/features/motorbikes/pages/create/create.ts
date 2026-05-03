@@ -1,9 +1,9 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { MotorbikeService } from '../../services/motorbike.service';
 import { CreateMotorbike } from '../../models/motorbike.model';
+import { MotorbikeFacade, BackendErrors } from '../../services/motorbike.facade';
 
 @Component({
   selector: 'app-create',
@@ -21,26 +21,23 @@ export class Create {
     anio: 0,
   };
 
+  errores: BackendErrors = {};
   loading = false;
-  errorMessage = '';
   successMessage = '';
 
-  constructor(
-    private motorbikeService: MotorbikeService,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  private facade = inject(MotorbikeFacade);
+  private cdr = inject(ChangeDetectorRef);
 
   createMotorbike(form: any) {
     if (this.loading) return;
 
     this.loading = true;
-    this.errorMessage = '';
+    this.errores = {};
     this.successMessage = '';
 
-    // NORMALIZAR PLACA
     this.motorbike.placa = (this.motorbike.placa || '').toUpperCase().replace(/\s/g, '');
 
-    this.motorbikeService.CreateMotorbike(this.motorbike).subscribe({
+    this.facade.crearMotorbike(this.motorbike).subscribe({
       next: () => {
         this.successMessage = 'Motocicleta creada correctamente';
 
@@ -54,7 +51,7 @@ export class Create {
         }, 3000);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message ?? 'Error al crear motocicleta';
+        this.errores = this.facade.mapBackendErrors(err);
         this.loading = false;
         this.cdr.detectChanges();
       },

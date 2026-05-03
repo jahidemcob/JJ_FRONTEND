@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ServicesService } from '../../../services/services.service';
 import { UpdateService } from '../../../models/service.model';
+import { ServicesFacade, BackendErrors } from '../../../services/service.facade';
 
 @Component({
   selector: 'app-edit-service',
@@ -21,26 +21,21 @@ export class EditService implements OnInit {
     precioBase: 0,
   };
 
+  errores: BackendErrors = {};
   loading = false;
-  errorMessage = '';
 
-  constructor(
-    private servicesService: ServicesService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  private facade = inject(ServicesFacade);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.loadService(id);
-    }
+    if (id) this.loadService(id);
   }
 
-  // CARGAR SERVICIO
   loadService(id: number) {
-    this.servicesService.getServiceById(id).subscribe({
+    this.facade.getServicioById(id).subscribe({
       next: (found) => {
         this.service = {
           idServicio: found.idServicio,
@@ -48,30 +43,27 @@ export class EditService implements OnInit {
           descripcion: found.descripcion,
           precioBase: found.precioBase,
         };
-
         this.cdr.detectChanges();
       },
       error: () => {
-        this.errorMessage = 'Servicio no encontrado';
+        this.errores.general = 'Servicio no encontrado';
         this.cdr.detectChanges();
       },
     });
   }
 
-  // ACTUALIZAR Y REDIRIGIR
   updateService() {
     if (this.loading) return;
 
     this.loading = true;
-    this.errorMessage = '';
+    this.errores = {};
 
-    this.servicesService.updateService(this.service).subscribe({
+    this.facade.actualizarServicio(this.service).subscribe({
       next: () => {
-        //  redirección inmediata
         this.router.navigate(['/admin/servicios']);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message ?? 'Error al actualizar servicio';
+        this.errores = this.facade.mapBackendErrors(err);
         this.loading = false;
         this.cdr.detectChanges();
       },

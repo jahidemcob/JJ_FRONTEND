@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MotorbikeService } from '../../services/motorbike.service';
+
 import { Motorbike } from '../../models/motorbike.model';
+import { MotorbikeFacade } from '../../services/motorbike.facade';
 
 @Component({
   selector: 'app-list',
@@ -14,28 +15,21 @@ import { Motorbike } from '../../models/motorbike.model';
 export class MotorbikeListComponent implements OnInit {
   motorbikes: Motorbike[] = [];
 
-  constructor(
-    private MotorbikeService: MotorbikeService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-  ) {}
+  private facade = inject(MotorbikeFacade);
+  private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.loadMotorbikes();
   }
 
   loadMotorbikes() {
-    this.MotorbikeService.getAllMotorbikes().subscribe({
+    this.facade.getMotorbikes().subscribe({
       next: (data) => {
         this.motorbikes = data;
-
-        console.log('Motocicletas:', data);
-
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error cargando motocicletas:', err);
-      },
+      error: (err) => console.error(err),
     });
   }
 
@@ -52,16 +46,12 @@ export class MotorbikeListComponent implements OnInit {
   }
 
   toggleStatus(motorbike: Motorbike) {
-    this.MotorbikeService.toggleMotorbikeStatus(motorbike.idMoto).subscribe({
+    this.facade.toggleEstado(motorbike.idMoto).subscribe({
       next: (res) => {
         motorbike.activo = res.status;
-
-        console.log(res.message);
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error cambiando estado:', err);
-      },
+      error: (err) => console.error(err),
     });
   }
 }

@@ -5,35 +5,28 @@ import { environment } from '../../../../environments/environment';
 
 import { Usuario, UsuarioCreate, UsuarioUpdate } from '../models/user.model';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class UsuarioService { 
-  httpClient = inject(HttpClient);
-
+@Injectable({ providedIn: 'root' })
+export class UsuarioService {
+  private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/users`;
 
-  // GET TODOS
-  GetAllUsers(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.apiUrl);
+  getAll(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.apiUrl);
   }
 
-  getUserById(id: number): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.apiUrl}/${id}`);
+  getById(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
-  // POST (crear)
-  registerUser(user: UsuarioCreate): Observable<Usuario> {
-    return this.httpClient.post<Usuario>(this.apiUrl, user);
+  create(user: UsuarioCreate): Observable<Usuario> {
+    return this.http.post<Usuario>(this.apiUrl, user);
   }
 
-  // PUT (actualizar)
-  updateUser(id: number, user: UsuarioUpdate): Observable<Usuario> {
-    return this.httpClient.put<Usuario>(`${this.apiUrl}/${id}`, user);
+  update(id: number, user: UsuarioUpdate): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.apiUrl}/${id}`, user);
   }
 
-  // PATCH (activar/desactivar)
-  updateUserStatus(id: number, status: boolean): Observable<void> {
-    return this.httpClient.patch<void>(`${this.apiUrl}/${id}/disable`, { activo: status });
+  toggleStatus(id: number, activo: boolean): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/disable`, { activo });
   }
 }

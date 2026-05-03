@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth';
+
+import { AuthFacade, AuthErrors } from '../../../../core/services/auth.facade';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +15,10 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-  ) {}
+  errores: AuthErrors = {};
+
+  private router = inject(Router);
+  private facade = inject(AuthFacade);
 
   login() {
     const data = {
@@ -25,33 +26,16 @@ export class LoginComponent {
       clave: this.password,
     };
 
-    this.authService.login(data).subscribe({
+    this.errores = {};
+
+    this.facade.login(data).subscribe({
       next: () => {
-        const ruta = this.authService.getRedirectRoute();
+        const ruta = this.facade.getRedirectRoute();
         this.router.navigate([`/${ruta}`]);
       },
-
       error: (err) => {
-        console.error('ERROR LOGIN:', err);
-
-        let errorMessage = 'Ocurrió un error inesperado';
-        const backendMessage = err.error?.message;
-
-        if (err.status === 401) {
-          errorMessage = backendMessage || 'Usuario o contraseña incorrectos';
-        } else if (err.status === 403) {
-          errorMessage = backendMessage || 'Usuario desactivado';
-        } else if (err.status === 400) {
-          errorMessage = backendMessage || 'Datos inválidos';
-        } else if (err.status === 404) {
-          errorMessage = backendMessage || 'Usuario no encontrado';
-        } else if (err.status === 500) {
-          errorMessage = backendMessage || 'Error interno del servidor';
-        } else {
-          errorMessage = backendMessage || errorMessage;
-        }
-
-        alert(errorMessage);
+        this.errores = this.facade.mapLoginErrors(err);
+        alert(this.errores.general || this.errores.username);
       },
     });
   }

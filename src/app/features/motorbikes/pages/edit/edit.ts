@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MotorbikeService } from '../../services/motorbike.service';
 import { UpdateMotorbike } from '../../models/motorbike.model';
+import { MotorbikeFacade, BackendErrors } from '../../services/motorbike.facade';
 
 @Component({
   selector: 'app-edit',
@@ -22,25 +22,21 @@ export class Edit implements OnInit {
     anio: 0,
   };
 
+  errores: BackendErrors = {};
   loading = false;
-  errorMessage = '';
 
-  constructor(
-    private motorbikeService: MotorbikeService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  private facade = inject(MotorbikeFacade);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.loadMotorbike(id);
-    }
+    if (id) this.loadMotorbike(id);
   }
 
   loadMotorbike(id: number) {
-    this.motorbikeService.getMotorbikeById(id).subscribe({
+    this.facade.getMotorbikeById(id).subscribe({
       next: (found) => {
         this.motorbike = {
           idMoto: found.idMoto,
@@ -49,11 +45,10 @@ export class Edit implements OnInit {
           cilindraje: found.cilindraje,
           anio: found.anio,
         };
-
         this.cdr.detectChanges();
       },
       error: () => {
-        this.errorMessage = 'Motocicleta no encontrada';
+        this.errores.general = 'Motocicleta no encontrada';
         this.cdr.detectChanges();
       },
     });
@@ -63,14 +58,14 @@ export class Edit implements OnInit {
     if (this.loading) return;
 
     this.loading = true;
-    this.errorMessage = '';
+    this.errores = {};
 
-    this.motorbikeService.updateService(this.motorbike).subscribe({
+    this.facade.actualizarMotorbike(this.motorbike).subscribe({
       next: () => {
         this.router.navigate(['/cliente/motocicletas']);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message ?? 'Error al actualizar motocicleta';
+        this.errores = this.facade.mapBackendErrors(err);
         this.loading = false;
         this.cdr.detectChanges();
       },

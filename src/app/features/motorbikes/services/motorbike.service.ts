@@ -9,11 +9,10 @@ import { Motorbike, CreateMotorbike, UpdateMotorbike } from '../models/motorbike
   providedIn: 'root',
 })
 export class MotorbikeService {
-  httpClient = inject(HttpClient);
+  private httpClient = inject(HttpClient);
 
   private apiUrl = `${environment.apiUrl}/api/Motorbike`;
 
-  // GET TODOS
   getAllMotorbikes(): Observable<Motorbike[]> {
     return this.httpClient.get<Motorbike[]>(this.apiUrl);
   }
@@ -22,17 +21,18 @@ export class MotorbikeService {
     return this.httpClient.get<Motorbike>(`${this.apiUrl}/${id}`);
   }
 
-  // POST (crear)
-  CreateMotorbike(motorbike: CreateMotorbike) {
+  createMotorbike(motorbike: CreateMotorbike): Observable<Motorbike> {
     return this.httpClient.post<Motorbike>(this.apiUrl, motorbike);
   }
 
-  // PUT (editar)
-  updateService(service: UpdateMotorbike) {
-    return this.httpClient.put<{ message: string }>(`${this.apiUrl}/${service.idMoto}`, service);
+  updateMotorbike(motorbike: UpdateMotorbike): Observable<{ message: string }> {
+    return this.httpClient.put<{ message: string }>(
+      `${this.apiUrl}/${motorbike.idMoto}`,
+      motorbike,
+    );
   }
 
-  toggleMotorbikeStatus(id: number) {
+  toggleMotorbikeStatus(id: number): Observable<{ message: string; status: boolean }> {
     return this.httpClient.patch<{ message: string; status: boolean }>(
       `${this.apiUrl}/${id}/disable`,
       {},

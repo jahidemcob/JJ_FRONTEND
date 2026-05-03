@@ -1,7 +1,7 @@
 <div class="table-container">
   <div class="table-header">
     <h2>Gestión de Usuarios</h2>
-    <button class="btn-create" (click)="registerUser()">+ Crear Usuario</button>
+    <button class="btn-create" (click)="crear()">+ Crear Usuario</button>
   </div>
 
   <!-- HEADER -->
@@ -68,11 +68,11 @@
 
           <td class="acciones">
             <div class="acciones-inner">
-              <button class="btn-edit" (click)="updateUser(u.idUsuario)">Editar</button>
+              <button class="btn-edit" (click)="editar(u.idUsuario)">Editar</button>
 
               <button
                 class="btn-state"
-                (click)="updateUserStatus(u.idUsuario)"
+                (click)="toggleEstado(u)"
                 [disabled]="loadingIds.includes(u.idUsuario)"
               >
                 {{ u.activo ? 'Desactivar' : 'Activar' }}

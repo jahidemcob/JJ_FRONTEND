@@ -1,9 +1,10 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UsuarioService } from '../../services/user.service';
-import { Usuario } from '../../models/user.model';
+
+import { UsuarioFacade } from '../../services/user.facade';
+import { Usuario, UsuarioUpdate, BackendErrors } from '../../models/user.model';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -13,46 +14,48 @@ import { Usuario } from '../../models/user.model';
   styleUrls: ['./editar-usuario.css'],
 })
 export class EditarUsuario implements OnInit {
-  route = inject(ActivatedRoute);
-  usuarioService = inject(UsuarioService);
-  router = inject(Router); 
-  cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+  private facade = inject(UsuarioFacade);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
-  user!: Usuario;               
-  nuevaClave: string = '';      
+  user!: Usuario;
+  nuevaClave = '';
+
+  errores: BackendErrors = {}; // 🔥 manejo de errores backend
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.usuarioService.getUserById(id).subscribe({
+    this.facade.getUsuario(id).subscribe({
       next: (data) => {
-        this.user = data;      
-        this.cdr.detectChanges();
+        this.user = data;
+        this.cdr.markForCheck();
       },
-      error: (err) => {
-        console.error('Error cargando usuario:', err);
-      },
+      error: (err) => console.error(err),
     });
   }
 
   guardar(form: any) {
+    this.errores = {}; 
+
     if (form.invalid) {
       form.control.markAllAsTouched();
       return;
     }
 
-    // 
-    if (this.nuevaClave) {
-      (this.user as any).nuevaClave = this.nuevaClave;
-    }
+    const updateData: UsuarioUpdate = {
+      ...this.user,
+      nuevaClave: this.nuevaClave || undefined,
+    };
 
-    this.usuarioService.updateUser(this.user.idUsuario, this.user).subscribe({
-      next: () => {
-        this.router.navigate(['/admin/usuarios']);
-      },
+    this.facade.actualizarUsuario(this.user.idUsuario, updateData).subscribe({
+      next: () => this.router.navigate(['/admin/usuarios']),
       error: (err) => {
-        console.error('Error actualizando:', err);
-        alert(err?.error?.error || 'Error al actualizar usuario');
+        this.errores = this.facade.mapBackendErrors(err);
+
+        // actualización inmediata
+        this.cdr.detectChanges();
       },
     });
   }

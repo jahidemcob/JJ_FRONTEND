@@ -34,7 +34,6 @@
 
     <!-- VALIDACIONES FRONT -->
     <div class="error" *ngIf="form.invalid && (form.touched || form.dirty)">
-      <!-- CAMPOS VACÍOS -->
       <span
         *ngIf="
           nombreServicio.errors?.['required'] ||
@@ -45,7 +44,6 @@
         Todos los campos deben estar diligenciados correctamente
       </span>
 
-      <!-- PRECIO INVÁLIDO -->
       <span
         *ngIf="
           !nombreServicio.errors?.['required'] &&
@@ -58,9 +56,11 @@
       </span>
     </div>
 
-    <!-- ERROR BACKEND -->
-    <div class="error" *ngIf="errorMessage">
-      {{ errorMessage }}
+    <!-- 🔥 ERROR BACKEND (AHORA CON FACADE) -->
+    <div class="error" *ngIf="errores.general || errores.nombreServicio || errores.precioBase">
+      <span *ngIf="errores.nombreServicio">{{ errores.nombreServicio }}</span>
+      <span *ngIf="errores.precioBase">{{ errores.precioBase }}</span>
+      <span *ngIf="errores.general">{{ errores.general }}</span>
     </div>
 
     <!-- ÉXITO -->
