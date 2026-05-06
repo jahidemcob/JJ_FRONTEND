@@ -1,7 +1,7 @@
 <div class="form-container">
   <h2>Editar Usuario</h2>
 
-  <form #form="ngForm" (ngSubmit)="guardar(form)">
+  <form *ngIf="user" #form="ngForm" (ngSubmit)="guardar(form)">
     <!-- NOMBRE -->
     <div class="form-group">
       <label>Nombre</label>

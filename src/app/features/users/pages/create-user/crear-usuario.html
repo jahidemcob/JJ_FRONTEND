@@ -67,14 +67,12 @@
       </select>
     </div>
 
-    <!-- 🔥 BLOQUE DE ERRORES UNIFICADO -->
     <div
       class="error"
       *ngIf="
         form.touched || form.dirty || errores.general || errores.nombreUsuario || errores.correo
       "
     >
-      <!-- 🔴 BACKEND (PRIORIDAD ALTA) -->
       <span *ngIf="errores.nombreUsuario">
         {{ errores.nombreUsuario }}
       </span>
@@ -87,7 +85,6 @@
         {{ errores.general }}
       </span>
 
-      <!-- 🟡 FRONTEND -->
       <span
         *ngIf="
           !errores.nombreUsuario &&

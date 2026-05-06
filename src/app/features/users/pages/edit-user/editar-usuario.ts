@@ -22,7 +22,7 @@ export class EditarUsuario implements OnInit {
   user!: Usuario;
   nuevaClave = '';
 
-  errores: BackendErrors = {}; // 🔥 manejo de errores backend
+  errores: BackendErrors = {};
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -37,24 +37,34 @@ export class EditarUsuario implements OnInit {
   }
 
   guardar(form: any) {
-    this.errores = {}; 
+    this.errores = {};
 
+    // validar form
     if (form.invalid) {
       form.control.markAllAsTouched();
       return;
     }
 
+    // validar user
+    if (!this.user || !this.user.idUsuario) {
+      return;
+    }
+
+    // validar contraseña corta
+    if (this.nuevaClave && this.nuevaClave.length < 6) {
+      form.control?.markAllAsTouched?.();
+      return;
+    }
+
     const updateData: UsuarioUpdate = {
       ...this.user,
-      nuevaClave: this.nuevaClave || undefined,
+      ...(this.nuevaClave ? { nuevaClave: this.nuevaClave } : {}),
     };
 
     this.facade.actualizarUsuario(this.user.idUsuario, updateData).subscribe({
       next: () => this.router.navigate(['/admin/usuarios']),
       error: (err) => {
         this.errores = this.facade.mapBackendErrors(err);
-
-        // actualización inmediata
         this.cdr.detectChanges();
       },
     });
