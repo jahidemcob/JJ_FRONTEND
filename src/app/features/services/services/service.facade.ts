@@ -15,7 +15,7 @@ export interface BackendErrors {
   providedIn: 'root',
 })
 export class ServicesFacade {
-  constructor(private service: ServicesService) {}
+  constructor(private readonly service: ServicesService) {}
 
   getServicios(): Observable<Service[]> {
     return this.service.getAllServices();

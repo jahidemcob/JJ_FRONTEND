@@ -24,10 +24,10 @@ export class EditService implements OnInit {
   errores: BackendErrors = {};
   loading = false;
 
-  private facade = inject(ServicesFacade);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(ServicesFacade);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));

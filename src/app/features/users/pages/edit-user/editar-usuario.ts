@@ -14,10 +14,10 @@ import { Usuario, UsuarioUpdate, BackendErrors } from '../../models/user.model';
   styleUrls: ['./editar-usuario.css'],
 })
 export class EditarUsuario implements OnInit {
-  private route = inject(ActivatedRoute);
-  private facade = inject(UsuarioFacade);
-  private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly route = inject(ActivatedRoute);
+  private readonly facade = inject(UsuarioFacade);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   user!: Usuario;
   nuevaClave = '';
@@ -46,19 +46,19 @@ export class EditarUsuario implements OnInit {
     }
 
     // validar user
-    if (!this.user || !this.user.idUsuario) {
+    if (!this.user?.idUsuario) {
       return;
     }
 
     // validar contraseña corta
-    if (this.nuevaClave && this.nuevaClave.length < 6) {
+    if (this.nuevaClave?.length < 6) {
       form.control?.markAllAsTouched?.();
       return;
     }
 
     const updateData: UsuarioUpdate = {
       ...this.user,
-      ...(this.nuevaClave ? { nuevaClave: this.nuevaClave } : {}),
+      ...(this.nuevaClave?.length ? { nuevaClave: this.nuevaClave } : {}),
     };
 
     this.facade.actualizarUsuario(this.user.idUsuario, updateData).subscribe({

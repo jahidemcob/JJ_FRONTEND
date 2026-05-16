@@ -1,8 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 
 import { AuthFacade, AuthErrors } from '../../../../core/services/auth.facade';
 
@@ -14,16 +13,16 @@ import { AuthFacade, AuthErrors } from '../../../../core/services/auth.facade';
   styleUrl: './register.css',
 })
 export class RegisterComponent {
-  mensaje: string = '';
+  mensaje: string = ''; 
   mensajeExito: string = '';
 
   errores: AuthErrors = {};
 
   campoActivo: string = '';
 
-  private facade = inject(AuthFacade);
-  private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(AuthFacade);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   setCampoActivo(campo: string) {
     this.campoActivo = campo;

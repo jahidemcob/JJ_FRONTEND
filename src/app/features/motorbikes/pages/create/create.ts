@@ -25,8 +25,8 @@ export class Create {
   loading = false;
   successMessage = '';
 
-  private facade = inject(MotorbikeFacade);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(MotorbikeFacade);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   createMotorbike(form: any) {
     if (this.loading) return;
@@ -35,8 +35,8 @@ export class Create {
     this.errores = {};
     this.successMessage = '';
 
-    this.motorbike.placa = (this.motorbike.placa || '').toUpperCase().replace(/\s/g, '');
-
+    this.motorbike.placa = (this.motorbike.placa || '').toUpperCase().replaceAll(' ', '');
+    
     this.facade.crearMotorbike(this.motorbike).subscribe({
       next: () => {
         this.successMessage = 'Motocicleta creada correctamente';

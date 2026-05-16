@@ -15,9 +15,9 @@ import { ServicesFacade } from '../../../services/service.facade';
 export class ServiceListComponent implements OnInit {
   services: Service[] = [];
 
-  private facade = inject(ServicesFacade);
-  private cdr = inject(ChangeDetectorRef);
-  private router = inject(Router);
+  private readonly facade = inject(ServicesFacade);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.loadServices();

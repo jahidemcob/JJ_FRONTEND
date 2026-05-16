@@ -10,15 +10,15 @@ import { AuthFacade, AuthErrors } from '../../../../core/services/auth.facade';
   imports: [RouterModule, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
-})
+}) 
 export class LoginComponent {
   username: string = '';
   password: string = '';
 
   errores: AuthErrors = {};
 
-  private router = inject(Router);
-  private facade = inject(AuthFacade);
+  private readonly router = inject(Router);
+  private readonly facade = inject(AuthFacade);
 
   login() {
     const data = {

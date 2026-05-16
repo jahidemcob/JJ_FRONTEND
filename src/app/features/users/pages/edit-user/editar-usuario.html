@@ -4,14 +4,22 @@
   <form *ngIf="user" #form="ngForm" (ngSubmit)="guardar(form)">
     <!-- NOMBRE -->
     <div class="form-group">
-      <label>Nombre</label>
-      <input type="text" [(ngModel)]="user.nombre" name="nombre" required #nombre="ngModel" />
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        [(ngModel)]="user.nombre"
+        name="nombre"
+        required
+        #nombre="ngModel"
+      />
     </div>
 
     <!-- USUARIO -->
     <div class="form-group">
-      <label>Usuario</label>
+      <label for="nombreUsuario">Usuario</label>
       <input
+        id="nombreUsuario"
         type="text"
         [(ngModel)]="user.nombreUsuario"
         name="nombreUsuario"
@@ -22,8 +30,9 @@
 
     <!-- TELÉFONO -->
     <div class="form-group">
-      <label>Teléfono</label>
+      <label for="telefono">Teléfono</label>
       <input
+        id="telefono"
         type="text"
         [(ngModel)]="user.telefono"
         name="telefono"
@@ -35,8 +44,9 @@
 
     <!-- CORREO -->
     <div class="form-group">
-      <label>Correo</label>
+      <label for="correo">Correo</label>
       <input
+        id="correo"
         type="email"
         [(ngModel)]="user.correo"
         name="correo"
@@ -48,8 +58,9 @@
 
     <!-- CONTRASEÑA -->
     <div class="form-group">
-      <label>Nueva Contraseña</label>
+      <label for="nuevaClave">Nueva Contraseña</label>
       <input
+        id="nuevaClave"
         type="password"
         [(ngModel)]="nuevaClave"
         name="nuevaClave"
@@ -61,8 +72,8 @@
 
     <!-- ROL -->
     <div class="form-group">
-      <label>Rol</label>
-      <select [(ngModel)]="user.idRol" name="idRol" required #rol="ngModel">
+      <label for="idRol">Rol</label>
+      <select [(ngModel)]="user.idRol" name="idRol" required #rol="ngModel" id="idRol">
         <option [ngValue]="null" disabled>Seleccione un rol</option>
         <option [value]="2">Empleado</option>
         <option [value]="3">Cliente</option>

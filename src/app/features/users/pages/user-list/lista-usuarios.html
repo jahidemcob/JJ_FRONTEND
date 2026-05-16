@@ -16,7 +16,7 @@
       <col style="width: 235px" />
     </colgroup>
     <thead>
-      <tr> 
+      <tr>
         <th>ID</th>
         <th>Nombre</th>
         <th>Usuario</th>
@@ -41,6 +41,19 @@
         <col style="width: 220px" />
       </colgroup>
 
+      <!-- THEAD OCULTO SOLO PARA ACCESIBILIDAD -->
+      <thead style="display: none">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
       <tbody>
         <tr *ngFor="let u of usuarios">
           <td>{{ u.idUsuario }}</td>
@@ -58,7 +71,7 @@
                     ? 'Cliente'
                     : 'Sin rol'
             }}
-          </td> 
+          </td>
 
           <td>
             <span [class.activo]="u.activo" [class.inactivo]="!u.activo">

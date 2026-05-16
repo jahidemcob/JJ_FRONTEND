@@ -23,8 +23,8 @@ export class CreateServiceComponent {
   loading = false;
   successMessage = '';
 
-  private facade = inject(ServicesFacade);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(ServicesFacade);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   createService(form: any) {
     if (this.loading) return;

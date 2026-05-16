@@ -4,8 +4,9 @@
   <form #form="ngForm" (ngSubmit)="createService(form)">
     <!-- NOMBRE -->
     <div class="form-group">
-      <label>Nombre del Servicio</label>
+      <label for="nombreServicio">Nombre del Servicio</label>
       <input
+        id="nombreServicio"
         [(ngModel)]="service.nombreServicio"
         name="nombreServicio"
         required
@@ -15,14 +16,21 @@
 
     <!-- DESCRIPCIÓN -->
     <div class="form-group">
-      <label>Descripción</label>
-      <input [(ngModel)]="service.descripcion" name="descripcion" required #descripcion="ngModel" />
+      <label for="descripcion">Descripción</label>
+      <input
+        id="descripcion"
+        [(ngModel)]="service.descripcion"
+        name="descripcion"
+        required
+        #descripcion="ngModel"
+      />
     </div>
 
     <!-- PRECIO -->
     <div class="form-group">
-      <label>Precio Base</label>
+      <label for="precioBase">Precio Base</label>
       <input
+        id="precioBase"
         type="number"
         [(ngModel)]="service.precioBase"
         name="precioBase"

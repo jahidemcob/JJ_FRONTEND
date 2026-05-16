@@ -17,7 +17,7 @@ export interface BackendErrors {
   providedIn: 'root',
 })
 export class MotorbikeFacade {
-  constructor(private service: MotorbikeService) {}
+  constructor(private readonly service: MotorbikeService) {}
 
   getMotorbikes(): Observable<Motorbike[]> {
     return this.service.getAllMotorbikes();

@@ -8,7 +8,7 @@ export interface AuthErrors {
   username?: string;
   password?: string;
   correo?: string;
-  usuario?: string;
+  usuario?: string; 
   general?: string;
 }
 
@@ -16,7 +16,7 @@ export interface AuthErrors {
   providedIn: 'root',
 })
 export class AuthFacade {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   login(data: LoginRequest): Observable<AuthResponse> {
     return this.authService.login(data);

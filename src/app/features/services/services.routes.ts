@@ -7,10 +7,6 @@ import { ServiceListComponent as AdminServiceList } from './pages/admin/service-
 // CLIENT
 import { ServiceList as ClientServiceList } from './pages/client/service-list/service-list';
 
-// EMPLOYEE
-import { AssignedServices } from './pages/employee/assigned-services/assigned-services'; 
-import { UpdateStatus } from './pages/employee/update-status/update-status';
- 
 // ADMIN ROUTES
 export const ADMIN_SERVICES_ROUTES: Routes = [
   { path: '', component: AdminServiceList },
@@ -20,9 +16,3 @@ export const ADMIN_SERVICES_ROUTES: Routes = [
 
 // CLIENT ROUTES
 export const CLIENT_SERVICES_ROUTES: Routes = [{ path: '', component: ClientServiceList }];
-
-// EMPLOYEE ROUTES
-export const EMPLOYEE_SERVICES_ROUTES: Routes = [ 
-  { path: '', component: AssignedServices },
-  { path: 'actualizar/:id', component: UpdateStatus },
-];

@@ -11,12 +11,11 @@ import { AuthService } from '../../../../core/services/auth';
   styleUrls: ['./administrador.css'],
 })
 export class Administrador {
-
   menuAbierto: boolean = false;
 
   constructor(
-    private authService: AuthService,
-    public router: Router
+    private readonly authService: AuthService,
+    public router: Router,
   ) {}
 
   ir(ruta: string) {
@@ -30,4 +29,4 @@ export class Administrador {
   cerrarSesion() {
     this.authService.logout();
   }
-} 
+}

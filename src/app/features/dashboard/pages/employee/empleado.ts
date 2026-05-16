@@ -15,7 +15,7 @@ export class Empleado {
   menuAbierto: boolean = false;
 
   constructor(
-    private authService: AuthService,
+    private readonly authService: AuthService,
     public router: Router
   ) {}
 

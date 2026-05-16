@@ -4,20 +4,21 @@
   <form #form="ngForm" (ngSubmit)="createMotorbike(form)">
     <!-- MARCA -->
     <div class="form-group">
-      <label>Marca</label>
-      <input [(ngModel)]="motorbike.marca" name="marca" required #marca="ngModel" />
+      <label for="marca">Marca</label>
+      <input id="marca" [(ngModel)]="motorbike.marca" name="marca" required #marca="ngModel" />
     </div>
 
     <!-- MODELO -->
     <div class="form-group">
-      <label>Modelo</label>
-      <input [(ngModel)]="motorbike.modelo" name="modelo" required #modelo="ngModel" />
+      <label for="modelo">Modelo</label>
+      <input id="modelo" [(ngModel)]="motorbike.modelo" name="modelo" required #modelo="ngModel" />
     </div>
 
     <!-- PLACA -->
     <div class="form-group">
-      <label>Placa</label>
+      <label for="placa">Placa</label>
       <input
+        id="placa"
         [(ngModel)]="motorbike.placa"
         name="placa"
         required
@@ -28,8 +29,9 @@
 
     <!-- CILINDRAJE -->
     <div class="form-group">
-      <label>Cilindraje</label>
+      <label for="cilindraje">Cilindraje</label>
       <input
+        id="cilindraje"
         type="number"
         [(ngModel)]="motorbike.cilindraje"
         name="cilindraje"
@@ -41,8 +43,9 @@
 
     <!-- AÑO -->
     <div class="form-group">
-      <label>Año</label>
+      <label for="anio">Año</label>
       <input
+        id="anio"
         type="number"
         [(ngModel)]="motorbike.anio"
         name="anio"

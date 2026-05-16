@@ -26,9 +26,9 @@ export class CrearUsuario {
   errores: BackendErrors = {};
 
   constructor(
-    private facade: UsuarioFacade,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
+    private readonly facade: UsuarioFacade,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   guardar(form: any) {
