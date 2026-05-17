@@ -1,79 +1,8 @@
-<div class="form-container">
-  <h2>Editar Servicio</h2>
-
-  <form #form="ngForm" (ngSubmit)="updateService()">
-    <!-- NOMBRE -->
-    <div class="form-group">
-      <label for="nombreServicio">Nombre del Servicio</label>
-      <input
-        id="nombreServicio"
-        [(ngModel)]="service.nombreServicio"
-        name="nombreServicio"
-        required
-        #nombreServicio="ngModel"
-      />
-    </div>
-
-    <!-- DESCRIPCIÓN -->
-    <div class="form-group">
-      <label for="descripcion">Descripción</label>
-      <textarea
-        id="descripcion"
-        [(ngModel)]="service.descripcion"
-        name="descripcion"
-        required
-        rows="3"
-        style="height: auto"
-        #descripcion="ngModel"
-      ></textarea>
-    </div>
-
-    <!-- PRECIO -->
-    <div class="form-group">
-      <label for="precioBase">Precio Base</label>
-      <input
-        id="precioBase"
-        type="number"
-        [(ngModel)]="service.precioBase"
-        name="precioBase"
-        required
-        min="1"
-        #precioBase="ngModel"
-      />
-    </div>
-
-    <!-- VALIDACIONES FRONT -->
-    <div class="error" *ngIf="form.invalid && (form.touched || form.dirty)">
-      <span
-        *ngIf="
-          nombreServicio.errors?.['required'] ||
-          descripcion.errors?.['required'] ||
-          precioBase.errors?.['required']
-        "
-      >
-        Todos los campos deben estar diligenciados correctamente
-      </span>
-
-      <span
-        *ngIf="
-          !nombreServicio.errors?.['required'] &&
-          !descripcion.errors?.['required'] &&
-          !precioBase.errors?.['required'] &&
-          precioBase.errors?.['min']
-        "
-      >
-        El precio debe ser mayor a 0
-      </span>
-    </div>
-
-    <!-- 🔥 ERROR BACKEND (AHORA CON FACADE) -->
-    <div class="error" *ngIf="errores.general || errores.nombreServicio || errores.precioBase">
-      <span *ngIf="errores.nombreServicio">{{ errores.nombreServicio }}</span>
-      <span *ngIf="errores.precioBase">{{ errores.precioBase }}</span>
-      <span *ngIf="errores.general">{{ errores.general }}</span>
-    </div>
-
-    <!-- BOTÓN -->
-    <button class="btn-save" type="submit" [disabled]="form.invalid || loading">Actualizar</button>
-  </form>
-</div>
+<app-service-form
+  title="Editar Servicio"
+  buttonLabel="Actualizar"
+  [service]="service"
+  [errores]="errores"
+  [loading]="loading"
+  (submitForm)="updateService($event)"
+/>

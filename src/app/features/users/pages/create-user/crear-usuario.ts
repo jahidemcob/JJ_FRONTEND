@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 
 import { UsuarioFacade } from '../../services/user.facade';
 import { UsuarioCreate, BackendErrors } from '../../models/user.model';
+import { UserFormComponent } from '../../../../shared/components/user-form/user-form.component';
 
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, UserFormComponent],
   templateUrl: './crear-usuario.html',
   styleUrls: ['./crear-usuario.css'],
 })

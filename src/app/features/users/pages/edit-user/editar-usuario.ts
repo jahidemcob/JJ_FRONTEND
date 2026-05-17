@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 
 import { UsuarioFacade } from '../../services/user.facade';
 import { Usuario, UsuarioUpdate, BackendErrors } from '../../models/user.model';
+import { UserFormComponent } from '../../../../shared/components/user-form/user-form.component';
 
 @Component({
   selector: 'app-editar-usuario',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, UserFormComponent],
   templateUrl: './editar-usuario.html',
   styleUrls: ['./editar-usuario.css'],
 })
@@ -19,8 +20,7 @@ export class EditarUsuario implements OnInit {
   private readonly router = inject(Router);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  user!: Usuario;
-  nuevaClave = '';
+  user!: Usuario & { clave?: string };
 
   errores: BackendErrors = {};
 
@@ -29,7 +29,7 @@ export class EditarUsuario implements OnInit {
 
     this.facade.getUsuario(id).subscribe({
       next: (data) => {
-        this.user = data;
+        this.user = { ...data, clave: '' };
         this.cdr.markForCheck();
       },
       error: (err) => console.error(err),
@@ -39,26 +39,18 @@ export class EditarUsuario implements OnInit {
   guardar(form: any) {
     this.errores = {};
 
-    // validar form
     if (form.invalid) {
       form.control.markAllAsTouched();
       return;
     }
 
-    // validar user
-    if (!this.user?.idUsuario) {
-      return;
-    }
+    if (!this.user?.idUsuario) return;
 
-    // validar contraseña corta
-    if (this.nuevaClave?.length < 6) {
-      form.control?.markAllAsTouched?.();
-      return;
-    }
+    if (this.user.clave && this.user.clave.length > 0 && this.user.clave.length < 6) return;
 
     const updateData: UsuarioUpdate = {
       ...this.user,
-      ...(this.nuevaClave?.length ? { nuevaClave: this.nuevaClave } : {}),
+      ...(this.user.clave?.length ? { nuevaClave: this.user.clave } : {}),
     };
 
     this.facade.actualizarUsuario(this.user.idUsuario, updateData).subscribe({

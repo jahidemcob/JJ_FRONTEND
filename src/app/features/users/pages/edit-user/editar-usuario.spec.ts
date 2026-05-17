@@ -79,8 +79,8 @@ describe('EditarUsuario', () => {
   });
 
   it('no permite contraseña corta (lógica)', () => {
-    component.nuevaClave = '123';
-    expect(component.nuevaClave.length).toBeLessThan(6);
+    component.user.clave = '123';
+    expect(component.user.clave.length).toBeLessThan(6);
   });
 
   it('no ejecuta si user inválido', () => {
@@ -90,7 +90,7 @@ describe('EditarUsuario', () => {
   });
 
   it('actualiza correctamente', () => {
-    component.nuevaClave = '123456';
+    component.user.clave = '123456';
     component.guardar({ invalid: false });
 
     expect(facadeMock.actualizarUsuario).toHaveBeenCalled();
@@ -100,6 +100,7 @@ describe('EditarUsuario', () => {
   it('maneja error backend', () => {
     facadeMock.actualizarUsuario.mockReturnValue(throwError(() => ({})));
     facadeMock.mapBackendErrors.mockReturnValue({ general: 'error' });
+    component.user.clave = '123456';
 
     component.guardar({ invalid: false });
 
@@ -152,7 +153,7 @@ describe('EditarUsuario', () => {
     setInput(2, '1234567890');
     setInput(3, 'test@test.com');
 
-    component.nuevaClave = '123';
+    component.user.clave = '123';
     setSelect('2');
 
     submitForm();
@@ -161,7 +162,7 @@ describe('EditarUsuario', () => {
   });
 
   it('botón se deshabilita cuando contraseña es corta', () => {
-    component.nuevaClave = '123';
+    component.user.clave = '123';
     fixture.detectChanges();
 
     const btn = fixture.nativeElement.querySelector('button');

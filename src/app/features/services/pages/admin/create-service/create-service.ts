@@ -1,55 +1,38 @@
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { CreateService } from '../../../models/service.model';
 import { ServicesFacade, BackendErrors } from '../../../services/service.facade';
+import { CreateFormBase } from '../../../../../shared/base/create-form.base';
+import { ServiceFormComponent } from '../../../../../shared/components/service-form/service-form.component';
 
 @Component({
   selector: 'app-create-service',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ServiceFormComponent],
   templateUrl: './create-service.html',
   styleUrls: ['./create-service.css'],
 })
-export class CreateServiceComponent {
+export class CreateServiceComponent extends CreateFormBase<BackendErrors> {
   service: CreateService = {
     nombreServicio: '',
     descripcion: '',
     precioBase: 0,
   };
 
-  errores: BackendErrors = {};
-  loading = false;
-  successMessage = '';
-
   private readonly facade = inject(ServicesFacade);
-  private readonly cdr = inject(ChangeDetectorRef);
 
   createService(form: any) {
-    if (this.loading) return;
-
-    this.loading = true;
-    this.errores = {};
-    this.successMessage = '';
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+    if (!this.beforeSubmit()) return;
 
     this.facade.crearServicio(this.service).subscribe({
-      next: () => {
-        this.successMessage = 'Servicio creado correctamente';
-        form.resetForm();
-        this.loading = false;
-        this.cdr.detectChanges();
-
-        setTimeout(() => {
-          this.successMessage = '';
-          this.cdr.detectChanges();
-        }, 3000);
-      },
-      error: (err) => {
-        this.errores = this.facade.mapBackendErrors(err);
-        this.loading = false;
-        this.cdr.detectChanges();
-      },
+      next: () => this.handleSuccess('Servicio creado correctamente', form),
+      error: (err) => this.handleError(err, this.facade.mapBackendErrors.bind(this.facade)),
     });
   }
 }
