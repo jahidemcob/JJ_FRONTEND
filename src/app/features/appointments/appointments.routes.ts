@@ -1,24 +1,27 @@
 import { Routes } from '@angular/router';
 
 // ADMIN
-import { ManageAppointments } from './pages/admin/manage-appointments/manage-appointments';
+import { ManageAppointmentsComponent } from './pages/admin/manage-appointments/manage-appointments';
 
 // EMPLOYEE
-import { ScheduledAppointments } from './pages/employee/scheduled-appointments/scheduled-appointments';
+import { ScheduledAppointmentsComponent } from './pages/employee/scheduled-appointments/scheduled-appointments';
 
 // CLIENT
-import { RequestAppointment } from './pages/client/request-appointment/request-appointment';
+import { MyAppointmentsComponent } from './pages/client/my-appointments/my-appointments';
+import { RequestAppointmentComponent } from './pages/client/request-appointment/request-appointment';
 
 // ADMIN ROUTES
 export const ADMIN_APPOINTMENTS_ROUTES: Routes = [
-  { path: '', component: ManageAppointments },
-];
-
-// CLIENT ROUTES
-export const CLIENT_APPOINTMENTS_ROUTES: Routes = [ 
-  { path: '', component: RequestAppointment },
+  { path: '', component: ManageAppointmentsComponent },
 ];
 
 // EMPLOYEE ROUTES
-export const EMPLOYEE_APPOINTMENTS_ROUTES: Routes = [{ path: '', component: ScheduledAppointments }];
+export const EMPLOYEE_APPOINTMENTS_ROUTES: Routes = [
+  { path: '', component: ScheduledAppointmentsComponent },
+];
 
+// CLIENT ROUTES
+export const CLIENT_APPOINTMENTS_ROUTES: Routes = [
+  { path: '', component: MyAppointmentsComponent },
+  { path: 'solicitar', component: RequestAppointmentComponent },
+];
