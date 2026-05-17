@@ -17,9 +17,9 @@ export class ListaUsuarios implements OnInit {
   loadingIds: number[] = [];
 
   constructor(
-    private facade: UsuarioFacade,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
+    private readonly facade: UsuarioFacade,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioFacade {
-  constructor(private service: UsuarioService) {}
+  constructor(private readonly service: UsuarioService) {}
 
 
   getUsuarios(): Observable<Usuario[]> {

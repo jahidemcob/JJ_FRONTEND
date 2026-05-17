@@ -9,9 +9,9 @@ import { Motorbike, CreateMotorbike, UpdateMotorbike } from '../models/motorbike
   providedIn: 'root',
 })
 export class MotorbikeService {
-  private httpClient = inject(HttpClient);
+  private readonly httpClient = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}/api/Motorbike`;
+  private readonly apiUrl = `${environment.apiUrl}/api/Motorbike`;
 
   getAllMotorbikes(): Observable<Motorbike[]> {
     return this.httpClient.get<Motorbike[]>(this.apiUrl);

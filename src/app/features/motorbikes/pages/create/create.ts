@@ -1,9 +1,10 @@
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { CreateMotorbike } from '../../models/motorbike.model';
 import { MotorbikeFacade, BackendErrors } from '../../services/motorbike.facade';
+import { CreateFormBase } from '../../../../shared/base/create-form.base';
 
 @Component({
   selector: 'app-create',
@@ -12,7 +13,7 @@ import { MotorbikeFacade, BackendErrors } from '../../services/motorbike.facade'
   templateUrl: './create.html',
   styleUrl: './create.css',
 })
-export class Create {
+export class Create extends CreateFormBase<BackendErrors> {
   motorbike: CreateMotorbike = {
     marca: '',
     modelo: '',
@@ -21,40 +22,16 @@ export class Create {
     anio: 0,
   };
 
-  errores: BackendErrors = {};
-  loading = false;
-  successMessage = '';
-
-  private facade = inject(MotorbikeFacade);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(MotorbikeFacade);
 
   createMotorbike(form: any) {
-    if (this.loading) return;
+    if (!this.beforeSubmit()) return;
 
-    this.loading = true;
-    this.errores = {};
-    this.successMessage = '';
-
-    this.motorbike.placa = (this.motorbike.placa || '').toUpperCase().replace(/\s/g, '');
+    this.motorbike.placa = (this.motorbike.placa || '').toUpperCase().replaceAll(' ', '');
 
     this.facade.crearMotorbike(this.motorbike).subscribe({
-      next: () => {
-        this.successMessage = 'Motocicleta creada correctamente';
-
-        form.resetForm();
-        this.loading = false;
-        this.cdr.detectChanges();
-
-        setTimeout(() => {
-          this.successMessage = '';
-          this.cdr.detectChanges();
-        }, 3000);
-      },
-      error: (err) => {
-        this.errores = this.facade.mapBackendErrors(err);
-        this.loading = false;
-        this.cdr.detectChanges();
-      },
+      next: () => this.handleSuccess('Motocicleta creada correctamente', form),
+      error: (err) => this.handleError(err, this.facade.mapBackendErrors.bind(this.facade)),
     });
   }
 }

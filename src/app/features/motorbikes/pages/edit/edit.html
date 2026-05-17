@@ -4,20 +4,21 @@
   <form #form="ngForm" (ngSubmit)="updateService()">
     <!-- MARCA -->
     <div class="form-group">
-      <label>Marca</label>
-      <input [(ngModel)]="motorbike.marca" name="marca" #marca="ngModel" />
+      <label for="marca">Marca</label>
+      <input id="marca" [(ngModel)]="motorbike.marca" name="marca" #marca="ngModel" />
     </div>
 
     <!-- MODELO -->
     <div class="form-group">
-      <label>Modelo</label>
-      <input [(ngModel)]="motorbike.modelo" name="modelo" #modelo="ngModel" />
+      <label for="modelo">Modelo</label>
+      <input id="modelo" [(ngModel)]="motorbike.modelo" name="modelo" #modelo="ngModel" />
     </div>
 
     <!-- CILINDRAJE -->
     <div class="form-group">
-      <label>Cilindraje</label>
+      <label for="cilindraje">Cilindraje</label>
       <input
+        id="cilindraje"
         type="number"
         [(ngModel)]="motorbike.cilindraje"
         name="cilindraje"
@@ -28,8 +29,15 @@
 
     <!-- AÑO -->
     <div class="form-group">
-      <label>Año</label>
-      <input type="number" [(ngModel)]="motorbike.anio" name="anio" min="2010" #anio="ngModel" />
+      <label for="anio">Año</label>
+      <input
+        id="anio"
+        type="number"
+        [(ngModel)]="motorbike.anio"
+        name="anio"
+        min="2010"
+        #anio="ngModel"
+      />
     </div>
 
     <!-- VALIDACIONES (SIN CAMPOS VACÍOS) -->

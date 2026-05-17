@@ -8,7 +8,6 @@ import { ScheduledAppointments } from './pages/employee/scheduled-appointments/s
 
 // CLIENT
 import { RequestAppointment } from './pages/client/request-appointment/request-appointment';
-import { App } from '../../app';
 
 // ADMIN ROUTES
 export const ADMIN_APPOINTMENTS_ROUTES: Routes = [

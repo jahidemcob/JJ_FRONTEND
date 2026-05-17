@@ -15,9 +15,9 @@ import { MotorbikeFacade } from '../../services/motorbike.facade';
 export class MotorbikeListComponent implements OnInit {
   motorbikes: Motorbike[] = [];
 
-  private facade = inject(MotorbikeFacade);
-  private cdr = inject(ChangeDetectorRef);
-  private router = inject(Router);
+  private readonly facade = inject(MotorbikeFacade);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.loadMotorbikes();

@@ -1,5 +1,5 @@
 <div class="register-container">
-  <img src="assets/logo.png" class="logo" />
+  <img src="assets/logo.png" class="logo" alt="Logo de la aplicación" />
 
   <div class="register-card">
     <h2>Crea tu cuenta</h2>
@@ -7,8 +7,9 @@
     <form (ngSubmit)="registrar(form)" #form="ngForm">
       <!-- NOMBRE -->
       <div class="input-group">
-        <label>Nombre completo</label>
+        <label for="nombre">Nombre completo</label>
         <input
+          id="nombre"
           type="text"
           name="nombre"
           ngModel
@@ -20,8 +21,9 @@
 
       <!-- USUARIO -->
       <div class="input-group">
-        <label>Usuario</label>
+        <label for="usuario">Usuario</label>
         <input
+          id="usuario"
           type="text"
           name="usuario"
           ngModel
@@ -33,8 +35,9 @@
 
       <!-- TELÉFONO -->
       <div class="input-group">
-        <label>Teléfono</label>
+        <label for="telefono">Teléfono</label>
         <input
+          id="telefono"
           type="tel"
           name="telefono"
           ngModel
@@ -47,8 +50,9 @@
 
       <!-- CORREO -->
       <div class="input-group">
-        <label>Correo electrónico</label>
+        <label for="correo">Correo electrónico</label>
         <input
+          id="correo"
           type="email"
           name="correo"
           ngModel
@@ -61,8 +65,9 @@
 
       <!-- CONTRASEÑA -->
       <div class="input-group">
-        <label>Clave (mínimo 6 caracteres)</label>
+        <label for="clave">Clave (mínimo 6 caracteres)</label>
         <input
+          id="clave"
           type="password"
           name="clave"
           ngModel
@@ -75,8 +80,9 @@
 
       <!-- CONFIRMAR -->
       <div class="input-group">
-        <label>Confirmar contraseña</label>
+        <label for="confirmarClave">Confirmar contraseña</label>
         <input
+          id="confirmarClave"
           type="password"
           name="confirmarClave"
           ngModel
@@ -138,7 +144,7 @@
         </span>
       </p>
 
-      <!--  ERRORES BACKEND -->
+      <!-- ERRORES BACKEND -->
       <p class="mensaje error" *ngIf="errores.usuario || errores.correo || errores.general">
         <span *ngIf="errores.usuario">{{ errores.usuario }}</span>
         <span *ngIf="errores.correo">{{ errores.correo }}</span>

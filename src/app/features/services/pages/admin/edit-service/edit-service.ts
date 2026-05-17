@@ -1,15 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UpdateService } from '../../../models/service.model';
 import { ServicesFacade, BackendErrors } from '../../../services/service.facade';
+import { ServiceFormComponent } from '../../../../../shared/components/service-form/service-form.component';
 
 @Component({
   selector: 'app-edit-service',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ServiceFormComponent],
   templateUrl: './edit-service.html',
   styleUrls: ['./edit-service.css'],
 })
@@ -24,10 +25,10 @@ export class EditService implements OnInit {
   errores: BackendErrors = {};
   loading = false;
 
-  private facade = inject(ServicesFacade);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(ServicesFacade);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -46,22 +47,24 @@ export class EditService implements OnInit {
         this.cdr.detectChanges();
       },
       error: () => {
-        this.errores.general = 'Servicio no encontrado';
+        this.errores = { general: 'Servicio no encontrado' };
         this.cdr.detectChanges();
       },
     });
   }
 
-  updateService() {
+  updateService(form?: NgForm) {
+    if (form?.invalid) {
+      form.control?.markAllAsTouched();
+      return;
+    }
     if (this.loading) return;
 
     this.loading = true;
     this.errores = {};
 
     this.facade.actualizarServicio(this.service).subscribe({
-      next: () => {
-        this.router.navigate(['/admin/servicios']);
-      },
+      next: () => this.router.navigate(['/admin/servicios']),
       error: (err) => {
         this.errores = this.facade.mapBackendErrors(err);
         this.loading = false;

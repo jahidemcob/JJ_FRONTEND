@@ -9,14 +9,14 @@ import { jwtDecode } from 'jwt-decode';
 import { LoginRequest, AuthResponse, JwtPayload, RegisterRequest } from '../models/model.auth';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', 
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/auth`;
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(
-    private router: Router,
-    private http: HttpClient,
+    private readonly router: Router,
+    private readonly http: HttpClient,
   ) {}
 
   login(data: LoginRequest): Observable<AuthResponse> {

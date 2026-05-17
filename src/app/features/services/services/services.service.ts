@@ -9,9 +9,9 @@ import { Service, CreateService, UpdateService } from '../models/service.model';
   providedIn: 'root',
 })
 export class ServicesService {
-  private httpClient = inject(HttpClient);
+  private readonly httpClient = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}/api/services`;
+  private readonly apiUrl = `${environment.apiUrl}/api/services`;
 
   getAllServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>(this.apiUrl);
