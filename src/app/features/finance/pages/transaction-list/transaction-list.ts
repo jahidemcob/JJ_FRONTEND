@@ -76,16 +76,8 @@ export class TransactionList implements OnInit {
       return;
     }
 
-    this.movimientosFiltrados = this.summary.movimientos.filter((m) => {
-      const fecha = new Date(m.fecha);
-
-      const year = fecha.getFullYear();
-
-      const month = String(fecha.getMonth() + 1).padStart(2, '0');
-
-      const day = String(fecha.getDate()).padStart(2, '0');
-
-      const fechaMov = `${year}-${month}-${day}`;
+    this.movimientosFiltrados = this.summary.movimientos.filter((m: any) => {
+      const fechaMov = String(m.fecha).substring(0, 10);
 
       return fechaMov === this.filtroFecha;
     });
