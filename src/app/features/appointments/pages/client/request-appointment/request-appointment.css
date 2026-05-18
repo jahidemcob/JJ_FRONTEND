@@ -1,3 +1,10 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* ==========================================================================
    CONTENEDOR PRINCIPAL Y LAYOUT
    ========================================================================== */
