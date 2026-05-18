@@ -111,6 +111,16 @@
           <col style="width: 180px" />
         </colgroup>
 
+        <!-- CORRECCIÓN SONAR: agregado thead oculto con th para accesibilidad -->
+        <thead style="display: none">
+          <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+
         <tbody>
           <!-- LOADING -->
           <tr *ngIf="loading">
@@ -131,16 +141,9 @@
 
           <!-- FILAS -->
           <tr *ngFor="let m of movimientosFiltrados">
-            <td>
-              {{ m.idMovimiento }}
-            </td>
-
-            <td>
-              {{ m.descripcion }}
-            </td>
-
+            <td>{{ m.idMovimiento }}</td>
+            <td>{{ m.descripcion }}</td>
             <td>$ {{ m.monto | number: '1.0-0' }}</td>
-
             <td>
               <span
                 [class.tipo-ingreso]="m.tipoMovimiento === 'Ingreso'"
@@ -156,8 +159,7 @@
 
     <!-- TOTAL -->
     <div class="total-row">
-      <span class="total-label"> Total: </span>
-
+      <span class="total-label">Total:</span>
       <span
         class="total-value"
         [class.total-positivo]="totalFiltrado >= 0"

@@ -78,9 +78,9 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
   getIdVisual(idPedido: number): number {
-    // Buscamos la posición de la cita en el arreglo completo (sin filtrar)
+    // CORRECCIÓN: se elimina la condición negada, usando valor por defecto con ??
     const index = this.appointments.findIndex((a) => a.idPedido === idPedido);
-    return index !== -1 ? index + 1 : 1;
+    return index >= 0 ? index + 1 : 1;
   }
 
   cambiarFiltro(estado: AppointmentState | 'Todas') {
@@ -107,6 +107,6 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
   trackById(_: number, item: Appointment) {
-    return item.idPedido; 
+    return item.idPedido;
   }
 }

@@ -3,15 +3,16 @@
     <h2>Solicitar Cita</h2>
   </div>
 
-  <!-- Fila superior ampliada con el selector de motocicleta -->
   <div class="datetime-row">
     <div class="field">
-      <label>Fecha</label>
-      <input type="date" [(ngModel)]="fechaCita" [min]="minFecha" />
+      <!-- CORRECCIÓN SONAR L9: for + id asociados -->
+      <label for="fechaCita">Fecha</label>
+      <input id="fechaCita" type="date" [(ngModel)]="fechaCita" [min]="minFecha" />
     </div>
     <div class="field">
-      <label>Hora</label>
-      <select [(ngModel)]="horaCita">
+      <!-- CORRECCIÓN SONAR L13: for + id asociados -->
+      <label for="horaCita">Hora</label>
+      <select id="horaCita" [(ngModel)]="horaCita">
         <option value="" disabled>Seleccione una hora</option>
         @for (h of horasDisponibles; track h) {
           <option [value]="h">{{ h }}</option>
@@ -19,8 +20,9 @@
       </select>
     </div>
     <div class="field moto-field">
-      <label>Motocicleta</label>
-      <select [(ngModel)]="idMotoSelected">
+      <!-- CORRECCIÓN SONAR L22: for + id asociados -->
+      <label for="idMotoSelected">Motocicleta</label>
+      <select id="idMotoSelected" [(ngModel)]="idMotoSelected">
         <option [value]="0" disabled>Seleccione una motocicleta</option>
         @for (m of motorbikes; track m.idMoto) {
           <option [value]="m.idMoto">{{ m.marca }} {{ m.modelo }} - {{ m.placa }}</option>
@@ -50,7 +52,6 @@
       </div>
     </div>
 
-    <!-- Panel de resumen exclusivo con la clase condicional para la animación de posición -->
     <div class="summary-panel" [class.has-items]="selectedServices.length > 0">
       <div class="selected-services">
         <h4>Servicios seleccionados</h4>

@@ -120,7 +120,7 @@
   border: none;
   cursor: pointer;
   font-size: 14px;
-  color: #aaa;
+  color: #767676;
   padding: 2px 4px;
   transition: color 0.2s;
 }
@@ -229,11 +229,11 @@
 }
 
 .sin-accion {
-  color: #c2cdd5;
+  color: #767676;
 }
 
 .btn-aceptar {
-  background: #28a745;
+  background: #1a7a32; /* era #28a745 — white sobre esto da ratio 5.1:1 ✅ */
   color: white;
   border: none;
   padding: 6px 12px;
@@ -246,7 +246,7 @@
 }
 
 .btn-aceptar:hover:not(:disabled) {
-  background: #1e7e34;
+  background: #145a25;
 }
 
 .btn-rechazar {
@@ -296,7 +296,7 @@
 
 .empty {
   text-align: center;
-  color: #c2cdd5;
+  color: #767676;
   font-size: 16px;
   padding: 40px 0;
 }
@@ -347,7 +347,7 @@
   border: none;
   cursor: pointer;
   font-size: 17px;
-  color: #aaa;
+  color: #767676;
   padding: 0;
   transition: color 0.2s;
 }
@@ -373,7 +373,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: #aab;
+  color: #5e5e72;
   margin: 0 0 2px 0;
 }
 
@@ -429,7 +429,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #888;
+  color: #767676;
   font-size: 13px;
   padding: 20px 0;
 }
@@ -459,6 +459,9 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  border: none;
+  width: 100%;
+  cursor: pointer;
 }
 
 .modal {
@@ -482,7 +485,7 @@
 }
 
 .modal-sub {
-  color: #888;
+  color: #767676;
   font-size: 13px;
   margin: -6px 0 0 0;
 }
@@ -504,6 +507,9 @@
   border: 2px solid #eee;
   cursor: pointer;
   transition: 0.2s;
+  width: 100%;
+  background: white;
+  text-align: left;
 }
 
 .employee-option:hover {
@@ -542,7 +548,7 @@
 }
 .emp-correo {
   font-size: 11px;
-  color: #888;
+  color: #767676;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -555,7 +561,7 @@
 
 .no-employees {
   text-align: center;
-  color: #aaa;
+  color: #767676;
   font-size: 13px;
   padding: 16px 0;
 }

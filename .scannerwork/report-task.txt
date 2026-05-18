@@ -2,5 +2,5 @@ projectKey=Frontend-Angular
 serverUrl=http://localhost:9000
 serverVersion=26.5.0.122743
 dashboardUrl=http://localhost:9000/dashboard?id=Frontend-Angular
-ceTaskId=f37c7f58-a056-4b12-b4dc-3175392d4348
-ceTaskUrl=http://localhost:9000/api/ce/task?id=f37c7f58-a056-4b12-b4dc-3175392d4348
+ceTaskId=d4a25a28-fcf3-48da-893d-7a66e85e7455
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d4a25a28-fcf3-48da-893d-7a66e85e7455
