@@ -5,7 +5,6 @@
       <h2>Citas Asignadas</h2>
     </div>
 
-    <!-- Filtros -->
     <div class="filtros">
       @for (estado of estados; track estado) {
         <button
@@ -19,7 +18,6 @@
           {{ getLabelEstado(estado) }}
         </button>
       }
-
       <div class="filtro-fecha">
         <input type="date" [(ngModel)]="filtroFecha" class="input-fecha" />
         @if (filtroFecha) {
@@ -75,7 +73,6 @@
               <td colspan="6" class="empty">No hay citas asignadas</td>
             </tr>
           }
-
           @for (a of appointmentsFiltradas; track trackById($index, a); let i = $index) {
             <tr [class.row-active]="selectedAppointment?.idPedido === a.idPedido">
               <td class="col-id">{{ i + 1 }}</td>
@@ -87,9 +84,8 @@
                   [class.agendada]="a.estadoCita === 'Agendada'"
                   [class.en-proceso]="a.estadoCita === 'EnProceso'"
                   [class.completada]="a.estadoCita === 'Completada'"
+                  >{{ getLabelEstado(a.estadoCita) }}</span
                 >
-                  {{ getLabelEstado(a.estadoCita) }}
-                </span>
               </td>
               <td
                 class="acciones-cell"
@@ -147,97 +143,54 @@
     </div>
   </div>
 
-  <!-- ══ PANEL DETALLES ════════════════════════════════════════ -->
-  <div class="detail-panel" [class.visible]="!!selectedAppointment || loadingDetail">
-    @if (loadingDetail) {
-      <div class="detail-loading"><span class="spinner"></span> Cargando...</div>
-    }
+  <!-- ══ PANEL DETALLES (componente compartido) ════════════════ -->
+  <app-appointment-detail-panel
+    [selectedAppointment]="selectedAppointment"
+    [loadingDetail]="loadingDetail"
+    [panelTitle]="'#' + getIndiceCita(selectedAppointment?.idPedido ?? 0)"
+    [loadingIds]="loadingIds"
+    [showEmpleado]="false"
+    [showAcciones]="true"
+    (closed)="closeDetail()"
+    (actionPrimary)="enDesarrollo($event)"
+    (actionSecondary)="terminado($event)"
+  >
+    <!-- slot moto -->
+    <span slot="moto">{{ getNombreMoto(selectedAppointment?.idMoto ?? 0) }}</span>
 
-    @if (selectedAppointment && !loadingDetail) {
-      <div class="detail-header">
-        <div>
-          <h3>
-            Cita <span class="detail-id">#{{ getIndiceCita(selectedAppointment.idPedido) }}</span>
-          </h3>
-          <span
-            class="estado-badge"
-            [class.agendada]="selectedAppointment.estadoCita === 'Agendada'"
-            [class.en-proceso]="selectedAppointment.estadoCita === 'EnProceso'"
-            [class.completada]="selectedAppointment.estadoCita === 'Completada'"
-          >
-            {{ getLabelEstado(selectedAppointment.estadoCita) }}
-          </span>
-        </div>
-        <button class="btn-close" (click)="closeDetail()">✕</button>
-      </div>
-
-      <div class="detail-section">
-        <p class="detail-label">Cliente</p>
-        <p class="detail-value">{{ selectedAppointment.nombreCliente }}</p>
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-section">
-          <p class="detail-label">Motocicleta</p>
-          <p class="detail-value">{{ getNombreMoto(selectedAppointment.idMoto) }}</p>
-        </div>
-        <div class="detail-section">
-          <p class="detail-label">Fecha creación</p>
-          <p class="detail-value">{{ selectedAppointment.fechaCreacionCita }}</p>
-        </div>
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-section">
-          <p class="detail-label">Fecha cita</p>
-          <p class="detail-value">{{ selectedAppointment.fechaCita }}</p>
-        </div>
-        <div class="detail-section">
-          <p class="detail-label">Hora</p>
-          <p class="detail-value">{{ selectedAppointment.horaCita }}</p>
-        </div>
-      </div>
-
-      <div class="detail-section">
-        <p class="detail-label">Servicios</p>
-        <div class="servicios-list">
-          @for (d of selectedAppointment.detalles; track d.idServicio) {
-            <div class="servicio-item">
-              <span class="servicio-nombre">{{ getNombreServicio(d.idServicio) }}</span>
-              <span class="servicio-precio">$ {{ d.subTotal | number: '1.0-0' }}</span>
-            </div>
-          }
-        </div>
-      </div>
-
-      <div class="detail-total">
-        <span>Total</span>
-        <span class="total-value">$ {{ selectedAppointment.total | number: '1.0-0' }}</span>
-      </div>
-
-      @if (
-        selectedAppointment.estadoCita === 'Agendada' ||
-        selectedAppointment.estadoCita === 'EnProceso'
-      ) {
-        <div class="detail-acciones">
-          @if (selectedAppointment.estadoCita === 'Agendada') {
-            <button
-              class="btn-desarrollo full-width"
-              [disabled]="isLoading(selectedAppointment.idPedido)"
-              (click)="enDesarrollo(selectedAppointment.idPedido)"
-            >
-              {{ isLoading(selectedAppointment.idPedido) ? '...' : 'Marcar En Proceso' }}
-            </button>
-          }
-          <button
-            class="btn-terminado full-width"
-            [disabled]="isLoading(selectedAppointment.idPedido)"
-            (click)="terminado(selectedAppointment.idPedido)"
-          >
-            {{ isLoading(selectedAppointment.idPedido) ? '...' : 'Marcar Terminado' }}
-          </button>
+    <!-- slot servicios -->
+    <div slot="servicios" class="servicios-list">
+      @for (d of selectedAppointment?.detalles ?? []; track d.idServicio) {
+        <div class="servicio-item">
+          <span class="servicio-nombre">{{ getNombreServicio(d.idServicio) }}</span>
+          <span class="servicio-precio">$ {{ d.subTotal | number: '1.0-0' }}</span>
         </div>
       }
+    </div>
+
+    <!-- slot acciones -->
+    @if (
+      selectedAppointment?.estadoCita === 'Agendada' ||
+      selectedAppointment?.estadoCita === 'EnProceso'
+    ) {
+      <div slot="acciones" class="detail-acciones">
+        @if (selectedAppointment?.estadoCita === 'Agendada') {
+          <button
+            class="btn-desarrollo full-width"
+            [disabled]="isLoading(selectedAppointment!.idPedido)"
+            (click)="enDesarrollo(selectedAppointment!.idPedido)"
+          >
+            {{ isLoading(selectedAppointment!.idPedido) ? '...' : 'Marcar En Proceso' }}
+          </button>
+        }
+        <button
+          class="btn-terminado full-width"
+          [disabled]="isLoading(selectedAppointment!.idPedido)"
+          (click)="terminado(selectedAppointment!.idPedido)"
+        >
+          {{ isLoading(selectedAppointment!.idPedido) ? '...' : 'Marcar Terminado' }}
+        </button>
+      </div>
     }
-  </div>
+  </app-appointment-detail-panel>
 </div>
