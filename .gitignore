@@ -29,11 +29,18 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
-# Miscellaneous
+# Angular cache
 /.angular/cache
+
+# SonarQube
+/.scannerwork
+
+# Coverage
+/coverage
+
+# Miscellaneous
 .sass-cache/
 /connect.lock
-/coverage
 /libpeerconnection.log
 testem.log
 /typings
