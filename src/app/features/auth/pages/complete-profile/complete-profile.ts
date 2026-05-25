@@ -46,7 +46,9 @@ export class CompleteProfileComponent {
         next: () => {
           this.mensajeExito = 'Cuenta completada correctamente. Redirigiendo...';
           localStorage.clear();
-          setTimeout(() => this.router.navigate(['/login']), 2000);
+          setTimeout(() => {
+            this.router.navigate(['/login'], { queryParams: { cuentaCreada: true } });
+          }, 2000);
         },
         error: () => {
           this.error = 'Error al completar el perfil. Intenta de nuevo.';

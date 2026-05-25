@@ -19,6 +19,14 @@
       <h2>Iniciar Sesión</h2>
       <p class="subtitle">Accede a tu cuenta</p>
 
+      <div class="aviso" *ngIf="mensajeGoogle">
+        {{ mensajeGoogle }}
+      </div>
+
+      <div class="aviso error" *ngIf="errores.general || errores.username">
+        {{ errores.general || errores.username }}
+      </div>
+
       <form (submit)="login(); $event.preventDefault()">
         <div class="form-group">
           <input type="text" placeholder="Usuario" [(ngModel)]="username" name="username" />

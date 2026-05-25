@@ -53,7 +53,7 @@
   margin-top: -6px;
   font-weight: 600;
   opacity: 0.9;
-  color: #C2CDD5;
+  color: #c2cdd5;
 }
 
 /* PARRAFO */
@@ -64,13 +64,13 @@
   line-height: 1.5;
   text-align: center;
   margin-top: 8px; /* 👈 simplificado */
-  color: #C2CDD5;
+  color: #c2cdd5;
 }
 
 /* DERECHA */
 .right-panel {
   flex: 0.7;
-  background: #F4F7FB;
+  background: #f4f7fb;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,7 +106,7 @@
   width: 100%;
   padding: 12px;
   border: none;
-  border-bottom: 2px solid #C2CDD5;
+  border-bottom: 2px solid #c2cdd5;
   background: transparent;
   outline: none;
   font-size: 14px;
@@ -138,7 +138,7 @@ button:hover {
 .google-btn {
   background: #fff;
   color: #303854;
-  border: 1px solid #C2CDD5;
+  border: 1px solid #c2cdd5;
 }
 
 /* LINK */
@@ -151,4 +151,21 @@ button:hover {
   color: #303854;
   font-weight: 600;
   text-decoration: none;
+}
+
+.aviso {
+  background: #eaf4ff;
+  color: #303854;
+  border: 1px solid #c2cdd5;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.aviso.error {
+  background: #fff0f0;
+  color: #c0392b;
+  border-color: #f5c6c6;
 }
