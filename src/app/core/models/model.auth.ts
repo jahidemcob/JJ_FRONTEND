@@ -30,3 +30,13 @@ export interface JwtPayload {
   rol?: string;
   exp: number;
 }
+
+export interface AuthResponse {
+  token: string;
+  username?: string;
+  rol?: string;
+  role?: string;
+  email?: string;
+  perfilCompleto?: boolean;
+  idUsuario?: number;
+}

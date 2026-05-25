@@ -8,7 +8,7 @@ export interface AuthErrors {
   username?: string;
   password?: string;
   correo?: string;
-  usuario?: string; 
+  usuario?: string;
   general?: string;
 }
 
@@ -28,6 +28,10 @@ export class AuthFacade {
 
   getRedirectRoute(): string {
     return this.authService.getRedirectRoute();
+  }
+
+  loginWithGoogle(idToken: string): Observable<AuthResponse> {
+    return this.authService.loginWithGoogle(idToken);
   }
 
   logout() {

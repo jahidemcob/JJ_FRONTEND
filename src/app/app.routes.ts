@@ -3,6 +3,7 @@ import { authGuard } from './core/guards/auth-guard';
 
 import { LoginComponent } from './features/auth/pages/login/login';
 import { RegisterComponent } from './features/auth/pages/register/register';
+import { CompleteProfileComponent } from './features/auth/pages/complete-profile/complete-profile';
 
 // Dashboars de roles
 import { Administrador } from './features/dashboard/pages/admin/administrador';
@@ -14,6 +15,8 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'complete-profile', component: CompleteProfileComponent },
+
   {
     path: 'admin', 
     component: Administrador,

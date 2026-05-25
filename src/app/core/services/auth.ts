@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import { LoginRequest, AuthResponse, JwtPayload, RegisterRequest } from '../models/model.auth';
 
 @Injectable({
-  providedIn: 'root', 
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly apiUrl = `${environment.apiUrl}/auth`;
@@ -34,7 +34,6 @@ export class AuthService {
   register(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data);
   }
-
 
   getToken(): string | null {
     return localStorage.getItem('token');
@@ -68,12 +67,22 @@ export class AuthService {
     return roleMap[rol || 'cliente'] || 'cliente';
   }
 
-
   isLoggedIn(): boolean {
     const decoded = this.getDecodedToken();
     if (!decoded?.exp) return false;
 
     return decoded.exp * 1000 > Date.now();
+  }
+
+  loginWithGoogle(idToken: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/google`, { idToken }).pipe(
+      tap((response) => {
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+        }
+        localStorage.setItem('usuario', JSON.stringify(response));
+      }),
+    );
   }
 
   logout(): void {
